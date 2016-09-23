@@ -1,11 +1,10 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Route = require('./components/rounting/Route');
-var App = require('./components/App');
+import React from "react"
+import ReactDOM from "react-dom"
+import { Provider } from "react-redux"
+import store from "./FE/store"
+var Route = require('./FE/components/rounting/Route');
 
-ReactDOM.render(
-    Route,
-    document.getElementById('main')
-);
+const app = document.getElementById('main');
 
+ReactDOM.render(Route, app);
 
