@@ -28,7 +28,8 @@ var Auth = React.createClass({
     },
     sendAuth(){
         console.log('send request', url)
-        $.ajax({
+        window.location.href = Config.domain + url
+/*        $.ajax({
             type: "GET",
             url: Config.domain + url,
             dataType: "json",
@@ -39,7 +40,7 @@ var Auth = React.createClass({
 
                 }
             }
-        })
+        })*/
     },
     render() {
         var commentsObj;
