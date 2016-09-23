@@ -1,0 +1,344 @@
+img {
+    width:100%
+}
+.container-fluid {
+    max-width: 980px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#geocoding_form {
+    margin: 40px auto 60px;
+}
+
+#address {
+    border-radius: 3px;
+}
+
+.input-group {
+    margin-left: 4%;
+}
+
+.glyphicon {
+    font-size: 18px;
+    z-index: 20;
+    cursor: pointer;
+}
+
+.glyphicon-search{
+    position: relative;
+    right: 30px;
+}
+
+.current-location {
+    margin-top: 30px;
+}
+
+#save-location {
+    display: inline;
+    margin: 10px auto;
+    line-height: 1.4;
+}
+
+.current-location .glyphicon-star,
+.current-location .glyphicon-star-empty {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 22px;
+    vertical-align: text-bottom;
+}
+
+.glyphicon-menu-right {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -9px;
+}
+
+.map-holder {
+    max-width: 500px;
+    height: 350px;
+    margin: 0 auto;
+    background-color: #FCFCFC;
+    position: relative;
+    border-radius: 2px;
+}
+
+.map-holder p {
+    position: absolute;
+    width: 84px;
+    height: 22px;
+    left: 50%;
+    top: 50%;
+    margin: -11px auto 0 -42px;
+    font-size: 20px;
+    color: #969FA8;
+}
+
+#map {
+    max-width: 500px;
+    height: 350px;
+    margin: 0 auto;
+}
+
+.list-group-item {
+    position: relative;
+    padding: 0px;
+}
+.list-group-item-first{
+    padding: 10px 20px;
+}
+a.list-group-item {
+    cursor: pointer;
+}
+
+a.list-group-item:hover {
+    background-color: #F7FBFF;
+}
+
+a.active-location {
+    background-color: #EEF6FF;
+}
+
+a.active-location:hover {
+    background-color: #EBF3FC;
+}
+
+a.list-group-item span.createdAt {
+    display: block;
+    color: #969FA8;
+    z-index: -1;
+}
+.list-group-item{
+    text-align: left;
+}
+.location-title{
+    text-align: center;
+}
+.mark-map-block{
+    height: 547px;
+    overflow-y: scroll;
+}
+.location-block li {
+    font-size: 14px;
+}
+.location-block-open{
+    height: auto;
+}
+.location-block-close{
+    height: 124px;
+    overflow: hidden;
+}
+.location-block-open .glyphicon-zoom-in{
+    display: none;
+}
+.location-block-close .glyphicon-zoom-in{
+    position: absolute;
+    top: 95px;
+    right: 20px;
+    display: block;
+}
+.caption-of-result{
+    position: absolute;
+    color: #fff !important;
+    right: 26px;
+    top: 12px !important;
+}
+.list-group .glyphicon-remove{
+    position: absolute;
+    color: #000;
+    top: 3px;
+}
+.main-map-block .btn{
+    width:100%
+}
+.main-map-block thead{
+    text-align: center;
+}
+.price-table{
+    margin: 0 auto;
+}
+.price-table th{
+    text-align: center;
+}
+.map-list-preview .glyphicon-remove{
+    color: #000 !important;
+}
+.price-table-block{
+    padding: 10px 0;
+}
+.price-table-block .price-table-block-img{
+    padding: 5px;
+}
+.price-table, .price-table thead th{
+    text-align: left;
+}
+.location-block-description, .main-block{
+    border-bottom: 1px solid #AAB1B9;
+    padding: 10px 0;
+}
+.main-map-block .btn{
+    padding: 8px 5px;
+}
+.main-map-block{
+    font-size: 14px;
+}
+.filter-head{
+    max-width: 50px;
+}
+.main-map-block thead th{
+    word-wrap: break-word;
+}
+.longName{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3em;
+    word-wrap: break-word !important;
+}
+.breadcumps-line i{
+    padding-top: 16px;
+    font-size:11px;
+}
+.second-breadcumps{
+    text-align: left;
+}
+.place-title{
+    padding-bottom: 10px;
+}
+#floating-panel{
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+ }
+.location-block .list-group i{
+    padding-right: 5px;
+}
+#vk_groups{
+    padding-top: 60px;
+}
+.myName{
+    position: relative;
+    top: 65px;
+}
+.nav-pills{
+    padding-top: 12px;
+}
+@media (max-width: 559px){
+    .header-img, .mark-map-block {
+        display: none;
+    }
+    .nav-pills>li {
+        float: none;
+        padding:1px
+    }
+    .map-list-preview .list-group{
+        display: none;
+    }
+    .map-list-preview h4{
+        font-size: 14px;
+    }
+}
+@media (min-width: 560px){
+    .header-img{
+        position: absolute;
+        left: 0;
+    }
+    .header-img .main-img{
+        width: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        height: 277px;
+        margin-top: -20px;
+    }
+    .main-page .main-label{
+        color: #fff;
+    }
+    .main-page .main-label h1{
+        color: #FFF;
+        position: relative;
+        top: 30px;
+        padding-top: 10px;
+    }
+    .nav-pills li a{
+        color: #fff;
+    }
+    .guide h3{
+        font-size: 18px;
+    }
+}
+@media (max-width: 992px){
+    .main-page .main-label h1{
+        padding: 0;
+    }
+    .main-page .header-img{
+        position: relative
+    }
+}@media (max-width: 992px){
+    .main-page .main-label h1{
+        display: none;
+    }
+    .main-page #geocoding_form{
+        margin: 65px auto 100px;
+    }
+    .main-page .header-img{
+        position: relative
+    }
+}
+.social-button {
+    position: absolute;
+    z-index: 1;
+    top: 226px;
+    right: 100px;
+}
+.social-button li{
+    cursor: pointer;
+    padding: 5px 10px 5px 10px;
+    background-color: rgba(102,102,102,0.5);
+}
+.thumbnail {
+    padding:0px;
+}
+.panel {
+    position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+    position:absolute;
+    top:11px;left:-16px;
+    right:100%;
+    width:0;
+    height:0;
+    display:block;
+    content:" ";
+    border-color:transparent;
+    border-style:solid solid outset;
+    pointer-events:none;
+}
+.panel>.panel-heading:after{
+    border-width:7px;
+    border-right-color:#f7f7f7;
+    margin-top:1px;
+    margin-left:2px;
+}
+.panel>.panel-heading:before{
+    border-right-color:#ddd;
+    border-width:8px;
+}
+.foto-gallery img{
+    vertical-align: baseline;
+}
+.map-infrustractura{
+    padding-top: 220px;
+
+}
+.infrustractura #map {
+    max-width: 100%;
+    height: 550px;
+}
