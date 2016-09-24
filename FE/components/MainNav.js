@@ -46,7 +46,7 @@ var MainNav = React.createClass({
         })*/
         return (<div>
                     <ul className="nav nav-pills"  onClick={this.handleSubmit}>
-                        <li className='active'><a href="#">Главная</a></li>
+                        <li className='active'><a href="/">Главная</a></li>
                             {NavBar}
                         <li>
                             <Link to={'/infrastructure/gport'}>

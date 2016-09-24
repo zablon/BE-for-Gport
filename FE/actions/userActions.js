@@ -2,8 +2,8 @@ export function fetchUser() {
   return {
     type: "FETCH_USER_FULFILLED",
     payload: {
-      name: "Dustin",
-      age: 24,
+      name: "Guest",
+      email: '',
     }
   }
 }
@@ -15,9 +15,23 @@ export function setUserName(name) {
   }
 }
 
-export function setUserAge(age) {
+export function setUserEmail(email) {
   return {
-    type: 'SET_USER_AGE',
-    payload: age,
+    type: 'SET_USER_EMAIL',
+    payload: email,
+  }
+}
+
+export function setUserType(type) {
+  return {
+    type: 'SET_USER_TYPE',
+    payload: type,
+  }
+}
+
+export function setUserParams(data) {
+  return {
+    type: 'SET_USER_PARAMS',
+    payload: data,
   }
 }

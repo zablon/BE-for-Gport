@@ -1,4 +1,4 @@
-var React = require('react');
+import React, { Component } from 'react'
 
 var Search = require('./Search');
 var Map = require('./Map');
@@ -15,16 +15,19 @@ var Auth = require('./auth/Auth');
 var Social = require('./social/social');
 var Adsense = require('./Adsense/Adsense');
 window.gmarkers = [];
-//restaurants = '';
+import { setUserParams } from "../actions/userActions"
+import { connect } from 'react-redux'
+import store from "../store"
 
-var App = React.createClass({
-
-	getInitialState(){
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.props.store.dispatch(setUserParams(userSettings));
         var type = (this.props.params.type ? this.props.params.type : '');
 		var favorites = [];
         favorites = restaurants;
         this.getDataDromDB();
-		return {
+        this.state = {
 			favorites: favorites,
 			currentAddress: 'Zport',
 			mapCoordinates: {
@@ -46,7 +49,7 @@ var App = React.createClass({
                 parking: ''
             }
         };
-	},
+	}
     getDataDromDB(){
 /*        var url = 'http://104.131.48.201:8080/zport/getjson',
             self=this;
@@ -61,7 +64,7 @@ var App = React.createClass({
                 })
             }
         })*/
-    },
+    }
 	toggleFavorite(address){
 
 		if(this.isAddressInFavorites(address)){
@@ -71,80 +74,59 @@ var App = React.createClass({
 			this.addToFavorites(address);
 		}
 
-	},
-
+	}
 	addToFavorites(address){
-
 		var favorites = this.state.favorites;
-
 		favorites.push({
 			address: address,
 			timestamp: Date.now()
 		});
-
 		this.setState({
 			favorites: favorites
 		});
 
 		localStorage.favorites = JSON.stringify(favorites);
-	},
-
+	}
 	removeFromFavorites(address){
-
 		var favorites = this.state.favorites;
 		var index = -1;
-
 		for(var i = 0; i < favorites.length; i++){
 
 			if(favorites[i].address == address){
 				index = i;
 				break;
 			}
-
 		}
-
 		// If it was found, remove it from the favorites array
-
 		if(index !== -1){
-			
 			favorites.splice(index, 1);
-
 			this.setState({
 				favorites: favorites
 			});
-
 			localStorage.favorites = JSON.stringify(favorites);
 		}
-
-	},
-
+	}
 	isAddressInFavorites(address){
-
 		var favorites = this.state.favorites;
-
 		for(var i = 0; i < favorites.length; i++){
-
 			if(favorites[i].address == address){
 				return true;
 			}
-
 		}
-
 		return false;
-	},
+	}
 	filterFunc(data){
         if(data.type!='' || data.distance!='' || data.toilet!='' || data.tv!='' || data.refrigeter!='' || data.conditioner!='' || data.wifi!='' || data.eat!='' || data.children!='' || data.swiming!=''){
             this.setState({
                 filter: data
             })
         }
-	},
+	}
 	searchForAddress(data){
 		var self = this;
         this.setState({
             filterText: data.title
         })
-
         self.setState({
             removeMarkers: true,
             mapCoordinates: {
@@ -152,12 +134,12 @@ var App = React.createClass({
                 lng: data.lng
             }
         });
-	},
+	}
     handleFilterText(filterText){
         this.setState({
             filterText: filterText
         })
-    },
+    }
     clearFilter(){
         this.setState({
             filterText: ''
@@ -177,7 +159,7 @@ var App = React.createClass({
                 parking: ''
             }
         })
-    },
+    }
     typeFilter(){
         if(this.props.params.type){
             this.setState({
@@ -199,7 +181,7 @@ var App = React.createClass({
             this.clearFilter();
         }
 
-    },
+    }
 	render(){
 /*    var url = 'http://localhost:8080/zport/getjson';
     var self=this;
@@ -214,8 +196,8 @@ var App = React.createClass({
             })
         }
     });*/
-
-
+        console.log('======App=======')
+        console.log(this.props)
 
     var routeType = (this.props.params.type ? this.props.params.type : '');
     return (
@@ -254,140 +236,20 @@ var App = React.createClass({
                     </div>
                 </div>
 			</div>
-
 		);
 	}
 
-});
+};
 
-module.exports = App;
+function mapStateToProps (state) {
+    console.log('mapStateToProps')
+    console.log(state)
+    const { user, tweets } = state.reducer;
+    return {
+        store: store,
+        user: user,
+        tweets: tweets
+    }
+}
 
-
-
-
-//console.log('restaurants');
-//console.log(restaurants);
-//console.log(restaurants.length);
-/*var pans=[]
- for(var i=0; i<restaurants.length; i++){
- pans.push({
- 'id' : restaurants[i].id,
- 'title' : restaurants[i].title,
- 'type' : (restaurants[i].type ? restaurants[i].type : "chast" ),
- 'folder' : "irina",
- 'children' : "true",
- 'conditioner' : "true",
- 'distance' : "true",
- 'dush' : "true",
- 'eat' : "true",
- 'toilet' : "true",
- 'tv' :"true",
- 'wifi' : "true",
- 'refrigeter' :"true",
- 'swiming' : "true",
- 'room':[{
- 'title' : "2-х местный номер эконом",
- 'folder-img' : "twoekonom",
- 'conditioner' : "true",
- 'dush' : "true",
- 'toilet' : "true",
- 'tv' :"true",
- 'wifi' : "true",
- 'refrigeter' :"true",
- 'swiming' : "true",
- 'price' : [{[0]:'май',[1]:'50'},
- {[0]:'июнь',[1]:'50'},
- {[0]:'июль',[1]:'50'},
- {[0]:'август',[1]:'50'},
- {[0]:'сентябрь',[1]:'50'},
- {[0]:'октябрь',[1]:'50'}]
- },{
- 'title' : "3-х местный номер эконом",
- 'folder-img' : "twoekonom",
- 'conditioner' : "true",
- 'dush' : "true",
- 'toilet' : "true",
- 'tv' :"true",
- 'wifi' : "true",
- 'refrigeter' :"true",
- 'swiming' : "true",
- 'price' : [{[0]:'май',[1]:'50'},
- {[0]:'июнь',[1]:'50'},
- {[0]:'июль',[1]:'50'},
- {[0]:'август',[1]:'50'},
- {[0]:'сентябрь',[1]:'50'},
- {[0]:'октябрь',[1]:'50'}]
- }
- ],
- 'lat' : restaurants[i].lat,
- 'lng' : restaurants[i].lng
- });
- }
- console.log(JSON.stringify(pans))*/
-/* pans[i].id = restaurants[i].id
- pans[i].title = restaurants[i].title
- pans[i].type = restaurants[i].type
-
- pans[i].children = true
- pans[i].conditioner = true
- pans[i].distance = true
- pans[i].dush = true
- pans[i].eat = true
- pans[i].toilet = true
- pans[i].tv = true
- pans[i].wifi = true
- pans[i].refrigeter = true
- pans[i].swiming = true
- pans[i].price = [
- [    {[0]:'май',[1]:'50'},
- {[0]:'июнь',[1]:'50'},
- {[0]:'июль',[1]:'50'},
- {[0]:'август',[1]:'50'},
- {[0]:'сентябрь',[1]:'50'},
- {[0]:'октябрь',[1]:'50'}
- ],
- [    {[0]:'май',[1]:'50'},
- {[0]:'июнь',[1]:'50'},
- {[0]:'июль',[1]:'50'},
- {[0]:'август',[1]:'50'},
- {[0]:'сентябрь',[1]:'50'},
- {[0]:'октябрь',[1]:'50'}
- ],
- [    {[0]:'май',[1]:'50'},
- {[0]:'июнь',[1]:'50'},
- {[0]:'июль',[1]:'50'},
- {[0]:'август',[1]:'50'},
- {[0]:'сентябрь',[1]:'50'},
- {[0]:'октябрь',[1]:'50'}
- ]
- ]
- pans[i].foto = {2: [
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300',
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300'
- ],
- 3: [
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300',
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300',
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300'
- ],
- 4: [
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300',
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300',
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300',
- 'https://lh5.ggpht.com/jZ8XCjpCQWWZ5GLhbjRAufsw3JXePHUJVfEvMH3D055ghq0dyiSP3YxfSc_czPhtCLSO=w300'
- ]}
- pans[i].lat = restaurants[i].lat
- pans[i].lng = restaurants[i].lng*//*
-
- }
-
- console.log(JSON.stringify(pans));
-
- */
-
-
-/*
- <CurrentLocation address={this.state.currentAddress}
- favorite={this.isAddressInFavorites(this.state.currentAddress)}
- onFavoriteToggle={this.toggleFavorite} />
- */
+module.exports = connect(mapStateToProps)(App);

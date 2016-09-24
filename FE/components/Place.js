@@ -1,7 +1,8 @@
 /**
  * Created by semianchuk on 07.04.16.
  */
-var React = require('react');
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 var MainTable = require('./mainTable');
 var helper = require('./helper');
 var config = require('./config');
@@ -10,10 +11,12 @@ var Breadcrumbs = require('react-breadcrumbs');
 var Link = require('react-router').Link;
 var Comments = require('./comments/Comments');
 var FotoFolder = require('./FotoFolder');
+import store from "../store"
 
-var Place = React.createClass({
-    getInitialState: function () {
-        return { display: 2,
+class Place extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { display: 2,
             placeId: this.props.params.placeId,
             mainTable:'',
             profileUrl:'',
@@ -31,7 +34,7 @@ var Place = React.createClass({
                 eat:''
             }
         };
-    },
+    }
     socButton(){
         (function() {
             if (window.pluso)if (typeof window.pluso.start == "function") return;
@@ -42,7 +45,7 @@ var Place = React.createClass({
                 var h=d[g]('body')[0];
                 h.appendChild(s);
             }})();
-    },
+    }
     checkImg(){
         var profileImg = new Image(),
             self = this;
@@ -57,7 +60,7 @@ var Place = React.createClass({
                 })
             }
             profileImg.src = config.domain + 'images/zport/'+ this.props.params.placeId + '/ico.jpg';
-    },
+    }
     componentDidMount() {
     this.setState({
         post : 'some'
@@ -105,8 +108,10 @@ var Place = React.createClass({
                         })
                     })
         }
-    },
+    }
 render() {
+    console.log('======Place=======')
+    console.log(this.props)
         return (
         <div>
             <div className="col-md-12 place-title">
@@ -192,9 +197,21 @@ render() {
         </div>
         );
 }
-});
+};
 
-module.exports = Place;
+function mapStateToProps (state) {
+    console.log('mapStateToProps')
+    console.log(state)
+    const { user, tweets } = state.reducer;
+    return {
+        store: store,
+        user: user,
+        tweets: tweets
+    }
+}
+
+module.exports = connect(mapStateToProps)(Place);
+
 
 /*
 
