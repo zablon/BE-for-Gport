@@ -14,23 +14,25 @@ var LocationList = React.createClass({
 		var self = this;
         var props = this.props;
         var num=0;
+        console.log('locationlist')
+        console.log(this.props)
 		var locations = this.props.locations
             .filter(function(data){
-                return data.title.toLowerCase().indexOf(props.filterText.toLowerCase()) > -1;
+                return data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1;
             })
             .filter(function(data){
                 if(props.filter!='' && data.type){
-                    return data.type.toLowerCase().indexOf(props.filter.type.toLowerCase()) > -1;
+                    return (data.type.toLowerCase().indexOf(props.filter.type.toLowerCase()) > -1) ? false : true;
                 }
             })
             .filter(function(data){
                     return (data.toilet==props.filter.toilet || props.filter.toilet=='') ? true : false
             })
-            .filter(function(data){
+/*            .filter(function(data){
                 if(props.filter!='' && data.distance){
                     return data.distance.toLowerCase().indexOf(props.filter.distance.toLowerCase()) > -1;
                 }
-            })
+            })*/
             .filter(function(data){
                     return (data.tv==props.filter.tv || props.filter.tv=='') ? true : false
             })

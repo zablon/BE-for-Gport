@@ -56,13 +56,15 @@ var Map = React.createClass({
             }
         });
         map.removeMarkers();
-    this.addMarkers(map, this.props)
+        console.log('map')
+        console.log(this.props)
+        this.addMarkers(map, this.props)
 	},
     addMarkers(map, props){
         var self = this;
         var locations = this.props.locations
             .filter(function(data){
-                    return data.title.toLowerCase().indexOf(props.filterText.toLowerCase()) > -1;
+                    return data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1;
             })
             .filter(function(data){
                 if(props.filter!='' && data.type){
@@ -73,11 +75,11 @@ var Map = React.createClass({
                 return (data.toilet==props.filter.toilet || props.filter.toilet=='') ? true : false
 
             })
-            .filter(function(data){
+/*            .filter(function(data){
                 if(props.filter!='' && data.distance){
                     return data.distance.toLowerCase().indexOf(props.filter.distance.toLowerCase()) > -1;
                 }
-            })
+            })*/
             .filter(function(data){
                 return (data.tv==props.filter.tv || props.filter.tv=='') ? true : false
             })
