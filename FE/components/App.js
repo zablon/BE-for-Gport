@@ -25,7 +25,7 @@ window.gmarkers = [];
 class App extends Component {
     constructor(props) {
         super(props);
-        this.props.store.dispatch(setUserParams(userSettings));
+        this.props.store.dispatch(setUserParams(window.userSettings))
         var type = (this.props.params.type ? this.props.params.type : '');
 		var favorites = [];
         favorites = restaurants;

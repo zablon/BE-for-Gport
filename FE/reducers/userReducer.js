@@ -1,10 +1,8 @@
 export default function reducer(state={
-    user: {
-      id: null,
-      name: null,
-      email: null,
-      type: null,
-    },
+    id: null,
+    name: null,
+    email: null,
+    type: null,
     fetching: false,
     fetched: false,
     error: null,
@@ -28,49 +26,51 @@ export default function reducer(state={
       case "SET_USER_NAME": {
         return {
           ...state,
-          user: {...state.user, name: action.payload},
+          ...state.user, name: action.payload,
         }
       }
       case "SET_USER_EMAIL": {
         return {
           ...state,
-          user: {...state.user, email: action.payload},
+          ...state.user, email: action.payload,
         }
       }
       case "SET_USER_TYPE": {
         return {
           ...state,
-          user: {...state.user, type: action.payload},
+          ...state.user, type: action.payload,
         }
       }
       case "SET_USER_PARAMS": {
         console.log('===SET_USER_PARAMS===')
         console.log(action)
-        if(action.payload.facebook){
+        if(action.payload && action.payload.facebook){
           return {
             ...state,
-            user: {...state.user, type: 'facebook', name: action.payload.facebook.name, email: action.payload.facebook.email, id: action.payload.facebook.id, },
+            ...state.user, type: 'facebook', name: action.payload.facebook.name, email: action.payload.facebook.email, id: action.payload.facebook.id,
           }
-        }else if(action.payload.twitter){
+        }else if(action.payload && action.payload.twitter){
           return {
             ...state,
-            user: {...state.user, type: 'twitter', name: action.payload.twitter.name, email: action.payload.twitter.email, id: action.payload.twitter.id, },
+            ...state.user, type: 'twitter', name: action.payload.twitter.name, email: action.payload.twitter.email, id: action.payload.twitter.id,
           }
-        }else if(action.payload.google){
+        }else if(action.payload && action.payload.google){
           return {
             ...state,
-            user: {...state.user, type: 'google', name: action.payload.google.name, email: action.payload.google.email, id: action.payload.google.id, },
+           ...state.user, type: 'google', name: action.payload.google.name, email: action.payload.google.email, id: action.payload.google.id,
           }
-        }else if(action.payload.login){
+        }else if(action.payload && action.payload.login){
           return {
             ...state,
-            user: {...state.user, type: 'login', name: action.payload.login.name, email: action.payload.login.email, id: action.payload.login.id, },
+           ...state.user, type: 'login', name: action.payload.login.name, email: action.payload.login.email, id: action.payload.login.id,
           }
         }else{
-          return state
+          return {
+            ...state,
+            ...state.user, type: 'guest', name: action.payload.guest.name, email: action.payload.guest.email, id: action.payload.guest.id,
+          }
         }
       }
     }
-
     return state
 }

@@ -4,12 +4,9 @@ module.exports = function(app, passport) {
 
     // show the home page (will also have our login links)
     app.get('/', function(req, res) {
-        ((res.user) ? res.locals.userSettings = res.user : res.locals.userSettings = {userType: 'guest'});
-        console.log('success')
-        console.log(req.user)
+        res.user ? res.locals.userSettings = res.user : res.locals.userSettings = {guest: { name:'guest', email:'guest', id:'guest'}};
         res.statusCode = 200;
-        //res.send({ success: req.user });
-        res.render('index.ejs',{ userSettings: req.user });
+        res.render('index.ejs');
     });
 
     // PROFILE SECTION =========================

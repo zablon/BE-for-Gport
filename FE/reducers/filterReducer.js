@@ -13,7 +13,8 @@ const defaultState = {
     eat: false,
     children: false,
     swiming: false,
-    filterText: ''
+    filterText: '',
+    search: false
 }
 export default function reducer(state=defaultState, action) {
 
