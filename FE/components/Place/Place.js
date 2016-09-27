@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 var MainTable = require('./../mainTable');
 var helper = require('./../helper');
 var config = require('./../config');
-var EditPlace = require('./../editPlace');
-var Breadcrumbs = require('react-breadcrumbs');
 var Link = require('react-router').Link;
 var Comments = require('./../comments/Comments');
 var FotoFolder = require('./../FotoFolder');
@@ -18,7 +16,6 @@ import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/pl
 class Place extends Component {
     constructor(props) {
         super(props);
-        this.props.store.dispatch(setPlaceId(this.props.params.placeId))
     }
     checkImg(){
         var self = this,
@@ -32,15 +29,12 @@ class Place extends Component {
             }
             profileImg.src = config.domain + 'images/zport/'+ this.props.params.placeId + '/ico.jpg';
     }
-    componentDidMount() {
-        this.props.store.dispatch(setPlaceId(this.props.params.placeId))
+    getDataFromJSON(){
         var self=this,
             num=1,
             locations = restaurants
                 .filter(function(data){
-                    if(data.id){
-                        return data.id == self.props.params.placeId
-                    }
+                    return data.id ? data.id == self.props.params.placeId : ''
                 })
                 .map(function(data){
                     var dataHouse = data;
@@ -57,10 +51,14 @@ class Place extends Component {
                     }
                     self.props.store.dispatch(setPlaceParams(placeParams))
                 })
+    }
+    componentDidMount() {
+        this.props.store.dispatch(setPlaceId(this.props.params.placeId));
+        this.getDataFromJSON();
         this.checkImg(this);
     }
     render() {
-        let place = this.props.place;
+        var place = this.props.place;
         return (
             <div>
                 <div className="col-md-12 place-title">
@@ -112,12 +110,14 @@ module.exports = connect(mapStateToProps)(Place);
 
 
 /*
+ var EditPlace = require('./../editPlace');
 
  <div className="col-md-12">
  <Comments placeId={this.state.placeId}></Comments>
  </div>
 
 
+ var Breadcrumbs = require('react-breadcrumbs');
 
 <Breadcrumbs
 excludes={['Place']}
