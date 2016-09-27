@@ -1,4 +1,7 @@
 var React = require('react');
+var delay = 3000;
+var isLoading = false;
+var isDirty = false;
 
 var SearchField = React.createClass({
 
@@ -7,9 +10,28 @@ var SearchField = React.createClass({
 	},
 
 	handleChange(event) {
-        this.props.onFilterInput(
-            event.target.value
-        )
+		var self = this;
+		isDirty = true;
+		reloadSearch();
+		function reloadSearch() {
+			if(!isLoading){
+				var q = $('#address').val();
+				if (q.length >= 3) {
+					isLoading = true;
+					console.log(q)
+					self.props.onFilterInput(
+						q
+					)
+					setTimeout(function(){
+						isLoading=false;
+						if(isDirty){
+							isDirty = false;
+							reloadSearch();
+						}
+					}, delay);
+				}
+			}
+		};
 	},
 
 	handleSubmit(event){
