@@ -3,8 +3,15 @@ module.exports = function(app, passport) {
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
+    // show the home page (will also have our login links)
+    app.get('/place/:id', function(req, res) {
+        req.user ? res.locals.userSettings = req.user : res.locals.userSettings = {guest: { name:'guest', email:'guest', id:'guest'}};
+        res.statusCode = 200;
+        res.render('index.ejs');
+    });
+
     app.get('/', function(req, res) {
-        res.user ? res.locals.userSettings = res.user : res.locals.userSettings = {guest: { name:'guest', email:'guest', id:'guest'}};
+        req.user ? res.locals.userSettings = req.user : res.locals.userSettings = {guest: { name:'guest', email:'guest', id:'guest'}};
         res.statusCode = 200;
         res.render('index.ejs');
     });
