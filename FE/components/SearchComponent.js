@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import helper from './helper'
-import { setFilterType } from "../actions/filterActions"
+import { setFilterType, setFilterDistance, setFilterToiler, setFilterTv, setFilterRefrigeter ,setFilterConditioner, setFilterWifi, setFilterEat, setFilterChildren, setFilterSwiming } from "../actions/filterActions"
 import { connect } from 'react-redux'
 import store from "../store"
 
@@ -18,29 +18,29 @@ class SearchComponent extends Component {
 
       }
       onToiletChanged(e) {
-          this.props.store.dispatch(setFilterToiler(e.currentTarget.value));
+          this.props.store.dispatch(setFilterToiler(parseBoolean(e.currentTarget.value)));
       }
       onTvChanged(e) {
-          this.props.store.dispatch(setFilterTv(e.currentTarget.value));
+          this.props.store.dispatch(setFilterTv(parseBoolean(e.currentTarget.value)));
 
       }
       onRefrigeterChanged(e) {
-          this.props.store.dispatch(setFilterRefrigeter(e.currentTarget.value));
+          this.props.store.dispatch(setFilterRefrigeter(parseBoolean(e.currentTarget.value)));
       }
       onConditionerChanged(e) {
-          this.props.store.dispatch(setFilterConditioner(e.currentTarget.value));
+          this.props.store.dispatch(setFilterConditioner(parseBoolean(e.currentTarget.value)));
       }
       onWifiChanged(e) {
-          this.props.store.dispatch(setFilterWifi(e.currentTarget.value));
+          this.props.store.dispatch(setFilterWifi(parseBoolean(e.currentTarget.value)));
       }
       onEatChanged(e) {
-          this.props.store.dispatch(setFilterEat(e.currentTarget.value));
+          this.props.store.dispatch(setFilterEat(parseBoolean(e.currentTarget.value)));
       }
       onChildrenChanged(e) {
-          this.props.store.dispatch(setFilterChildren(e.currentTarget.value));
+          this.props.store.dispatch(setFilterChildren(parseBoolean(e.currentTarget.value)));
       }
       onSwimingChanged(e) {
-          this.props.store.dispatch(setFilterSwiming(e.currentTarget.value));
+          this.props.store.dispatch(setFilterSwiming(parseBoolean(e.currentTarget.value)));
       }
       componentDidMount(){
         var self=this;
@@ -49,14 +49,13 @@ class SearchComponent extends Component {
         })
       }
 	  render() {
-        var self=this;
-		var params = this.state;
-        var type = helper.filterData.type.map(function(res){
-            return   <option selected = {self.props.type==res} value={res}>{helper.type(res)}</option>
-        })
-        var distance = helper.filterData.distance.map(function(res){
-            return   <option value={res}>{res}</option>
-        })
+        var self=this,
+            type = helper.filterData.type.map(function(res){
+                return   <option selected = {self.props.type==res} value={res}>{helper.type(res)}</option>
+            }),
+            distance = helper.filterData.distance.map(function(res){
+                return   <option value={res}>{res}</option>
+            })
 		return (
             <div className="col-md-12">
                 <div className="col-md-12">
@@ -78,8 +77,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.wifi}
-                                        onChange={this.onWifiChanged}/>
+                                        checked={this.props.filter.wifi}
+                                        onChange={this.onWifiChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -91,8 +90,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.toilet}
-                                        onChange={this.onToiletChanged}/>
+                                        checked={this.props.filter.toilet}
+                                        onChange={this.onToiletChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -104,8 +103,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.tv}
-                                        onChange={this.onTvChanged}/>
+                                        checked={this.props.filter.tv}
+                                        onChange={this.onTvChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -117,8 +116,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.refrigeter}
-                                        onChange={this.onRefrigeterChanged}/>
+                                        checked={this.props.filter.refrigeter}
+                                        onChange={this.onRefrigeterChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -129,7 +128,7 @@ class SearchComponent extends Component {
                         <ul className="list-unstyled">
                             <li className="text-center"><strong>Дистанция</strong></li>
                             <li>
-                                <select className="form-control"  onChange={this.onDistanceChanged} >
+                                <select className="form-control"  onChange={this.onDistanceChanged.bind(this)} >
                                     <option selected = "true" value=""></option>
                                     {distance}
                                 </select>
@@ -143,8 +142,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.conditioner}
-                                        onChange={this.onConditionerChanged}/>
+                                        checked={this.props.filter.conditioner}
+                                        onChange={this.onConditionerChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -156,8 +155,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.eat}
-                                        onChange={this.onEatChanged}/>
+                                        checked={this.props.filter.eat}
+                                        onChange={this.onEatChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -169,8 +168,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.children}
-                                        onChange={this.onChildrenChanged}/>
+                                        checked={this.props.filter.children}
+                                        onChange={this.onChildrenChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>
@@ -182,8 +181,8 @@ class SearchComponent extends Component {
                                 <label className="btn btn-default">
                                     <input type="radio"
                                         value="true"
-                                        checked={this.state.swiming}
-                                        onChange={this.onSwimingChanged}/>
+                                        checked={this.props.filter.swiming}
+                                        onChange={this.onSwimingChanged.bind(this)}/>
                                 </label>
                             </li>
                         </ul>

@@ -47,37 +47,49 @@ export default function reducer(state=defaultState, action) {
         case "SET_FILTER_TOILET": {
             return {
                 ...state,
-                ...state, toilet: action.payload, filterSearch: true
+                ...state, toilet: (state.toilet == action.payload ? !action.payload : action.payload), filterSearch: true
             }
         }
         case "SET_FILTER_TV": {
             return {
                 ...state,
-                ...state, tv: action.payload, filterSearch: true
+                ...state, tv: (state.tv == action.payload ? !action.payload : action.payload), filterSearch: true
             }
         }
         case "SET_FILTER_REFRIGETER": {
             return {
                 ...state,
-                ...state, refrigeter: action.payload, filterSearch: true
+                ...state, refrigeter: (state.refrigeter == action.payload ? !action.payload : action.payload), filterSearch: true
             }
         }
         case "SET_FILTER_CONDITIONER": {
             return {
                 ...state,
-                ...state, conditioner: action.payload, filterSearch: true
+                ...state, conditioner: (state.conditioner == action.payload ? !action.payload : action.payload), filterSearch: true
             }
         }
         case "SET_FILTER_WIFI": {
             return {
                 ...state,
-                ...state, wifi: action.payload, filterSearch: true
+                ...state, wifi: (state.wifi == action.payload ? !action.payload : action.payload), filterSearch: true
             }
         }
         case "SET_FILTER_EAT": {
             return {
                 ...state,
-                ...state, eat: action.payload, filterSearch: true
+                ...state, eat: (state.eat == action.payload ? !action.payload : action.payload), filterSearch: true
+            }
+        }
+        case "SET_FILTER_CHILDREN": {
+            return {
+                ...state,
+                ...state, children: (state.children == action.payload ? !action.payload : action.payload), filterSearch: true
+            }
+        }
+        case "SET_FILTER_SWIMING": {
+            return {
+                ...state,
+                ...state, swiming: (state.swiming == action.payload ? !action.payload : action.payload), filterSearch: true
             }
         }
     }
