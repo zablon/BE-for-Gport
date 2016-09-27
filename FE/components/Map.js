@@ -56,50 +56,43 @@ var Map = React.createClass({
             }
         });
         map.removeMarkers();
-        console.log('map')
-        console.log(this.props)
         this.addMarkers(map, this.props)
 	},
     addMarkers(map, props){
         var self = this;
         var locations = this.props.locations
             .filter(function(data){
-                    return data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1;
+                return (props.filter.textSearch==true) ? data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1 : true;
             })
             .filter(function(data){
-                if(props.filter!='' && data.type){
-                    return data.type.toLowerCase().indexOf(props.filter.type.toLowerCase()) > -1;
-                }
+                return (props.filter.filterSearch==true) ? data.type.toLowerCase().indexOf(props.filter.type.toLowerCase()) > -1 : true
             })
             .filter(function(data){
-                return (data.toilet==props.filter.toilet || props.filter.toilet=='') ? true : false
-
-            })
-/*            .filter(function(data){
-                if(props.filter!='' && data.distance){
-                    return data.distance.toLowerCase().indexOf(props.filter.distance.toLowerCase()) > -1;
-                }
-            })*/
-            .filter(function(data){
-                return (data.tv==props.filter.tv || props.filter.tv=='') ? true : false
+                return (props.filter.filterSearch==true) ?  props.filter.toilet ? props.filter.toilet : true : true
             })
             .filter(function(data){
-                return (data.refrigeter==props.filter.refrigeter || props.filter.refrigeter=='') ? true : false
+                return (props.filter.filterSearch==true) ? props.filter.distance ? data.distance.toLowerCase().indexOf(props.filter.distance.toLowerCase()) > -1 : true : true
             })
             .filter(function(data){
-                return (data.conditioner==props.filter.conditioner || props.filter.conditioner=='') ? true : false
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.tv : true  : true
             })
             .filter(function(data){
-                return (data.wifi==props.filter.wifi || props.filter.wifi=='') ? true : false
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.toilet : true : true
             })
             .filter(function(data){
-                return (data.eat==props.filter.eat || props.filter.eat=='') ? true : false
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.toilet : true : true
             })
             .filter(function(data){
-                return (data.swiming==props.filter.swiming || props.filter.swiming=='') ? true : false
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.toilet : true : true
             })
             .filter(function(data){
-                return (data.parking==props.filter.parking || props.filter.parking=='') ? true : false
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.toilet : true : true
+            })
+            .filter(function(data){
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.toilet : true : true
+            })
+            .filter(function(data){
+                return (props.filter.filterSearch==true) ? props.filter.toilet ? props.filter.toilet : true : true
             })
             .map(function(data){
                 var icon = 'images/icon/green-icon.png'

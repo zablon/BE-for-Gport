@@ -23,6 +23,18 @@ export function clearFilterText() {
     }
 }
 
+export function startSearchFilter(val) {
+    return {
+        type: 'START_SERCH_FILTER',
+        payload: val,
+    }
+}
+export function startSearchText(val) {
+    return {
+        type: 'START_SERCH_TEXT',
+        payload: val,
+    }
+}
 export function setFilterText(name) {
     return {
         type: 'SET_FILTER_TEXT',
