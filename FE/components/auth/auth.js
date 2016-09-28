@@ -26,6 +26,10 @@ var Auth = React.createClass({
         url = 'auth/google'
         this.sendAuth();
     },
+    vk(){
+        url = 'auth/vk'
+        this.sendAuth();
+    },
     sendAuth(){
         console.log('send request', url)
         window.location.href = Config.domain + url
@@ -46,7 +50,8 @@ var Auth = React.createClass({
         var commentsObj;
         return (
             <div className="auth-block">
-                <div onClick={this.FB} className="btn btn-primary"><span className="fa fa-facebook"></span> Facebook</div>
+                <div onClick={this.vk} className="btn btn-primary btn-vk"><span className="fa fa-vk"></span> Vk</div>
+                <div onClick={this.FB} className="btn btn-primary"><span className="fa fa-facebook"></span> FB</div>
                 <div onClick={this.twitter} className="btn btn-info"><span className="fa fa-twitter"></span> Twitter</div>
                 <div onClick={this.google} className="btn btn-danger"><span className="fa fa-google-plus"></span> Google+</div>
             </div>

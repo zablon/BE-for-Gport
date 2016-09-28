@@ -367,3 +367,7 @@ a.list-group-item span.createdAt {
     margin: 20px;
 }
 /*====== auth =========*/
+.btn-vk{
+    background-color: #507299;
+    border-color: #507299;
+}

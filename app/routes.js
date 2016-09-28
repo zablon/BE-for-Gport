@@ -60,6 +60,17 @@ module.exports = function(app, passport) {
             failureFlash : true // allow flash messages
         }));
 
+    // vk -------------------------------
+
+        // send to facebook to do the authentication
+        app.get('/auth/vk', passport.authenticate('vkontakte', { scope : 'email' }));
+
+        // handle the callback after facebook has authenticated the user
+        app.get('/auth/vkontakte/callback',
+            passport.authenticate('vkontakte', {
+                successRedirect : '/',
+                failureRedirect : '/'
+            }));
     // facebook -------------------------------
 
         // send to facebook to do the authentication

@@ -60,6 +60,11 @@ export default function reducer(state={
             ...state,
            ...state.user, type: 'google', name: action.payload.google.name, email: action.payload.google.email, photos: action.payload.google.photos,  id: action.payload.google.id,
           }
+        }else if(action.payload && action.payload.vk){
+          return {
+            ...state,
+           ...state.user, type: 'vk', name: action.payload.vk.name, email: action.payload.vk.email, photos: action.payload.vk.photos,  id: action.payload.vk.id,
+          }
         }else if(action.payload && action.payload.login){
           return {
             ...state,
