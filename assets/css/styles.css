@@ -342,3 +342,28 @@ a.list-group-item span.createdAt {
     max-width: 100%;
     height: 550px;
 }
+/*====== pfofile IMG =========*/
+.profile-block{
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+.profile-block-img{
+    border: 9px solid white;
+    overflow: hidden;
+    height: 150px;
+}
+.profile-block-name{
+    position: absolute;
+    top: 100px;
+    left: 155px;
+    width: 183px;
+    font-weight: bolder;
+    font-size: 20px;
+}
+/*====== pfofile IMG =========*/
+/*====== auth  =========*/
+.auth-block div{
+    margin: 20px;
+}
+/*====== auth =========*/

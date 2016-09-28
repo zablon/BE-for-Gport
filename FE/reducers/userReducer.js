@@ -3,6 +3,7 @@ export default function reducer(state={
     name: null,
     email: null,
     type: null,
+    photos: null,
     fetching: false,
     fetched: false,
     error: null,
@@ -47,17 +48,17 @@ export default function reducer(state={
         if(action.payload && action.payload.facebook){
           return {
             ...state,
-            ...state.user, type: 'facebook', name: action.payload.facebook.name, email: action.payload.facebook.email, id: action.payload.facebook.id,
+            ...state.user, type: 'facebook', name: action.payload.facebook.name, email: action.payload.facebook.email, photos: action.payload.facebook.photos, id: action.payload.facebook.id,
           }
         }else if(action.payload && action.payload.twitter){
           return {
             ...state,
-            ...state.user, type: 'twitter', name: action.payload.twitter.name, email: action.payload.twitter.email, id: action.payload.twitter.id,
+            ...state.user, type: 'twitter', name: action.payload.twitter.name, email: action.payload.twitter.email, photos: action.payload.twitter.photos,  id: action.payload.twitter.id,
           }
         }else if(action.payload && action.payload.google){
           return {
             ...state,
-           ...state.user, type: 'google', name: action.payload.google.name, email: action.payload.google.email, id: action.payload.google.id,
+           ...state.user, type: 'google', name: action.payload.google.name, email: action.payload.google.email, photos: action.payload.google.photos,  id: action.payload.google.id,
           }
         }else if(action.payload && action.payload.login){
           return {

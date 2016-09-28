@@ -16,6 +16,7 @@ var Auth = require('./auth/Auth');
 var Social = require('./social/social');
 var Adsense = require('./Adsense/Adsense');
 
+import ProfileBlock from "./Profile/ProfileBlock"
 import { setUserParams } from "../actions/userActions"
 import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../actions/filterActions"
 import store from "../store"
@@ -81,11 +82,11 @@ class App extends Component {
                 <div className="col-md-12">
                     <MainNav type={routeType} typeFilter={this.typeFilter.bind(this)}></MainNav>
                 </div>
-                <div className="col-md-12 main-label">
-				    <h1>Поиск жилья в железном порту</h1>
-                </div>
                 <div className="col-md-12">
                     <SearchField onSearch={this.searchForAddress.bind(this)} onFilterInput={this.handleFilterText.bind(this)} filterText={this.state.filterText}/>
+                </div>
+                <div className="col-md-12 profile-img">
+                    <ProfileBlock ></ProfileBlock>
                 </div>
                 <div className="col-md-12">
                     <div className="col-md-7">

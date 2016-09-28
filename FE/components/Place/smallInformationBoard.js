@@ -6,7 +6,6 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import store from "../../store"
 import helper from "../helper"
-import config from "../config"
 
 class SmallInformationBoard extends Component {
     constructor(props) {
@@ -72,7 +71,6 @@ class SmallInformationBoard extends Component {
     }
 }
 function mapStateToProps (state) {
-    const { user, tweets, filter } = state.reducer;
     return {
         store: store,
     }

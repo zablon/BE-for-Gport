@@ -147,12 +147,12 @@ module.exports = function(passport) {
         clientID        : configAuth.facebookAuth.clientID,
         clientSecret    : configAuth.facebookAuth.clientSecret,
         callbackURL     : configAuth.facebookAuth.callbackURL,
-        profileFields   : ['id', 'name', 'email'],
+        profileFields: ['id', 'displayName', 'picture.type(large)', 'email'],
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
     },
     function(req, token, refreshToken, profile, done) {
-
+        req.user ? req.logout() : ''
         // asynchronous
         process.nextTick(function() {
 
@@ -167,9 +167,11 @@ module.exports = function(passport) {
 
                         // if there is a user id already but no token (user was linked at one point and then removed)
                         if (!user.facebook.token) {
-                            user.facebook.token = token;
-                            user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
-                            user.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                            user.facebook.token  = token;
+                            user.facebook.photos = profile.photos ? profile.photos[0].value : '/images/icon/unknown-user-pic.jpg';
+                                //user.facebook.name   = profile.name.givenName + ' ' + profile.name.familyName;
+                            user.facebook.name   = profile.displayName;
+                            user.facebook.email  = (profile.emails[0].value || '').toLowerCase();
 
                             user.save(function(err) {
                                 if (err)
@@ -182,12 +184,14 @@ module.exports = function(passport) {
                         return done(null, user); // user found, return that user
                     } else {
                         // if there is no user, create them
-                        var newUser            = new User();
+                        var newUser             = new User();
 
-                        newUser.facebook.id    = profile.id;
-                        newUser.facebook.token = token;
-                        newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
-                        newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                        newUser.facebook.id     = profile.id;
+                        newUser.facebook.token  = token;
+                        newUser.facebook.photos = profile.photos ? profile.photos[0].value : '/images/icon/unknown-user-pic.jpg';
+                        //newUser.facebook.name   = profile.name.givenName + ' ' + profile.name.familyName;
+                        newUser.facebook.name   = profile.displayName;
+                        newUser.facebook.email  = (profile.emails[0].value || '').toLowerCase();
 
                         newUser.save(function(err) {
                             if (err)
@@ -231,7 +235,7 @@ module.exports = function(passport) {
 
     },
     function(req, token, tokenSecret, profile, done) {
-
+        req.user ? req.logout() : ''
         // asynchronous
         process.nextTick(function() {
 
@@ -309,7 +313,7 @@ module.exports = function(passport) {
 
     },
     function(req, token, refreshToken, profile, done) {
-
+        req.user ? req.logout() : ''
         // asynchronous
         process.nextTick(function() {
 
@@ -319,13 +323,14 @@ module.exports = function(passport) {
                 User.findOne({ 'google.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
-
+                    
                     if (user) {
 
                         // if there is a user id already but no token (user was linked at one point and then removed)
                         if (!user.google.token) {
                             user.google.token = token;
                             user.google.name  = profile.displayName;
+                            user.google.photos  = profile._json.picture;
                             user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
                             user.save(function(err) {
@@ -338,12 +343,13 @@ module.exports = function(passport) {
 
                         return done(null, user);
                     } else {
-                        var newUser          = new User();
+                        var newUser           = new User();
 
-                        newUser.google.id    = profile.id;
-                        newUser.google.token = token;
-                        newUser.google.name  = profile.displayName;
-                        newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                        newUser.google.id     = profile.id;
+                        newUser.google.token  = token;
+                        newUser.google.name   = profile.displayName;
+                        newUser.google.photos = profile._json.picture;
+                        newUser.google.email  = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
                         newUser.save(function(err) {
                             if (err)

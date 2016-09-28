@@ -45,9 +45,7 @@ var Auth = React.createClass({
     render() {
         var commentsObj;
         return (
-            <div>
-                <div onClick={this.login} className="btn btn-default"><span className="fa fa-user"></span> Local Login</div>
-                <div onClick={this.signup} className="btn btn-default"><span className="fa fa-user"></span> Local Signup</div>
+            <div className="auth-block">
                 <div onClick={this.FB} className="btn btn-primary"><span className="fa fa-facebook"></span> Facebook</div>
                 <div onClick={this.twitter} className="btn btn-info"><span className="fa fa-twitter"></span> Twitter</div>
                 <div onClick={this.google} className="btn btn-danger"><span className="fa fa-google-plus"></span> Google+</div>
@@ -57,3 +55,8 @@ var Auth = React.createClass({
 });
 
 module.exports = Auth;
+
+/*
+ <div onClick={this.login} className="btn btn-default"><span className="fa fa-user"></span> Local Login</div>
+ <div onClick={this.signup} className="btn btn-default"><span className="fa fa-user"></span> Local Signup</div>
+ */
