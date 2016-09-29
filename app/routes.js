@@ -62,7 +62,18 @@ module.exports = function(app, passport) {
 
     // vk -------------------------------
 
-        // send to facebook to do the authentication
+        // send to odnoklassniki to do the authentication
+        app.get('/auth/odnoklassniki', passport.authenticate('odnoklassniki', { scope : 'email' }));
+
+        // handle the callback after facebook has authenticated the user
+        app.get('/auth/odnoklassniki/callback',
+            passport.authenticate('odnoklassniki', {
+                successRedirect : '/',
+                failureRedirect : '/'
+            }));
+    // vk -------------------------------
+
+        // send to vk to do the authentication
         app.get('/auth/vk', passport.authenticate('vkontakte', { scope : 'email' }));
 
         // handle the callback after facebook has authenticated the user

@@ -65,6 +65,11 @@ export default function reducer(state={
             ...state,
            ...state.user, type: 'vk', name: action.payload.vk.name, email: action.payload.vk.email, photos: action.payload.vk.photos,  id: action.payload.vk.id,
           }
+        }else if(action.payload && action.payload.odnoklassniki){
+          return {
+            ...state,
+           ...state.user, type: 'odnoklassniki', name: action.payload.odnoklassniki.name, email: action.payload.odnoklassniki.email, photos: action.payload.odnoklassniki.photos,  id: action.payload.odnoklassniki.id,
+          }
         }else if(action.payload && action.payload.login){
           return {
             ...state,

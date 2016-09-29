@@ -144,6 +144,87 @@ module.exports = function(passport) {
     // =========================================================================
     // Vkontakte ================================================================
     // =========================================================================
+    passport.use(new OdnoklassnikiStrategy({
+            clientID: ODNOKLASSNIKI_APP_ID,
+            clientPublic: ODNOKLASSNIKI_APP_PUBLIC_KEY,
+            clientSecret: ODNOKLASSNIKI_APP_SECRET_KEY,
+            callbackURL: "http://localhost:8080/auth/odnoklassniki/callback"
+        },
+        function(req, token, refreshToken, profile, done) {
+            req.user ? req.logout() : ''
+            // asynchronous
+            process.nextTick(function() {
+                    console.log(profile) // Print the google web page.
+                // check if the user is already logged in
+                /*if (!req.user) {
+
+                    User.findOne({ 'vk.id' : profile.id }, function(err, user) {
+                        if (err)
+                            return done(err);
+
+                        if (user) {
+
+                            // if there is a user id already but no token (user was linked at one point and then removed)
+                            if (!user.vk.token) {
+                                user.vk.token  = token;
+                                //user.vk.photos = photos ? photos[0].photo_100 : '/images/icon/unknown-user-pic.jpg';
+                                //user.facebook.name   = profile.name.givenName + ' ' + profile.name.familyName;
+                                user.vk.name   = profile.displayName;
+                                user.vk.email  = null;
+
+                                user.save(function(err) {
+                                    if (err)
+                                        return done(err);
+
+                                    return done(null, user);
+                                });
+                            }
+
+                            return done(null, user); // user found, return that user
+                        } else {
+                            // if there is no user, create them
+                            var newUser             = new User();
+
+                            newUser.vk.id     = profile.id;
+                            newUser.vk.token  = token;
+                            //newUser.vk.photos = photos ? photos[0].photo_100 : '/images/icon/unknown-user-pic.jpg';
+                            //newUser.facebook.name   = profile.name.givenName + ' ' + profile.name.familyName;
+                            newUser.vk.name   = profile.displayName;
+                            newUser.vk.email  = null;
+
+                            newUser.save(function(err) {
+                                if (err)
+                                    return done(err);
+
+                                return done(null, newUser);
+                            });
+                        }
+                    });
+
+                } else {
+                    // user already exists and is logged in, we have to link accounts
+                    var user            = req.user; // pull the user out of the session
+
+                    user.facebook.id    = profile.id;
+                    user.facebook.token = token;
+                    user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                    user.facebook.email = (profile.emails[0].value || '').toLowerCase();
+
+                    user.save(function(err) {
+                        if (err)
+                            return done(err);
+
+                        return done(null, user);
+                    });
+
+                }*/
+            });
+
+        }
+    ));
+    // =========================================================================
+    // Vkontakte ================================================================
+    // =========================================================================
     passport.use(new VKontakteStrategy(
         {
             clientID:     5646716, // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
@@ -156,7 +237,7 @@ module.exports = function(passport) {
             req.user ? req.logout() : ''
             // asynchronous
             process.nextTick(function() {
-                
+
                 request('https://api.vk.com/method/users.get?user_id='+profile.id+'&v=5.23&fields=photo_100', function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         console.log(JSON.parse(body)) // Print the google web page.
