@@ -7,8 +7,8 @@ var MainTable = require('./../mainTable');
 var helper = require('./../helper');
 var config = require('./../config');
 var Link = require('react-router').Link;
-var Comments = require('./../comments/Comments');
 var FotoFolder = require('./../FotoFolder');
+import Comments from "../comments/Comments"
 import store from "../../store"
 import SmallInformationBoard from "./SmallInformationBoard"
 import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
@@ -36,17 +36,17 @@ class Place extends Component {
                 .filter(function(data){
                     return data.id ? data.id == self.props.params.placeId : ''
                 })
-                .map(function(data){
+                .map(function(data, index){
                     var dataHouse = data;
                     dataHouse.typeHouse = 'zport';
                     var placeParams = {
                         place:dataHouse,
                         description:dataHouse.description,
-                        images: <FotoFolder data={dataHouse}></FotoFolder>,
+                        images: <FotoFolder key={index} data={dataHouse}></FotoFolder>,
                         mainTable : dataHouse.room
-                            .map(function(data){
+                            .map(function(data, index){
                                 num++;
-                                return <MainTable fullData={dataHouse} data={data} count={dataHouse.room.length} num={num}></MainTable>;
+                                return <MainTable key={index} fullData={dataHouse} data={data} count={dataHouse.room.length} num={num}></MainTable>;
                             })
                     }
                     self.props.store.dispatch(setPlaceParams(placeParams))
@@ -85,6 +85,9 @@ class Place extends Component {
                         <SmallInformationBoard data={place}></SmallInformationBoard>
                     </div>
                 </div>
+                <div className="col-md-12">
+                    <Comments placeId={place.placeId}></Comments>
+                </div>
                 <div className="col-md-12 location-block-description text-left">
                      {place.description}
                 </div>
@@ -111,10 +114,6 @@ module.exports = connect(mapStateToProps)(Place);
 
 /*
  var EditPlace = require('./../editPlace');
-
- <div className="col-md-12">
- <Comments placeId={this.state.placeId}></Comments>
- </div>
 
 
  var Breadcrumbs = require('react-breadcrumbs');

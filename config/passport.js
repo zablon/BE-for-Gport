@@ -3,7 +3,8 @@ var LocalStrategy       = require('passport-local').Strategy;
 var FacebookStrategy    = require('passport-facebook').Strategy;
 var TwitterStrategy     = require('passport-twitter').Strategy;
 var GoogleStrategy      = require('passport-google-oauth').OAuth2Strategy;
-const VKontakteStrategy = require('passport-vkontakte').Strategy;
+var VKontakteStrategy = require('passport-vkontakte').Strategy;
+var OdnoklassnikiStrategy = require('passport-odnoklassniki').Strategy;
 var http = require('http');
 var request = require('request');
 
@@ -145,9 +146,9 @@ module.exports = function(passport) {
     // Vkontakte ================================================================
     // =========================================================================
     passport.use(new OdnoklassnikiStrategy({
-            clientID: ODNOKLASSNIKI_APP_ID,
-            clientPublic: ODNOKLASSNIKI_APP_PUBLIC_KEY,
-            clientSecret: ODNOKLASSNIKI_APP_SECRET_KEY,
+            clientID: 'ODNOKLASSNIKI_APP_ID',
+            clientPublic: 'ODNOKLASSNIKI_APP_PUBLIC_KEY',
+            clientSecret: 'ODNOKLASSNIKI_APP_SECRET_KEY',
             callbackURL: "http://localhost:8080/auth/odnoklassniki/callback"
         },
         function(req, token, refreshToken, profile, done) {

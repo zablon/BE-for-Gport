@@ -95,13 +95,13 @@ class App extends Component {
                     <Adsense></Adsense>
                     </div>
                     <div className="mark-map-block col-md-5">
-                        <LocationList filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.state.favorites} activeLocationAddress={this.state.currentAddress}
+                        <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.state.favorites} activeLocationAddress={this.state.currentAddress}
                         onClick={this.searchForAddress.bind(this)} />
                     </div>
                 </div>
                 <div className="col-md-12">
                     <div className="main-map-block">
-                        <SearchComponent type={routeType}/>
+                        <SearchComponent key="SearchComponent" type={routeType}/>
                     </div>
                 </div>
 			</div>
