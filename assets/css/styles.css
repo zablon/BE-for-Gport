@@ -371,3 +371,9 @@ a.list-group-item span.createdAt {
     background-color: #507299;
     border-color: #507299;
 }
+.show-block{
+    display: block;
+}
+.hide-block{
+    display: none;
+}

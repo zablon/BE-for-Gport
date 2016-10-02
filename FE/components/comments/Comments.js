@@ -7,36 +7,33 @@ var CommentsArea = require('./CommentsArea');
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from "../../store"
+import ReactDOM from "react-dom"
 
 class Comments extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { commentsObj : ''}
+        this.state = { commentsObj : '', userData:false}
     }
-    componentDidMount(){
-        this.getData();
+    componentWillReceiveProps(){
+        this.getData(this);
+        this.userData(this);
     }
     send(e){
         e.preventDefault();
-
         var data = {
-            username     : this.refs.username.getDOMNode().value,
-            email : this.refs.email.getDOMNode().value,
-            message    : this.refs.message.getDOMNode().value,
-            'zport.id' : this.props.placeId,
-            create : 'Create',
-            controller : 'comments',
-            format : null,
-            action:'save'
+            name         : this.props.user.type!='guest' ? this.props.user.name :  ReactDOM.findDOMNode(this.refs.name).value,
+            email        : this.props.user.type!='guest' && this.props.user.email ? this.props.user.email : ReactDOM.findDOMNode(this.refs.email).value,
+            placeid      : this.props.placeId,
+            userid       : this.props.user.type!='guest' ? this.props.user.id : null,
+            type         : this.props.user.type!='guest' ? this.props.user.type : null,
+            data         : this.refs.message.getDOMNode().value,
         }
-        this.refs.username.getDOMNode().value = ''
-        this.refs.email.getDOMNode().value = ''
-        this.refs.message.getDOMNode().value = ''
+        ReactDOM.findDOMNode(this.refs.message).value = ''
         this.ajaxSend(data)
     }
     ajaxSend(data){
-        var url = 'http://localhost:8080/comments/send?format=json',
+        var url = 'http://localhost:8080/comments/add',
             self=this;
 
         $.ajax({
@@ -46,20 +43,16 @@ class Comments extends Component {
             data: data,
             success: function (obj) {
                 if(obj.status == 'success'){
-                    self.getData();
+                    self.getData(self);
+                }else{
+                    console.log(obj.errors)
                 }
             }
         })
     }
     getData(){
-        var data = {
-            'zport.id' : this.props.placeId,
-            'max' : 100
-        }
-        this.ajaxGetData(data)
-    }
-    ajaxGetData(data){
-        var url = 'http://localhost:8080/comments/get',
+        var data = {'placeid' : this.props.placeId},
+            url = 'http://localhost:8080/comments/getbyplaceid',
             self=this;
         $.ajax({
             type: "POST",
@@ -67,32 +60,39 @@ class Comments extends Component {
             dataType: "json",
             data: data,
             success: function (obj) {
-                if(typeof obj == 'object'){
-                    commentsObj = obj.map(function(data){
-                        return  <CommentsArea comment={data} placeId={self.props.placeId}></CommentsArea>
+                if(obj.status=='success'){
+                    var commentsObj = obj.message.map(function(data, index){
+                        return  <CommentsArea key={index} comment={data} placeId={self.props.placeId}></CommentsArea>
                     })
-                    self.setState({
-                        commentsObj: commentsObj
-                    })
+                    self.setState({commentsObj: commentsObj})
+                }else{
+                    console.log(obj.errors)
                 }
             }
         })
     }
+    userData(){
+        this.props.user.type!='guest' && this.props.user.type ? (this.refs.name.getDOMNode().value = this.props.user.name,
+                                         this.refs.email.getDOMNode().value = this.props.user.email,
+                                         this.setState({userData:false}))
+                                       : this.setState({userData:true})
+    }
     render() {
-        var commentsObj;
         return (
             <div>
                 <div className="form-horizontal" role="form">
-                    <div className="form-group">
-                        <label for="email" className="col-sm-2 control-label">ФИО</label>
-                        <div className="col-sm-10">
-                            <input type="text" className="form-control" id="email" ref="username" placeholder="Name"/>
+                    <div className={this.state.userData ? 'show-block' : 'hide-block'}>
+                        <div className="form-group ">
+                            <label for="email" className="col-sm-2 control-label">ФИО</label>
+                            <div className="col-sm-10">
+                                <input type="text" className="form-control" id="email" ref="name" placeholder="Name"/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <label for="email" className="col-sm-2 control-label">Email</label>
-                        <div className="col-sm-10">
-                            <input type="email" className="form-control" id="email" name="email" ref="email" placeholder="example@domain.com"/>
+                        <div className="form-group">
+                            <label for="email" className="col-sm-2 control-label">Email</label>
+                            <div className="col-sm-10">
+                                <input type="email" className="form-control" id="email" name="email" ref="email" placeholder="example@domain.com"/>
+                            </div>
                         </div>
                     </div>
                     <div className="form-group">
@@ -103,7 +103,7 @@ class Comments extends Component {
                     </div>
                     <div className="form-group">
                         <div className="col-sm-10 col-sm-offset-2 text-right">
-                            <input id="submit" name="submit" type="submit" value="Отправить" onClick={ this.send } className="btn btn-primary" />
+                            <input id="submit" name="submit" type="submit" value="Отправить" onClick={ this.send.bind(this) } className="btn btn-primary" />
                         </div>
                     </div>
                 </div>
@@ -113,4 +113,13 @@ class Comments extends Component {
     }
 };
 
-module.exports = Comments;
+function mapStateToProps (state) {
+    const { user } = state.reducer;
+    return {
+        state: store.getState(),
+        store: store,
+        user: user,
+    }
+}
+
+module.exports = connect(mapStateToProps)(Comments);

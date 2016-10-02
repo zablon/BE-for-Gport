@@ -12,10 +12,12 @@ import Comments from "../comments/Comments"
 import store from "../../store"
 import SmallInformationBoard from "./SmallInformationBoard"
 import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
+import { setUserParams } from "../../actions/userActions"
 
 class Place extends Component {
     constructor(props) {
         super(props);
+        this.props.store.dispatch(setUserParams(window.userSettings))
     }
     checkImg(){
         var self = this,

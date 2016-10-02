@@ -26,6 +26,7 @@
     "ejs": "~0.8.5",
     "express": "~4.0.0",
     "express-session": "~1.0.0",
+    "express-validator": "^2.20.10",
     "gm": "^1.22.0",
     "image-size": "^0.5.0",
     "method-override": "~1.0.0",
