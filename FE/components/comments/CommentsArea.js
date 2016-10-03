@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react'
+import Timestamp from 'react-timestamp';
 
 class CommentsArea extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class CommentsArea extends Component {
                 <div className="col-sm-11">
                     <div className="panel panel-default">
                         <div className="panel-heading">
-                            <strong>{data.name}</strong> <span className="text-muted"> {data.dateCreated}</span>
+                            <strong>{data.name}</strong> <span className="text-muted"> <Timestamp time={data.dateCreated} format='full' /></span>
                             <i onClick={this.props.remove} className={editPermission ? 'fa fa-times comment-remove show-block' : 'fa fa-times comment-remove hide-block'}
                                aria-hidden="true"></i>
                         </div>
