@@ -13,7 +13,7 @@ class Comments extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { commentsObj : '', userData:false}
+        this.state = { commentsObj : '', userData:false, showComment: true}
     }
     componentWillReceiveProps(){
         this.getData(this);
@@ -100,7 +100,18 @@ class Comments extends Component {
                                          this.setState({userData:false}))
                                        : this.setState({userData:true})
     }
+    showComments() {
+        this.setState({hover: true});
+    }
+    hideComments() {
+        this.setState({hover: false});
+    }
     render() {
+        if(this.state.hover==true){
+            this.state.toogle = 'comments-block-open'
+        }else{
+            this.state.toogle = 'comments-block-close'
+        }
         return (
             <div>
                 <div className="form-horizontal" role="form">
@@ -130,7 +141,14 @@ class Comments extends Component {
                         </div>
                     </div>
                 </div>
-                    {this.state.commentsObj}
+                <div className="comment-block" onClick={this.showComments.bind(this)}>
+                    <div className={this.state.toogle}>
+                        {this.state.commentsObj}
+                    </div>
+                    <div className="comment-block-show-full">
+                        <span >Показать полностью ...</span>
+                    </div>
+                </div>
             </div>
         );
     }

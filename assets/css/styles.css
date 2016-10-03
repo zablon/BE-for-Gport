@@ -383,3 +383,18 @@ a.list-group-item span.createdAt {
     top: 15px;
     cursor: pointer;
 }
+
+.comments-block-open{
+    height: auto;
+}
+.comments-block-close{
+    height: 115px;
+    overflow: hidden;
+}
+.comment-block{
+    cursor: pointer;
+}
+.comment-block-show-full{
+    text-align: left;
+    color: #42648b;
+}
