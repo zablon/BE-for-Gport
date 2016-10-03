@@ -33,7 +33,7 @@ class Comments extends Component {
         this.ajaxSend(data)
     }
     ajaxSend(data){
-        var url = 'http://localhost:8080/comments/add',
+        var url =  config.domain + 'comments/add',
             self=this;
 
         $.ajax({
@@ -52,7 +52,7 @@ class Comments extends Component {
     }
     getData(){
         var data = {'placeid' : this.props.placeId},
-            url = 'http://localhost:8080/comments/getbyplaceid',
+            url = config.domain + 'comments/getbyplaceid',
             self=this;
         $.ajax({
             type: "POST",
