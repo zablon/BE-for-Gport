@@ -3,11 +3,9 @@
  */
 
 var React = require('react');
-var config = require('./config');
+var config = require('./../config');
 
 var FotoFolder = React.createClass({
-
-
     componentDidMount() {
 
     },

@@ -377,3 +377,9 @@ a.list-group-item span.createdAt {
 .hide-block{
     display: none;
 }
+.comment-remove{
+    position: absolute;
+    right: 14px;
+    top: 15px;
+    cursor: pointer;
+}

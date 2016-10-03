@@ -52,8 +52,8 @@ class Comments extends Component {
     }
     getData(){
         var data = {'placeid' : this.props.placeId},
-            url = config.domain + 'comments/getbyplaceid',
-            self=this;
+            url  = config.domain + 'comments/getbyplaceid',
+            self = this;
         $.ajax({
             type: "POST",
             url: url,
@@ -62,9 +62,32 @@ class Comments extends Component {
             success: function (obj) {
                 if(obj.status=='success'){
                     var commentsObj = obj.message.map(function(data, index){
-                        return  <CommentsArea key={index} comment={data} placeId={self.props.placeId}></CommentsArea>
+                        return  <CommentsArea remove={self.remove.bind(self, data)} key={index} comment={data} placeId={self.props.placeId} id={data._id} user={self.props.user}></CommentsArea>
                     })
                     self.setState({commentsObj: commentsObj})
+                }else{
+                    console.log(obj.errors)
+                }
+            }
+        })
+    }
+    enter(e){
+        if(e.keyCode == 13) {
+            this.send(e)
+        }
+    }
+    remove(data){
+        var data = {data: data},
+            url = config.domain + 'comments/remove',
+            self=this;
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            data: data,
+            success: function (obj) {
+                if(obj.status == 'success'){
+                    self.getData(self);
                 }else{
                     console.log(obj.errors)
                 }
@@ -98,7 +121,7 @@ class Comments extends Component {
                     <div className="form-group">
                         <label for="email" className="col-sm-2 control-label">Сообщения</label>
                         <div className="col-sm-10">
-                            <textarea className="form-control" id="message" name="message" ref="message" placeholder="Message"></textarea>
+                            <textarea className="form-control" id="message" name="message" ref="message" onKeyDown={this.enter.bind(this)}  placeholder="Message"></textarea>
                         </div>
                     </div>
                     <div className="form-group">

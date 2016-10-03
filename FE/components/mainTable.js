@@ -3,7 +3,7 @@
  */
 
 var React = require('react');
-var FotoFolder = require('./FotoFolder');
+var FotoFolder = require('./Place/FotoFolder');
 var config = require('./config');
 
 var PriceTable = React.createClass({

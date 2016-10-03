@@ -3,26 +3,11 @@
  */
 var Comment    = require('../models/comment.js'),
     User       = require('../models/user'),
-    async      = require('async');
+    async      = require('async'),
+    helper = require('../../config/helper.js');
 
 var comments ={};
-var queryForMongo = function(data){
-    switch(data.type){
-        case 'local':
-            return {'local': data.userid};
-        case 'facebook':
-            return {'facebook.id': data.userid};
-        case 'twitter':
-            return {'twitter.id': data.userid};
-        case 'google':
-            return {'google.id': data.userid};
-        case 'vk':
-            return {'vk.id': data.userid};
-        case 'odnoklassniki':
-            return {'odnoklassniki.id': data.userid};
-    }
-    return ;
-}
+
 comments.getbyplaceid = function (obj, done) {
     Comment.find(obj, function(err, comment) {
 
@@ -31,12 +16,18 @@ comments.getbyplaceid = function (obj, done) {
         comment.forEach(function(data,index){
             calls.push(function(callback) {
                     if(data.type) {
-                        User.findOne(queryForMongo(data), function(err, user) {
-                            data.user = user
-                            console.log('===data====')
-                            console.log(data)
-                            console.log(user)
-                            callback(null, data);
+                        User.findOne(helper.queryForMongo(data), function(err, user) {
+                            var userObj = {
+                                _id: data._id,
+                                type: data.type,
+                                email: data.email,
+                                placeid: data.placeid,
+                                dateModified: data.dateModified,
+                                dateCreated: data.dateCreated,
+                                data: data.data,
+                                user: helper.queryForReturnUser(data, user)
+                            }
+                            callback(null, userObj);
                         });
                     }else{
                         callback(null, data);
@@ -69,6 +60,16 @@ comments.add = function (data, done) {
         return done(null, newComment);
     });
 }
-
+comments.remove = function (obj, done) {
+    var obj = {_id: obj.data._id}
+    Comment.remove(obj, function(err, comment) {
+        if (!err) {
+            return done(null, err);
+        }
+        else {
+            return done(null, comment);
+        }
+    })
+}
 
 module.exports = comments;

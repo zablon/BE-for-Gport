@@ -7,7 +7,7 @@ var MainTable = require('./../mainTable');
 var helper = require('./../helper');
 var config = require('./../config');
 var Link = require('react-router').Link;
-var FotoFolder = require('./../FotoFolder');
+var FotoFolder = require('./FotoFolder');
 import Comments from "../comments/Comments"
 import store from "../../store"
 import SmallInformationBoard from "./SmallInformationBoard"

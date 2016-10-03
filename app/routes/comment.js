@@ -2,6 +2,7 @@
  * Created by semianchuk on 30.09.16.
  */
 var comments = require('../controller/comment.js');
+var helper = require('../../config/helper.js');
 
 module.exports = function(app) {
 
@@ -75,5 +76,49 @@ module.exports = function(app) {
         }
 
     });
+    app.post('/comments/remove', function(req, res) {
+        if(!req.user){
+            res.json({message: 'you are not login ', status: 'error'});
+            return ;
+        }
 
+        req.assert('data', 'data is not obj').notEmpty();
+
+        var errors = req.validationErrors();
+        if( !errors){
+            var user = helper.parseUserObj(req.user);
+            if(user.id != req.body.data.user.id){
+                res.json({message: 'you are have no permissions ', status: 'error'});
+                return ;
+            }
+            function callback(err,msg){
+                if(err) {
+                    res.statusCode = 200;
+                    res.json({
+                        title: 'cant remove comment',
+                        message: err,
+                        status: 'error'
+                    });
+                }
+
+                res.statusCode = 200;
+                res.json({
+                    title: 'comment remove success',
+                    message: msg,
+                    status: 'success'
+                });
+            }
+            comments.remove(req.body,callback)
+        }
+        else {
+            res.statusCode = 200;
+            res.json({
+                title: 'cant remove comment',
+                message: 'cant remove comment',
+                errors: errors,
+                status: 'error'
+            });
+        }
+
+    })
 }
