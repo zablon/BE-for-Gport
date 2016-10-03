@@ -145,7 +145,7 @@ class Comments extends Component {
                     <div className={this.state.toogle}>
                         {this.state.commentsObj}
                     </div>
-                    <div className="comment-block-show-full">
+                    <div className={this.state.commentsObj.length>0 ? "comment-block-show-full" : "hide-block comment-block-show-full" }   >
                         <span >Показать полностью ...</span>
                     </div>
                 </div>
