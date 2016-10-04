@@ -16,6 +16,8 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
+var socketIo = require('./app/socket/socket.js');
+
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 app.use(express.static(__dirname + '/assets'));
@@ -46,19 +48,6 @@ require('./app/routes/comment.js')(app, comment); // load our routes for comment
 
 // launch ======================================================================
 var server = app.listen(port);
-console.log('The magic happens on port ' + port);
+notification = socketIo(server);
 
-//socket.io
-var socketIo = require('socket.io')
-var io = socketIo(server)
-console.log('===socket run====')
-io.on('connection', socket => {
-    console.log('===connection====')
-    socket.on('message', body => {
-        console.log('===in====')
-        console.log(body)
-        socket.broadcast.emit('message', {
-         body
-        })
-    })
-})
+console.log('The magic happens on port ' + port);

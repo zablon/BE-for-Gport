@@ -55,7 +55,7 @@ module.exports = function(app) {
                         status: 'error'
                     });
                 }
-
+                notification.emit('message', {body: req.body.name +' добавил новый комментарий '})
                 res.statusCode = 200;
                 res.json({
                     title: 'comment add success',

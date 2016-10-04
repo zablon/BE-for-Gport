@@ -32,6 +32,7 @@ var helper = {};
     }
 
     helper.queryForReturnUser = function(data, user){
+        if(!user) return ;
         switch(data.type){
             case 'local':
                 return user.local;

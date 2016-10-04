@@ -263,11 +263,12 @@ module.exports = function(passport) {
                                         user.save(function(err) {
                                             if (err)
                                                 return done(err);
+                                            notification.emit('message', {body: 'Мы рады приветствовать нового юзера '+ user.vk.name})
 
                                             return done(null, user);
                                         });
                                     }
-
+                                    notification.emit('message', {body: 'Мы рады приветствовать нового юзера '+ user.vk.name})
                                     return done(null, user); // user found, return that user
                                 } else {
                                     // if there is no user, create them
@@ -283,7 +284,6 @@ module.exports = function(passport) {
                                     newUser.save(function(err) {
                                         if (err)
                                             return done(err);
-
                                         return done(null, newUser);
                                     });
                                 }
@@ -293,14 +293,15 @@ module.exports = function(passport) {
                             // user already exists and is logged in, we have to link accounts
                             var user            = req.user; // pull the user out of the session
 
-                            user.facebook.id    = profile.id;
-                            user.facebook.token = token;
-                            user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
-                            user.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                            user.vk.id    = profile.id;
+                            user.vk.token = token;
+                            user.vk.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                            user.vk.email = (profile.emails[0].value || '').toLowerCase();
 
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
+                                notification.emit('message', {body: 'Мы рады приветствовать нового юзера '+ newUser.vk.name})
 
                                 return done(null, user);
                             });
@@ -349,7 +350,7 @@ module.exports = function(passport) {
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
-                                    
+
                                 return done(null, user);
                             });
                         }
@@ -369,7 +370,7 @@ module.exports = function(passport) {
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
-                                
+                            notification.emit('message', {body: 'Мы рады приветствовать нового юзера '+ newUser.facebook.name})
                             return done(null, newUser);
                         });
                     }
@@ -465,7 +466,7 @@ module.exports = function(passport) {
                 user.save(function(err) {
                     if (err)
                         return done(err);
-                        
+                    notification.emit('message', {body: 'Мы рады приветствовать нового юзера '+ newUser.twitter.name})
                     return done(null, user);
                 });
             }
@@ -509,7 +510,7 @@ module.exports = function(passport) {
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
-                                    
+
                                 return done(null, user);
                             });
                         }
@@ -527,7 +528,8 @@ module.exports = function(passport) {
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
-                                
+                            notification.emit('message', {body: 'Мы рады приветствовать нового юзера '+ newUser.google.name})
+
                             return done(null, newUser);
                         });
                     }

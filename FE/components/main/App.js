@@ -20,7 +20,9 @@ import ProfileBlock from "../Profile/ProfileBlock"
 import { setUserParams } from "../../actions/userActions"
 import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../../actions/filterActions"
 import store from "../../store"
+import config from "../config"
 import io from 'socket.io-client'
+import Notifier from "react-desktop-notification"
 
 window.gmarkers = [];
 
@@ -44,9 +46,10 @@ class App extends Component {
     componentDidMount () {
         this.socket = io('/')
         this.socket.on('message', message => {
-            alert('ok')
-            console.log('======message======')
-            console.log(message)        })
+            console.log('======message=====')
+            console.log(message)
+            Notifier.start("Title", message.body, config.domain, "https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png");
+        })
     }
 	filterFunc(data){
         this.props.store.dispatch(fetchFilter());

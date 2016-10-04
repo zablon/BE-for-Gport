@@ -8,12 +8,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from "../../store"
 import ReactDOM from "react-dom"
+import io from 'socket.io-client'
+import Notifier from "react-desktop-notification"
 
 class Comments extends Component {
 
     constructor(props) {
         super(props);
         this.state = { commentsObj : '', userData:false, showComment: true}
+    }
+    componentDidMount () {
+        this.socket = io('/')
+        this.socket.on('message', message => {
+            Notifier.start("Title", message.body, config.domain, "https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png");
+        })
     }
     componentWillReceiveProps(){
         this.getData(this);
