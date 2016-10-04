@@ -18,9 +18,16 @@ class Comments extends Component {
         this.state = { commentsObj : '', userData:false, showComment: true}
     }
     componentDidMount () {
+        var self = this;
         this.socket = io('/')
-        this.socket.on('message', message => {
-            Notifier.start("Title", message.body, config.domain, "https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png");
+        this.socket.on('user', data => {
+            Notifier.start("Title", data.text, config.domain, config.domain+"images/icon/logo.jpeg");
+        })
+        this.socket.on('comment', message => {
+            Notifier.start(data.title, message.body.name +' добавил новый комментарий - ' +message.body.data, config.domain, config.domain+"images/icon/logo.jpeg");
+            if(message.body.id == self.props.placeId){
+                self.getData(self);
+            }
         })
     }
     componentWillReceiveProps(){
@@ -51,6 +58,7 @@ class Comments extends Component {
             data: data,
             success: function (obj) {
                 if(obj.status == 'success'){
+                    self.socket.emit('comment', {id: data.placeid, userid: data.userid, data: data.data, name: data.name})
                     self.getData(self);
                 }else{
                     console.log(obj.errors)

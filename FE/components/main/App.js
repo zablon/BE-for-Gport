@@ -45,10 +45,8 @@ class App extends Component {
     }
     componentDidMount () {
         this.socket = io('/')
-        this.socket.on('message', message => {
-            console.log('======message=====')
-            console.log(message)
-            Notifier.start("Title", message.body, config.domain, "https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png");
+        this.socket.on('user', data => {
+            Notifier.start(data.title, data.text, config.domain, config.domain+"images/icon/logo.jpeg");
         })
     }
 	filterFunc(data){
