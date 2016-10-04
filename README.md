@@ -1,7 +1,7 @@
 # Site for group https://vk.com/gport
 
 Technology:
-React, redux, mongoDB, nodeJS, express, passport(auth)
+React, redux, mongoDB, nodeJS, express, passport(auth), socket.io, native browser notification
 
 1. Clone the repo: `https://github.com/fix2015/BE-for-Gport.git`
 2. Install packages: `npm install`
