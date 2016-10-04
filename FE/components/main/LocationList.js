@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import LocationItem from './LocationItem'
-import helper from './helper'
-import { setFilterType } from "../actions/filterActions"
+import LocationItem from './locationItem/LocationItem'
+import helper from '../helper'
+import { setFilterType } from "../../actions/filterActions"
 import { connect } from 'react-redux'
-import store from "../store"
+import store from "../../store"
 
 class LocationList extends Component {
 

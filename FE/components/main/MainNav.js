@@ -2,7 +2,7 @@
  * Created by semianchuk on 08.05.16.
  */
 var React = require('react');
-var helper = require('./helper');
+var helper = require('./../helper');
 var Link = require('react-router').Link;
 
 var MainNav = React.createClass({

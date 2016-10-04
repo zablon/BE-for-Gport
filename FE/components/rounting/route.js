@@ -4,7 +4,7 @@
 import { Router, Route, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-var App = require('../App');
+var App = require('../main/App');
 var Place = require('../Place/Place');
 var Guides = require('../guides/guides');
 var Contacts = require('../contacts/Contacts');

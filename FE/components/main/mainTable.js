@@ -3,8 +3,8 @@
  */
 
 var React = require('react');
-var FotoFolder = require('./Place/FotoFolder');
-var config = require('./config');
+var FotoFolder = require('./../Place/FotoFolder');
+var config = require('./../config');
 
 var PriceTable = React.createClass({
     getInitialState() {

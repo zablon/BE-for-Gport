@@ -5,7 +5,7 @@
 
 var React = require('react');
 var config = require('./../config');
-var MainNav = require('../MainNav');
+var MainNav = require('../main/MainNav');
 var Link = require('react-router').Link;
 var helper = require('../helper');
 

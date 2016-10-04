@@ -1,7 +1,7 @@
 var React = require('react');
 var moment = require('moment');
 var Link = require('react-router').Link;
-var helper = require('./helper');
+var helper = require('./../../helper');
 
 var LocationItem = React.createClass({
 

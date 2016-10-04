@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-var MainTable = require('./../mainTable');
+var MainTable = require('./../main/mainTable');
 var helper = require('./../helper');
 var config = require('./../config');
 var Link = require('react-router').Link;

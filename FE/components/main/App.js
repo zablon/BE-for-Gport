@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-var Search = require('./Search');
+var Search = require('./../search/Search');
 var Map = require('./Map');
 var CurrentLocation = require('./CurrentLocation');
 var LocationList = require('./LocationList');
-var SearchField = require('./SearchField');
-var SearchComponent = require('./SearchComponent');
-import restaurants from "../restaurants"
+var SearchField = require('./../search/SearchField');
+var SearchComponent = require('./../search/SearchComponent');
+import restaurants from "../../restaurants"
 window.restaurants = restaurants;
-var helper = require('./helper');
+var helper = require('./../helper');
 
 var MainNav = require('./MainNav');
-var Auth = require('./auth/Auth');
-var Social = require('./social/social');
-var Adsense = require('./Adsense/Adsense');
+var Auth = require('./../auth/auth');
+var Social = require('./../social/social');
+var Adsense = require('./../Adsense/Adsense');
 
-import ProfileBlock from "./Profile/ProfileBlock"
-import { setUserParams } from "../actions/userActions"
-import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../actions/filterActions"
-import store from "../store"
+import ProfileBlock from "../Profile/ProfileBlock"
+import { setUserParams } from "../../actions/userActions"
+import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../../actions/filterActions"
+import store from "../../store"
 
 window.gmarkers = [];
 

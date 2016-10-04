@@ -1,5 +1,5 @@
 var React = require('react');
-var helper = require('./helper');
+var helper = require('./../helper');
 
 var Map = React.createClass({
 	componentDidMount(){
