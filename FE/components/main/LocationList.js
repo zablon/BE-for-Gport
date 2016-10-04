@@ -15,8 +15,6 @@ class LocationList extends Component {
 		var self = this;
         var props = this.props;
         var num=0;
-        console.log('locationlist')
-        console.log(this.props)
 		var locations = this.props.locations
             .filter(function(data){
                     return (props.filter.textSearch==true) ? data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1 : true;

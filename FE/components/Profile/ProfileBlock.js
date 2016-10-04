@@ -8,8 +8,6 @@ import store from "../../store"
 class ProfileBlock extends Component {
     render(){
         var profile = this.props.user;
-        console.log('=======profile=======')
-        console.log(profile)
         profile.photos = profile.photos ? profile.photos :  '/images/icon/unknown-user-pic.jpg';
         return (
             <div className="profile-block">

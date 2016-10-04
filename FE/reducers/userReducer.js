@@ -43,8 +43,6 @@ export default function reducer(state={
         }
       }
       case "SET_USER_PARAMS": {
-        console.log('===SET_USER_PARAMS===')
-        console.log(action)
         if(action.payload && action.payload.facebook){
           return {
             ...state,

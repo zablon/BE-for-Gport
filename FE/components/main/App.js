@@ -20,6 +20,7 @@ import ProfileBlock from "../Profile/ProfileBlock"
 import { setUserParams } from "../../actions/userActions"
 import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../../actions/filterActions"
 import store from "../../store"
+import io from 'socket.io-client'
 
 window.gmarkers = [];
 
@@ -39,7 +40,14 @@ class App extends Component {
             },
             filter: this.props.filter
         };
-	}
+    }
+    componentDidMount () {
+        this.socket = io('/')
+        this.socket.on('message', message => {
+            alert('ok')
+            console.log('======message======')
+            console.log(message)        })
+    }
 	filterFunc(data){
         this.props.store.dispatch(fetchFilter());
         this.state.filter = this.props.filter
@@ -111,8 +119,6 @@ class App extends Component {
 };
 
 function mapStateToProps (state) {
-    console.log('mapStateToProps APP')
-    console.log(state.reducer)
     const { user, tweets, filter } = state.reducer;
     return {
         state: store.getState(),

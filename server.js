@@ -45,5 +45,20 @@ require('./app/routes/auth.js')(app, passport); // load our routes and pass in o
 require('./app/routes/comment.js')(app, comment); // load our routes for comment
 
 // launch ======================================================================
-app.listen(port);
+var server = app.listen(port);
 console.log('The magic happens on port ' + port);
+
+//socket.io
+var socketIo = require('socket.io')
+var io = socketIo(server)
+console.log('===socket run====')
+io.on('connection', socket => {
+    console.log('===connection====')
+    socket.on('message', body => {
+        console.log('===in====')
+        console.log(body)
+        socket.broadcast.emit('message', {
+         body
+        })
+    })
+})
