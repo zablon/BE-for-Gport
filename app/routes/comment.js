@@ -11,7 +11,7 @@ module.exports = function(app) {
 
         var errors = req.validationErrors();
         if( !errors){
-            function callback(err, msg){
+            comments.getbyplaceid(req.body,(err, msg)=>{
                 if(err) {
                     res.json({
                         title: 'cant get comment',
@@ -26,8 +26,7 @@ module.exports = function(app) {
                     message: msg,
                     status: 'success'
                 });
-            }
-            comments.getbyplaceid(req.body,callback)
+            })
         }
         else {
             res.statusCode = 200;
@@ -47,7 +46,7 @@ module.exports = function(app) {
 
         var errors = req.validationErrors();
         if( !errors){
-            function callback(err,msg){
+            comments.add(req.body,(err,msg) => {
                 if(err) {
                     res.json({
                         title: 'cant add comment',
@@ -62,8 +61,7 @@ module.exports = function(app) {
                     message: msg,
                     status: 'success'
                 });
-            }
-            comments.add(req.body,callback)
+            })
         }
         else {
             res.statusCode = 200;
@@ -91,7 +89,7 @@ module.exports = function(app) {
                 res.json({message: 'you are have no permissions ', status: 'error'});
                 return ;
             }
-            function callback(err,msg){
+            comments.remove(req.body,(err,msg)=>{
                 if(err) {
                     res.statusCode = 200;
                     res.json({
@@ -107,8 +105,7 @@ module.exports = function(app) {
                     message: msg,
                     status: 'success'
                 });
-            }
-            comments.remove(req.body,callback)
+            })
         }
         else {
             res.statusCode = 200;
