@@ -39,23 +39,23 @@ data.type =  function(data){
 data.socialButton =[
     {
         link: 'https://vk.com/gport',
-        url: 'site-images/soc-icon/vk.png'
+        url: '/site-images/soc-icon/vk.png'
     },
     {
         link: 'https://www.youtube.com/channel/UCRVZ2jPsor1wUEMTxlSg1Kw',
-        url: 'site-images/soc-icon/youtube.png'
+        url: '/site-images/soc-icon/youtube.png'
     },
     {
         link: 'https://www.instagram.com/gportvlog/',
-        url: 'site-images/soc-icon/instagram.png'
+        url: '/site-images/soc-icon/instagram.png'
     },
     {
         link: 'https://twitter.com/GportUkraine',
-        url: 'site-images/soc-icon/twitter.png'
+        url: '/site-images/soc-icon/twitter.png'
     },
     {
         link: 'https://www.takeit.to/gport/',
-        url: 'site-images/soc-icon/tito.png'
+        url: '/site-images/soc-icon/tito.png'
     }
 ]
 

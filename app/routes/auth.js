@@ -10,7 +10,7 @@ module.exports = function(app, passport) {
         res.render('index.ejs');
     });
 
-    app.get('/', function(req, res) {
+    app.get('/*', function(req, res) {
         req.user ? res.locals.userSettings = req.user : res.locals.userSettings = {guest: { name:'guest', email:'guest', id:'guest'}};
         res.statusCode = 200;
         res.render('index.ejs');

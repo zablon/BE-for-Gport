@@ -8,6 +8,7 @@ var App = require('../main/App');
 var Place = require('../Place/Place');
 var Guides = require('../guides/guides');
 var Contacts = require('../contacts/Contacts');
+var Statistics = require('../statistics/Statistics');
 var Infrastructure = require('../Infrastructure/Infrastructure');
 
 import store from "../../store"
@@ -32,6 +33,9 @@ module.exports = (
                 </Route>
                 <Route path="contacts"  name="Contacts" component={Contacts}>
                 <Route path="/contact/us" component={Contacts}/>
+                </Route>                
+                <Route path="statistics"  name="Statistics" component={Statistics}>
+                <Route path="/statistics/d3" component={Statistics}/>
                 </Route>
             </Router>
     </Provider>)

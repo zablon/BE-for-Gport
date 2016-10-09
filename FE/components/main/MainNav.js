@@ -65,17 +65,3 @@ var MainNav = React.createClass({
 });
 
 module.exports = MainNav;
-
-/*
- <li className="dropdown">
- <a className="dropdown-toggle"
- data-toggle="dropdown"
- href="#">
- Dropdown
- <b className="caret"></b>
- </a>
- <ul className="dropdown-menu">
- {NavBarDrop}
- </ul>
- </li>
- */
