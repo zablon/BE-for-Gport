@@ -30,7 +30,7 @@
 ```bash
 `node server.js`
 ```
-## 6. Visit in your browser at: `http://localhost:8080`
+## 7. Visit in your browser at: `http://localhost:8080`
 
 ## Structure of App
 ```
