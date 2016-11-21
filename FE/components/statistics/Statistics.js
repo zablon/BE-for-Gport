@@ -45,8 +45,24 @@ class Statistics extends Component {
                 pansionat,
                 recreation
             ],
+            viewBoxObjects = { x: 0,y: 0, width: 500, height: 400},
             PieChart = rd3.PieChart,
-            Treemap = rd3.Treemap;
+            Treemap = rd3.Treemap,
+            ScatterChart = rd3.ScatterChart,
+            LineChart = rd3.LineChart;
+
+        var lineData = [
+                {
+                    name: "series1",
+                    values: [ { x: 0, y: 20 }, { x: 24, y: 10 }, { x: 54, y: 30 }, { x: 64, y: 30 }, { x: 74, y: 40 }, { x: 84, y: 50 } ],
+                    strokeWidth: 3,
+                    strokeDashArray: "5,5",
+                },
+                {
+                    name: "series2",
+                    values: [ { x: 10, y: 22 },  { x: 26, y: 32 },  { x: 36, y: 42 },  { x:46, y: 56 },  { x: 56, y: 62 },  { x: 66, y: 72 } ]
+                }
+            ];
         return (
             <div>
                 <div className="col-md-12 header-img">
@@ -73,6 +89,25 @@ class Statistics extends Component {
                         fontSize="12px"
                         title="Treemap"
                         hoverAnimation={false}
+                    />
+                    <hr/>
+                    <LineChart
+                        legend={true}
+                        data={lineData}
+                        width={600}
+                        height={400}
+                        viewBoxObject={viewBoxObjects}
+                        title="Line Chart"
+                        yAxisLabel="Altitude"
+                        xAxisLabel="Elapsed Time (sec)"
+                        gridHorizontal={true}
+                    />
+                    <hr/>
+                    <ScatterChart
+                        data={lineData}
+                        width={500}
+                        height={400}
+                        title="Scatter Chart"
                     />
                 </div>
             </div>

@@ -1,8 +1,8 @@
 /**
  * Created by semianchuk on 30.09.16.
  */
-var Comment    = require('../models/comment.js'),
-    User       = require('../models/user'),
+var Comment    = require('../oldModels/comment.js'),
+    User       = require('../oldModels/user'),
     async      = require('async'),
     helper = require('../../config/helper.js');
 

@@ -9,7 +9,7 @@ var http = require('http');
 var request = require('request');
 
 // load up the user model
-var User       = require('../app/models/user');
+var User       = require('../app/oldModels/user');
 
 // load the auth variables
 var configAuth = require('./auth'); // use this one for testing

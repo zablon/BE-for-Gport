@@ -9,6 +9,25 @@ var SearchField = require('./../search/SearchField');
 var SearchComponent = require('./../search/SearchComponent');
 import restaurants from "../../restaurants"
 window.restaurants = restaurants;
+var url =  config.domain + 'place/get';
+$.ajax({
+    type: "POST",
+    url: url,
+    dataType: "json",
+    success: function (obj) {
+        console.log('==========')
+        console.log(obj)
+        if(obj.status == 'success'){
+
+        }else{
+            console.log(obj.errors)
+        }
+    }
+})
+
+
+
+
 var helper = require('./../helper');
 
 var MainNav = require('./MainNav');

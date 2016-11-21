@@ -13,6 +13,23 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var path = require('path');
+var favicon = require('serve-favicon');
+var debug = require('debug')('express-sequelize');
+
+var models  = require('./app/models');
+
+
+models.sequelize.sync().then(function() {
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port, function() {
+        debug('Express server listening on port ' + server.address().port);
+    });
+    server.on('error', onError);
+    server.on('listening', onListening);
+});
 
 var configDB = require('./config/database.js');
 
@@ -43,11 +60,75 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 var comment = require('./app/controller/comment.js');
 
 // routes ======================================================================
-require('./app/routes/auth.js')(app, passport); // load our routes and pass in our app and fully configured passport
-require('./app/routes/comment.js')(app, comment); // load our routes for comment
-
+require('./app/routes/auth')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes/comment')(app, comment); // load our routes for comment
+require('./app/routes/places')(app);
+require('./app/routes/rooms')(app);
 // launch ======================================================================
 var server = app.listen(port);
 notification = socketIo(server);
 
 console.log('The magic happens on port ' + port);
+
+
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+}
+
