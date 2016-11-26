@@ -18,7 +18,7 @@ var FotoFolder = React.createClass({
             roomId = this.props.data.id,
             type = this.props.data.typeHouse;
             if(this.props.data!=''){
-                fotos = this.props.data.image
+                fotos = this.props.data.Images
                 .map(function(data){
                     return <div className="col-md-3 col-sm-4 col-xs-6 thumb foto-gallery">
                                     <a className="fancyimage" data-fancybox-group="group" href={config.domain + 'images/'+type+'/'+ roomId + '/' + data.name}>

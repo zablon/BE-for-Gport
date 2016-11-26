@@ -56,7 +56,9 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                Place.hasMany(models.Room)
+                Place.hasMany(models.Room);
+                Place.hasMany(models.Image);
+                Place.hasMany(models.Comment);
             }
         }
     });

@@ -4,15 +4,29 @@ var express = require('express');
 module.exports = function(app) {
 
     app.post('/place/get', function (req, res) {
-        models.Place.findAll({
-
-        }).then(function (places) {
-            console.log('========')
-            console.log(places)
+        models.Place.findAll().then(function (places) {
             res.statusCode = 200;
             res.json({
-                title: 'Sequelize: Express Example',
+                title: 'Get data success',
                 places: places,
+                status: 'success'
+            });
+        });
+    })
+
+    app.post('/place/get/:place_id', function (req, res) {
+        var id = req.params.place_id;
+        models.Place.findById(id,{
+            include: [
+                {model: models.Room},
+                {model: models.Comment}
+            ]
+            })
+            .then(function (place) {
+            res.statusCode = 200;
+            res.json({
+                title: 'Get data by id',
+                place: place,
                 status: 'success'
             });
         });

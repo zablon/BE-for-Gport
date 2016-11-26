@@ -56,7 +56,6 @@ var Auth = React.createClass({
             <div className="auth-block">
                 <div onClick={this.vk} className="btn btn-primary btn-vk"><span className="fa fa-vk"></span> </div>
                 <div onClick={this.FB} className="btn btn-primary"><span className="fa fa-facebook"></span> </div>
-                <div onClick={this.twitter} className="btn btn-info"><span className="fa fa-twitter"></span> </div>
                 <div onClick={this.google} className="btn btn-danger"><span className="fa fa-google-plus"></span> </div>
             </div>
         );
@@ -66,6 +65,7 @@ var Auth = React.createClass({
 module.exports = Auth;
 
 /*
+ <div onClick={this.twitter} className="btn btn-info"><span className="fa fa-twitter"></span> </div>
  <div onClick={this.odnoklassniki} className="btn btn-warning"><span className="fa fa-odnoklassniki"></span> </div>
  <div onClick={this.login} className="btn btn-default"><span className="fa fa-user"></span> Local Login</div>
  <div onClick={this.signup} className="btn btn-default"><span className="fa fa-user"></span> Local Signup</div>

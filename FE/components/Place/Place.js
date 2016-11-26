@@ -32,27 +32,35 @@ class Place extends Component {
             profileImg.src = config.domain + 'images/zport/'+ this.props.params.placeId + '/ico.jpg';
     }
     getDataFromJSON(){
-        var self=this,
+        var url =  config.domain + 'place/get/'+this.props.params.placeId,
+            self=this,
             num=1,
-            locations = restaurants
-                .filter(function(data){
-                    return data.id ? data.id == self.props.params.placeId : ''
-                })
-                .map(function(data, index){
-                    var dataHouse = data;
+            index = this.props.params.placeId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            success: function (obj) {
+                if(obj.status == 'success'){
+                    console.log(obj)
+                    var dataHouse = obj.place;
                     dataHouse.typeHouse = 'zport';
                     var placeParams = {
                         place:dataHouse,
                         description:dataHouse.description,
                         images: <FotoFolder key={index} data={dataHouse}></FotoFolder>,
-                        mainTable : dataHouse.room
+                        mainTable : dataHouse.Rooms
                             .map(function(data, index){
                                 num++;
-                                return <MainTable key={index} fullData={dataHouse} data={data} count={dataHouse.room.length} num={num}></MainTable>;
+                                return <MainTable key={index} fullData={dataHouse} data={data} count={dataHouse.Rooms.length} num={num}></MainTable>;
                             })
                     }
                     self.props.store.dispatch(setPlaceParams(placeParams))
-                })
+                }else{
+                    console.log(obj.errors)
+                }
+            }
+        })
     }
     componentDidMount() {
         this.props.store.dispatch(setPlaceId(this.props.params.placeId));

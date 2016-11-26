@@ -5,8 +5,7 @@ var path      = require("path");
 var Sequelize = require("sequelize");
 var env       = process.env.NODE_ENV || "development";
 var config    = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
-console.log(config)
-console.log(process.env.DATABASE_URL)
+
 if (process.env.DATABASE_URL) {
   var sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {

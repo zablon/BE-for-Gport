@@ -7,26 +7,9 @@ var CurrentLocation = require('./CurrentLocation');
 var LocationList = require('./LocationList');
 var SearchField = require('./../search/SearchField');
 var SearchComponent = require('./../search/SearchComponent');
-import restaurants from "../../restaurants"
-window.restaurants = restaurants;
-var url =  config.domain + 'place/get';
-$.ajax({
-    type: "POST",
-    url: url,
-    dataType: "json",
-    success: function (obj) {
-        console.log('==========')
-        console.log(obj)
-        if(obj.status == 'success'){
+//import restauran from "../../restaurants"
 
-        }else{
-            console.log(obj.errors)
-        }
-    }
-})
-
-
-
+window.restaurants = [];
 
 var helper = require('./../helper');
 
@@ -48,6 +31,7 @@ window.gmarkers = [];
 class App extends Component {
     constructor(props) {
         super(props);
+        console.log(window.userSettings)
         this.props.store.dispatch(setUserParams(window.userSettings))
         var type = (this.props.params.type ? this.props.params.type : '');
 		var favorites = [];
@@ -62,7 +46,25 @@ class App extends Component {
             filter: this.props.filter
         };
     }
+    getData(){
+        var url =  config.domain + 'place/get',
+            self=this;
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            success: function (obj) {
+                if(obj.status == 'success'){
+                    self.setState({favorites: obj.places})
+                    window.restaurants = obj.places;
+                }else{
+                    console.log(obj.errors)
+                }
+            }
+        })
+    }
     componentDidMount () {
+        this.getData().bind(this);
         this.socket = io('/')
         this.socket.on('user', data => {
             Notifier.start(data.title, data.text, config.domain, config.domain+"images/icon/logo.jpeg");

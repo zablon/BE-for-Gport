@@ -39,7 +39,7 @@ var PriceTable = React.createClass({
                 "refrigeter": this.props.data.refrigeter,
                 "swiming": this.props.data.swiming
             },
-            price: this.props.data.price
+            price: this.props.data.Prices
                 .map(function(data){
                     return  (<tr>
                                 <td>{data.mounth}</td>

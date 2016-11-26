@@ -1,32 +1,25 @@
 /**
  * Created by semianchuk on 30.09.16.
  */
-var comments = require('../controller/comment.js');
-var helper = require('../../config/helper.js');
+var models  = require('../models'),
+    express = require('express'),
+    helper = require('../../config/helper.js');
 
 module.exports = function(app) {
-
+    
     app.post('/comments/getbyplaceid', function(req, res) {
         req.assert('placeid', 'placeid is required').isInt();
-
         var errors = req.validationErrors();
         if( !errors){
-            comments.getbyplaceid(req.body,(err, msg)=>{
-                if(err) {
+            models.Comment.findAll({'PlaceId': req.body.placeid})
+                .then(function (comments) {
+                    res.statusCode = 200;
                     res.json({
-                        title: 'cant get comment',
-                        message: err,
-                        status: 'error'
+                        title: 'Get data by id',
+                        message: comments,
+                        status: 'success'
                     });
-                }
-
-                res.statusCode = 200;
-                res.json({
-                    title: 'comment get success',
-                    message: msg,
-                    status: 'success'
                 });
-            })
         }
         else {
             res.statusCode = 200;
@@ -46,21 +39,21 @@ module.exports = function(app) {
 
         var errors = req.validationErrors();
         if( !errors){
-            comments.add(req.body,(err,msg) => {
-                if(err) {
-                    res.json({
-                        title: 'cant add comment',
-                        message: err,
-                        status: 'error'
-                    });
-                }
+            models.Comment.create({
+                data: req.body.data,
+                name: req.body.name,
+                PlaceId: req.body.placeid,
+                userid: req.body.userid,
+                type: req.body.type,
+                email: req.body.email,
+            }).then(function (msg) {
                 res.statusCode = 200;
                 res.json({
                     title: 'comment add success',
                     message: msg,
                     status: 'success'
                 });
-            })
+            });
         }
         else {
             res.statusCode = 200;
@@ -88,23 +81,18 @@ module.exports = function(app) {
                 res.json({message: 'you are have no permissions ', status: 'error'});
                 return ;
             }
-            comments.remove(req.body,(err,msg)=>{
-                if(err) {
-                    res.statusCode = 200;
-                    res.json({
-                        title: 'cant remove comment',
-                        message: err,
-                        status: 'error'
-                    });
+            models.Comment.destroy({
+                where: {
+                    id: req.body
                 }
-
+            }).then(function () {
                 res.statusCode = 200;
                 res.json({
-                    title: 'comment remove success',
-                    message: msg,
-                    status: 'success'
+                    title: 'cant remove comment',
+                    message: err,
+                    status: 'error'
                 });
-            })
+            });
         }
         else {
             res.statusCode = 200;
