@@ -36,21 +36,22 @@ class Comments extends Component {
     }
     send(e){
         e.preventDefault();
+        console.log('====this.props.user========')
+        console.log(this.props.user)
         var data = {
             name         : this.props.user.type!='guest' ? this.props.user.name :  ReactDOM.findDOMNode(this.refs.name).value,
-            email        : this.props.user.type!='guest' && this.props.user.email ? this.props.user.email : ReactDOM.findDOMNode(this.refs.email).value,
+            email        : this.props.user.type!='guest' && this.props.user.email ? this.props.user.email ? this.props.user.email : this.props.user.id + '@'+this.props.user.type+'.com' : ReactDOM.findDOMNode(this.refs.email).value,
             placeid      : this.props.placeId,
             userid       : this.props.user.type!='guest' ? this.props.user.id : null,
             type         : this.props.user.type!='guest' ? this.props.user.type : null,
             data         : this.refs.message.getDOMNode().value,
         }
-        ReactDOM.findDOMNode(this.refs.message).value = ''
+        ReactDOM.findDOMNode(this.refs.message).value = '';
         this.ajaxSend(data)
     }
     ajaxSend(data){
         var url =  config.domain + 'comments/add',
             self=this;
-
         $.ajax({
             type: "POST",
             url: url,
@@ -78,7 +79,7 @@ class Comments extends Component {
             success: function (obj) {
                 if(obj.status=='success'){
                     var commentsObj = obj.message.map(function(data, index){
-                        return  <CommentsArea remove={self.remove.bind(self, data)} key={index} comment={data} placeId={self.props.placeId} id={data._id} user={self.props.user}></CommentsArea>
+                        return  <CommentsArea remove={self.remove.bind(self, data)} edit={self.edit.bind(self, data)} key={index} comment={data} placeId={self.props.placeId} id={data._id} user={self.props.user}></CommentsArea>
                     })
                     self.setState({commentsObj: commentsObj})
                 }else{
@@ -95,6 +96,24 @@ class Comments extends Component {
     remove(data){
         var data = {data: data},
             url = config.domain + 'comments/remove',
+            self=this;
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            data: data,
+            success: function (obj) {
+                if(obj.status == 'success'){
+                    self.getData(self);
+                }else{
+                    console.log(obj.errors)
+                }
+            }
+        })
+    }
+    edit(data){
+        var data = {data: data},
+            url = config.domain + 'comments/edit',
             self=this;
         $.ajax({
             type: "POST",
@@ -135,7 +154,7 @@ class Comments extends Component {
                         <div className="form-group ">
                             <label for="email" className="col-sm-2 control-label">ФИО</label>
                             <div className="col-sm-10">
-                                <input type="text" className="form-control" id="email" ref="name" placeholder="Name"/>
+                                <input type="text" className="form-control" id="name" ref="name" placeholder="Name"/>
                             </div>
                         </div>
                         <div className="form-group">

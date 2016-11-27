@@ -25,6 +25,8 @@ var PriceTable = React.createClass({
     },
     componentDidMount() {
         $("a.fancyimage").fancybox();
+        console.log('price')
+        console.log(this.props)
         this.setState({
             num:2,
             type: this.props.num,

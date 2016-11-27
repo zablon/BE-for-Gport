@@ -401,3 +401,9 @@ a.list-group-item span.createdAt {
 .statistic-block{
     padding-top: 280px;
 }
+.comment-edit{
+    position: absolute;
+    right: 34px;
+    top: 16px;
+    cursor: pointer;
+}

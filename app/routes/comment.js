@@ -11,7 +11,8 @@ module.exports = function(app) {
         req.assert('placeid', 'placeid is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.Comment.findAll({'PlaceId': req.body.placeid})
+            models.Comment.findAll({where: {'PlaceId': req.body.placeid},
+                    include: [models.User]})
                 .then(function (comments) {
                     res.statusCode = 200;
                     res.json({
@@ -33,7 +34,6 @@ module.exports = function(app) {
     });
 
     app.post('/comments/add', function(req, res) {
-
         req.assert('placeid', 'placeid is not integer').isInt();
         req.assert('data', 'data is empty').notEmpty();
 
@@ -43,7 +43,7 @@ module.exports = function(app) {
                 data: req.body.data,
                 name: req.body.name,
                 PlaceId: req.body.placeid,
-                userid: req.body.userid,
+                UserId: req.user ? req.user.id : req.body.userid ? req.body.userid : 1240170586050377,
                 type: req.body.type,
                 email: req.body.email,
             }).then(function (msg) {
@@ -76,17 +76,25 @@ module.exports = function(app) {
 
         var errors = req.validationErrors();
         if( !errors){
-            var user = helper.parseUserObj(req.user);
-            if(user.id != req.body.data.user.id){
+            var user = req.user;
+            if(user.id != req.body.data.User.id){
                 res.json({message: 'you are have no permissions ', status: 'error'});
                 return ;
             }
             models.Comment.destroy({
                 where: {
-                    id: req.body
+                    id: req.body.data.id
                 }
-            }).then(function () {
+            }).then(function (result) {
                 res.statusCode = 200;
+                res.json({
+                    title: 'remove comment success',
+                    message: result,
+                    status: 'success'
+                });
+            })
+            .catch(function () {
+                res.statusCode = 400;
                 res.json({
                     title: 'cant remove comment',
                     message: err,

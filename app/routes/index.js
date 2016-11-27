@@ -9,9 +9,10 @@ module.exports = function(app) {
       models.Place.findAll({
         include: [
           {
-            model: models.Room, include: [
-            {model: models.Price}
-          ]
+            model: models.Room, 
+            include: [
+              {model: models.Price}
+            ]
           }]
       }).then(function (places) {
         res.statusCode = 200;

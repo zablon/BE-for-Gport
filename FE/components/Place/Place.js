@@ -13,7 +13,6 @@ import store from "../../store"
 import SmallInformationBoard from "./SmallInformationBoard"
 import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
 import { setUserParams } from "../../actions/userActions"
-
 class Place extends Component {
     constructor(props) {
         super(props);
@@ -42,7 +41,6 @@ class Place extends Component {
             dataType: "json",
             success: function (obj) {
                 if(obj.status == 'success'){
-                    console.log(obj)
                     var dataHouse = obj.place;
                     dataHouse.typeHouse = 'zport';
                     var placeParams = {
@@ -62,7 +60,7 @@ class Place extends Component {
             }
         })
     }
-    componentDidMount() {
+    componentWillMount() {
         this.props.store.dispatch(setPlaceId(this.props.params.placeId));
         this.getDataFromJSON();
         this.checkImg(this);

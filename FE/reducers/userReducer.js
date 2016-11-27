@@ -43,10 +43,15 @@ export default function reducer(state={
         }
       }
       case "SET_USER_PARAMS": {
-        if(action.payload){
+        if(action.payload || action.payload.type != 'guest'){
           return {
             ...state,
             ...state.user, type: action.payload.type, name: action.payload.name, email: action.payload.email, photos: action.payload.photos, id: action.payload.id,
+          }
+        }else{
+          return {
+            ...state,
+            ...state.user, type: 'guest', name: 'guest', email: 'guest@guest.com', id: '0',
           }
         }
       }

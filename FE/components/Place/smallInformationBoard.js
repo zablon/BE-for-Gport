@@ -25,10 +25,12 @@ class SmallInformationBoard extends Component {
     }
     render(){
         var data = this.props.data;
+        console.log('====')
+        console.log(this.props)
         return (
             <ul className="list-group">
                 <li className="list-group-item">
-                    <i className="glyphicon glyphicon-home"></i> {data.place.title}
+                    <i className="glyphicon glyphicon-home"></i>{data.place.title}
                 </li>
                 <li className="list-group-item">
                     <i className="glyphicon glyphicon-star"></i> Тип: {helper.type(data.place.type)}
@@ -37,7 +39,7 @@ class SmallInformationBoard extends Component {
                     <i className="glyphicon glyphicon-send"></i> Дистанция: {data.place.distance} м.
                 </li>
                 <li className="list-group-item">
-                    <i className="glyphicon glyphicon-shopping-cart"></i> Удобства: <i className={data.place.toilet==true ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-remove"}></i>
+                    <i className="glyphicon glyphicon-shopping-cart"></i> Удобства: toilet - {data.place.toilet} <i className={data.place.toilet==true ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-remove"}></i>
                 </li>
                 <li className="list-group-item">
                     <i className="glyphicon glyphicon-equalizer"></i> Душ: <i className={data.place.dush==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
@@ -71,8 +73,11 @@ class SmallInformationBoard extends Component {
     }
 }
 function mapStateToProps (state) {
+    const { user, place } = state.reducer;
     return {
         store: store,
+        user: user,
+        place: place
     }
 }
 

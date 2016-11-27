@@ -11,8 +11,8 @@ class CommentsArea extends Component {
     }
     render() {
         var data = this.props.comment,
-            img  = this.props.comment.user ?  this.props.comment.user.photos : "https://ssl.gstatic.com/accounts/ui/avatar_2x.png",
-            editPermission = ((this.props.comment.user && this.props.comment.user.id == this.props.user.id) ? true : false);
+            img  = this.props.comment.User ?  this.props.comment.User.photos : "https://ssl.gstatic.com/accounts/ui/avatar_2x.png",
+            editPermission = ((this.props.comment.User && this.props.comment.User.id == this.props.user.id) ? true : false);
         return (
             <div className="row">
                 <div className="col-sm-1">
@@ -24,6 +24,8 @@ class CommentsArea extends Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <strong>{data.name}</strong> <span className="text-muted"> <Timestamp time={data.dateCreated} format='full' /></span>
+                            <i onClick={this.props.edit} className={editPermission ? 'fa fa-pencil-square-o comment-edit hide-block' : 'fa fa-pencil-square-o edit-remove hide-block'}
+                               aria-hidden="true"></i>
                             <i onClick={this.props.remove} className={editPermission ? 'fa fa-times comment-remove show-block' : 'fa fa-times comment-remove hide-block'}
                                aria-hidden="true"></i>
                         </div>
