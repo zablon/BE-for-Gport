@@ -36,8 +36,6 @@ class Comments extends Component {
     }
     send(e){
         e.preventDefault();
-        console.log('====this.props.user========')
-        console.log(this.props.user)
         var data = {
             name         : this.props.user.type!='guest' ? this.props.user.name :  ReactDOM.findDOMNode(this.refs.name).value,
             email        : this.props.user.type!='guest' && this.props.user.email ? this.props.user.email ? this.props.user.email : this.props.user.id + '@'+this.props.user.type+'.com' : ReactDOM.findDOMNode(this.refs.email).value,

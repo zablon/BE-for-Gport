@@ -25,8 +25,6 @@ class SmallInformationBoard extends Component {
     }
     render(){
         var data = this.props.data;
-        console.log('====')
-        console.log(this.props)
         return (
             <ul className="list-group">
                 <li className="list-group-item">

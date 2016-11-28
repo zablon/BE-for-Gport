@@ -18,7 +18,11 @@ module.exports = function(app) {
         var id = req.params.place_id;
         models.Place.findById(id,{
             include: [
-                {model: models.Room},
+                {model: models.Room,
+                    include: [
+                        {model: models.Price}
+                    ]
+                },
                 {model: models.Comment}
             ]
             })
