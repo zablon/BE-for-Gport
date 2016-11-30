@@ -65,8 +65,7 @@ class Place extends Component {
     }
     setDataImages(data){
         this.setState({images: data}, function () {
-            console.log('====this.state====');
-            console.log(this.state);
+
         });
     }
     componentDidMount() {

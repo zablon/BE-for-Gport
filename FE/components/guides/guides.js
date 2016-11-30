@@ -2,7 +2,6 @@
  * Created by semianchuk on 23.04.16.
  */
 
-var React = require('react');
 var config = require('./../config');
 var directionsService = new google.maps.DirectionsService;
 var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -11,9 +10,19 @@ var MainNav = require('../main/MainNav');
 var Link = require('react-router').Link;
 var helper = require('../helper');
 var endPoint = helper.endPoint
-var Guides = React.createClass({
-    getInitialState(){
-        return {
+
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import store from "../../store"
+import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
+import { setUserParams } from "../../actions/userActions"
+
+class Guides extends Component {
+    constructor(props) {
+        super(props);
+        this.props.store.dispatch(setUserParams(window.userSettings));
+        this.props.store.dispatch(setPlaceId(this.props.params.placeName));
+        this.state= {
             fulldata: {},
             legs: {},
             url: '',
@@ -21,7 +30,7 @@ var Guides = React.createClass({
             destination: '',
             endPoint:endPoint
         }
-    },
+    }
     initMap() {
         var self = this;
         setTimeout(function(){
@@ -34,7 +43,7 @@ var Guides = React.createClass({
             });
             directionsDisplay.setMap(map);
         },100)
-    },
+    }
     calculateAndDisplayRoute(end) {
         var lat = Number(this.state.fulldata.lat),
             lng = Number(this.state.fulldata.lng),
@@ -56,7 +65,7 @@ var Guides = React.createClass({
                 window.alert('Directions request failed due to ' + status);
             }
         });
-    },
+    }
     calcRoute(event){
         var end = this.state.endPoint;
         for(var i=0; i<end.length; i++){
@@ -64,25 +73,38 @@ var Guides = React.createClass({
                 this.calculateAndDisplayRoute(end[i]);
             }
         }
-    },
-    componentDidMount(){
-        var self = this;
-        locations = restaurants
-            .filter(function(data){
-                if(data.id){
-                    return data.id == self.props.params.placeName
+    }
+    getDataFromJSON(){
+        var url =  config.domain + 'place/get/'+this.props.params.placeName,
+            self=this;
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            success: function (obj) {
+                if(obj.status == 'success'){
+                    var dataHouse = obj.place;
+                    dataHouse.typeHouse = 'zport';
+                    var placeParams = {
+                        place:dataHouse,
+                        description:dataHouse.description
+                    }
+                    self.props.store.dispatch(setPlaceParams(placeParams));
+                    self.setState({
+                        fulldata:dataHouse
+                    })
+                    setTimeout(function(){
+                        self.calcRoute({target: {value: 'bazarNew'}})
+                    },200)
+                }else{
+                    console.log(obj.errors)
                 }
-            })
-            .map(function(data){
-                self.setState({
-                    fulldata:data
-                })
-            })
-            setTimeout(function(){
-                self.calcRoute({target: {value: 'bazarNew'}})
-            },200)
-    },
-
+            }
+        })
+    }
+    componentDidMount(){
+        this.getDataFromJSON();
+    }
     render() {
         this.initMap();
         var end = this.state.endPoint
@@ -102,13 +124,13 @@ var Guides = React.createClass({
                 <div className="col-md-12" id="floating-panel">
                     <div  className="col-md-6">
                         <b>Начало: </b>
-                        <select id="start" onChange={this.calcRoute}>
+                        <select id="start" onChange={this.calcRoute.bind(this)}>
                             <option value="chicago, il">{this.state.fulldata.title}</option>
                         </select>
                     </div>
                     <div className="col-md-6">
                         <b>Конечная точка: </b>
-                        <select id="end" onChange={this.calcRoute}>
+                        <select id="end" onChange={this.calcRoute.bind(this)}>
                             {end}
                         </select>
                     </div>
@@ -130,6 +152,16 @@ var Guides = React.createClass({
             </div>
             );
     }
-    });
+}
 
-module.exports = Guides;
+function mapStateToProps (state) {
+    const { user, place } = state.reducer;
+    return {
+        store: store,
+        user: user,
+        place: place
+    }
+}
+
+module.exports = connect(mapStateToProps)(Guides);
+
