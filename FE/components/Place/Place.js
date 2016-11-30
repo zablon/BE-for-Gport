@@ -17,10 +17,12 @@ class Place extends Component {
     constructor(props) {
         super(props);
         this.props.store.dispatch(setUserParams(window.userSettings))
+        this.state= {
+            images: ''
+        }
     }
     checkImg(){
-        var self = this,
-            profileImg = new Image(),
+        var profileImg = new Image(),
             self = this;
             profileImg.onload = function(){
                 self.props.store.dispatch(setPlaceProfileUrl(config.domain + 'images/zport/'+ self.props.params.placeId + '/ico.jpg'))
@@ -32,9 +34,8 @@ class Place extends Component {
     }
     getDataFromJSON(){
         var url =  config.domain + 'place/get/'+this.props.params.placeId,
-            self=this,
             num=1,
-            index = this.props.params.placeId;
+            self=this;
         $.ajax({
             type: "POST",
             url: url,
@@ -46,21 +47,29 @@ class Place extends Component {
                     var placeParams = {
                         place:dataHouse,
                         description:dataHouse.description,
-                        images: <FotoFolder key={index} data={dataHouse}></FotoFolder>,
+                        images: dataHouse.Images,
                         mainTable : dataHouse.Rooms
                             .map(function(data, index){
                                 num++;
                                 return <MainTable key={index} fullData={dataHouse} data={data} count={dataHouse.Rooms.length} num={num}></MainTable>;
                             })
                     }
-                    self.props.store.dispatch(setPlaceParams(placeParams))
+                    self.setDataImages(dataHouse);
+                    self.setState({images: dataHouse});
+                    self.props.store.dispatch(setPlaceParams(placeParams));
                 }else{
                     console.log(obj.errors)
                 }
             }
         })
     }
-    componentWillMount() {
+    setDataImages(data){
+        this.setState({images: data}, function () {
+            console.log('====this.state====');
+            console.log(this.state);
+        });
+    }
+    componentDidMount() {
         this.props.store.dispatch(setPlaceId(this.props.params.placeId));
         this.getDataFromJSON();
         this.checkImg(this);
@@ -100,7 +109,7 @@ class Place extends Component {
                      {place.description}
                 </div>
                 <div className="col-md-12 location-block-description">
-                    {place.images}
+                    <FotoFolder data={this.state.images}></FotoFolder>
                 </div>
                 {place.mainTable}
             </div>

@@ -20,10 +20,12 @@ module.exports = function(app) {
             include: [
                 {model: models.Room,
                     include: [
-                        {model: models.Price}
+                        {model: models.Price},
+                        {model: models.Image},
                     ]
                 },
-                {model: models.Comment}
+                {model: models.Comment},
+                {model: models.Image}
             ]
             })
             .then(function (place) {

@@ -2,37 +2,61 @@
  * Created by semianchuk on 23.04.16.
  */
 
-var React = require('react');
-var config = require('./../config');
+import React, { Component } from 'react'
+import config from './../config'
+import { connect } from 'react-redux'
+import store from "../../store"
 
-var FotoFolder = React.createClass({
-    componentDidMount() {
-
-    },
+class FotoFolder extends Component {
+    constructor(props) {
+        super(props)
+        this.state={
+            images: ''
+        };
+        var self=this;
+        setTimeout(function(){
+            self.getImages();
+        })
+    }
     handleClick(){
-        this.props.onClick(this.props.data);
-    },
-    render() {
-        var html = '',
-            fotos = '',
-            roomId = this.props.data.id,
-            type = this.props.data.typeHouse;
-            if(this.props.data!=''){
-                fotos = this.props.data.Images
+        this.props.onClick(this.props.data).bind(this);
+    }
+    componentWillReceiveProps(){
+        var self=this;
+        setTimeout(function(){
+            self.getImages();
+        })
+    }
+    getImages(){
+        if(this.props.data!='' &&  this.props.data){
+            var roomId = this.props.data.id,
+                type = this.props.data.typeHouse,
+                images = this.props.data.Images
                 .map(function(data){
                     return <div className="col-md-3 col-sm-4 col-xs-6 thumb foto-gallery">
-                                    <a className="fancyimage" data-fancybox-group="group" href={config.domain + 'images/'+type+'/'+ roomId + '/' + data.name}>
-                                        <img classNameName='img-responsive' src={config.domain + 'images/'+type+'/'+ roomId + '/' + data.name}/>
-                                    </a>
-                            </div>
+                        <a className="fancyimage" data-fancybox-group="group" href={config.domain + 'images/'+type+'/'+ roomId + '/' + data.name}>
+                            <img classNameName='img-responsive' src={config.domain + 'images/'+type+'/'+ roomId + '/' + data.name}/>
+                        </a>
+                    </div>
                 })
-            }
-            return (
-                <div>
-                    {fotos}
-                </div>
-                );
-    }
-    });
+            this.setState({ images: images});
 
-module.exports = FotoFolder;
+        }
+    }
+    render() {
+        return (
+            <div>
+                {this.state.images}
+            </div>
+            );
+    }
+};
+function mapStateToProps (state) {
+    const { filter } = state.reducer;
+    return {
+        store: store,
+        filter: filter
+    }
+}
+
+module.exports = connect(mapStateToProps)(FotoFolder);

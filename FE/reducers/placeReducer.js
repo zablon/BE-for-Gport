@@ -48,7 +48,6 @@ const defaultState = {
                 ...state,
                 ...state, place: action.payload.place,
                           description: action.payload.description,
-                          images: action.payload.place.images,
                           mainTable: action.payload.mainTable,
             }
         }

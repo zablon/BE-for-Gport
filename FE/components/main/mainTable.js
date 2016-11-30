@@ -38,21 +38,6 @@ class PriceTable extends Component {
         this.state ={
             fotoFolder: images
         }
-/*        var self=this,
-            url = config.domain + 'foto/'+folder+'/'+subfolder;
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            cache: false,
-            success: function(result) {
-                this.setState({
-                    fotoFolder: result
-                })
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });*/
     }
     handleClick(event){
         this.props.onChangeData(event);
@@ -66,6 +51,7 @@ class PriceTable extends Component {
             tv,
             wifi,
             refrigeter,
+            Images,
         } = this.props.data;
         var price = this.props.data.Prices
             .map(function(data){
@@ -124,7 +110,7 @@ class PriceTable extends Component {
                     </div>
                     <div className="col-md-2"></div>
                     <div className="col-md-12">
-                        <FotoFolder data={this.state.fotoFolder}></FotoFolder>
+                        <FotoFolder data={this.props.data}></FotoFolder>
                     </div>
                 </div>
             </div>
