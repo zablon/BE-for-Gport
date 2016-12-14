@@ -19,7 +19,9 @@ var Social = require('./../social/social');
 var Adsense = require('./../Adsense/Adsense');
 
 import ProfileBlock from "../Profile/ProfileBlock"
+import { addTweet } from "../../actions/tweetsActions"
 import { setUserParams } from "../../actions/userActions"
+import { setPlaceParams, fetchPlace } from "../../actions/placeActions"
 import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../../actions/filterActions"
 import store from "../../store"
 import config from "../config"
@@ -31,13 +33,12 @@ window.gmarkers = [];
 class App extends Component {
     constructor(props) {
         super(props);
-        console.log(window.userSettings)
+
+        fetchPlace(this.props.store.dispatch);
+
         this.props.store.dispatch(setUserParams(window.userSettings))
         var type = (this.props.params.type ? this.props.params.type : '');
-		var favorites = [];
-        favorites = restaurants;
         this.state = {
-			favorites: favorites,
 			currentAddress: 'Zport',
 			mapCoordinates: {
                 lat: 46.12363029999999,
@@ -46,25 +47,7 @@ class App extends Component {
             filter: this.props.filter
         };
     }
-    getData(){
-        var url =  config.domain + 'place/get',
-            self=this;
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "json",
-            success: function (obj) {
-                if(obj.status == 'success'){
-                    self.setState({favorites: obj.places})
-                    window.restaurants = obj.places;
-                }else{
-                    console.log(obj.errors)
-                }
-            }
-        })
-    }
     componentDidMount () {
-        this.getData().bind(this);
         this.socket = io('/')
         this.socket.on('user', data => {
             Notifier.start(data.title, data.text, config.domain, config.domain+"images/icon/logo.jpeg");
@@ -112,28 +95,29 @@ class App extends Component {
                 <div className="col-md-12">
                     <MainNav type={routeType} typeFilter={this.typeFilter.bind(this)}></MainNav>
                 </div>
-                <div className="col-md-12">
-                    <SearchField onSearch={this.searchForAddress.bind(this)} onFilterInput={this.handleFilterText.bind(this)} filterText={this.state.filterText}/>
-                </div>
                 <div className="col-md-12 profile-img">
                     <ProfileBlock ></ProfileBlock>
                 </div>
                 <div className="col-md-12">
                     <div className="col-md-7">
                         <Auth></Auth>
-                        <Map filter= {filter} filterText={this.state.filterText} locations={this.state.favorites} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
-                    <Adsense></Adsense>
+                        <div className="main-map-block">
+                            <div className="col-md-12">
+                                <h2>Поиск жилья</h2>
+                                <SearchField onSearch={this.searchForAddress.bind(this)} onFilterInput={this.handleFilterText.bind(this)} filterText={this.state.filterText}/>
+                            </div>
+                            <SearchComponent key="SearchComponent" type={routeType}/>
+                        </div>
                     </div>
                     <div className="mark-map-block col-md-5">
-                        <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.state.favorites} activeLocationAddress={this.state.currentAddress}
+                        <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.props.place} activeLocationAddress={this.state.currentAddress}
                         onClick={this.searchForAddress.bind(this)} />
                     </div>
-                </div>
-                <div className="col-md-12">
-                    <div className="main-map-block">
-                        <SearchComponent key="SearchComponent" type={routeType}/>
+                    <div className="map-block col-md-5 hidden">
+                        <Map filter= {filter} filterText={this.state.filterText} locations={this.props.place.places} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
                     </div>
                 </div>
+
 			</div>
 		);
 	}
@@ -141,14 +125,24 @@ class App extends Component {
 };
 
 function mapStateToProps (state) {
-    const { user, tweets, filter } = state.reducer;
+    const { user, tweets, filter, place } = state.reducer;
     return {
         state: store.getState(),
         store: store,
         user: user,
         tweets: tweets,
-        filter: filter
+        filter: filter,
+        place: place,
     }
 }
 
 module.exports = connect(mapStateToProps)(App);
+
+/*
+ <div className="col-md-12">
+ <div className="main-map-block">
+ <SearchComponent key="SearchComponent" type={routeType}/>
+ </div>
+ </div>
+ <Adsense></Adsense>
+ */

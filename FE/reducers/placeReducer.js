@@ -3,23 +3,25 @@
  */
 
 const defaultState = {
-    display: '',
-    placeId: '',
-    mainTable: '',
-    profileUrl: '',
-    post: '',
-    place: {
-        type: '',
-        description: '',
-        distance: '',
-        toilet: '',
-        dush: '',
-        tv: '',
-        refrigeter: '',
-        conditioner: '',
-        wifi: '',
-        eat: ''
-    }
+        display: '',
+        placeId: '',
+        mainTable: '',
+        profileUrl: '',
+        post: '',
+        place: {
+            type: '',
+            title: '',
+            description: '',
+            distance: '',
+            toilet: '',
+            dush: '',
+            tv: '',
+            refrigeter: '',
+            conditioner: '',
+            wifi: '',
+            eat: ''
+        },
+        places: []
     }
     export default function reducer(state=defaultState, action) {
 
@@ -28,27 +30,18 @@ const defaultState = {
         {
             return state
         }
-        case "SET_PLACE_ID":
+        case "SET_PLACES_PARAMS":
         {
             return {
                 ...state,
-                ...state, placeId: action.payload,
-            }
-        }        
-        case "SET_PLACE_PROFILE_URL":
-        {
-            return {
-                ...state,
-                ...state, profileUrl: action.payload,
+                places: action.payload
             }
         }
         case "SET_PLACE_PARAMS":
         {
             return {
                 ...state,
-                ...state, place: action.payload.place,
-                          description: action.payload.description,
-                          mainTable: action.payload.mainTable,
+                ...state, place: action.payload.place
             }
         }
     }

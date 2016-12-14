@@ -11,11 +11,10 @@ class LocationList extends Component {
         this.props.clearFilter();
     }
 	render(){
-
 		var self = this;
         var props = this.props;
         var num=0;
-		var locations = this.props.locations
+		var locations = this.props.place
             .filter(function(data){
                     return (props.filter.textSearch==true) ? data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1 : true;
             })
@@ -74,9 +73,10 @@ class LocationList extends Component {
 };
 
 function mapStateToProps (state) {
-    const { user, tweets, filter } = state.reducer;
+    const { place, filter } = state.reducer;
     return {
         store: store,
+        place: place.places,
         filter: filter
     }
 }

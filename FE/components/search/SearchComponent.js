@@ -59,7 +59,7 @@ class SearchComponent extends Component {
 		return (
             <div className="col-md-12">
                 <div className="col-md-12">
-                    <div className="col-md-4">
+                    <div className="col-md-12">
                         <ul className="list-unstyled">
                             <li className="text-center"><strong>Тип</strong></li>
                             <li>
@@ -70,20 +70,18 @@ class SearchComponent extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
-                        <ul className="list-unstyled text-center">
-                            <li><strong>Wi-fi</strong></li>
+                    <div className="col-md-12">
+                        <ul className="list-unstyled">
+                            <li className="text-center"><strong>Дистанция</strong></li>
                             <li>
-                                <label className="btn btn-default">
-                                    <input type="radio"
-                                        value="true"
-                                        checked={this.props.filter.wifi}
-                                        onChange={this.onWifiChanged.bind(this)}/>
-                                </label>
+                                <select className="form-control"  onChange={this.onDistanceChanged.bind(this)} >
+                                    <option selected = "true" value=""></option>
+                                    {distance}
+                                </select>
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <ul className="list-unstyled text-center">
                             <li><strong>Туалет</strong></li>
                             <li>
@@ -96,7 +94,7 @@ class SearchComponent extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <ul className="list-unstyled text-center">
                             <li><strong>Телевизор</strong></li>
                             <li>
@@ -109,7 +107,7 @@ class SearchComponent extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <ul className="list-unstyled text-center">
                             <li><strong>Холодильник</strong></li>
                             <li>
@@ -125,17 +123,19 @@ class SearchComponent extends Component {
                 </div>
                 <div className="col-md-12">
                     <div className="col-md-4">
-                        <ul className="list-unstyled">
-                            <li className="text-center"><strong>Дистанция</strong></li>
+                        <ul className="list-unstyled text-center">
+                            <li><strong>Wi-fi</strong></li>
                             <li>
-                                <select className="form-control"  onChange={this.onDistanceChanged.bind(this)} >
-                                    <option selected = "true" value=""></option>
-                                    {distance}
-                                </select>
+                                <label className="btn btn-default">
+                                    <input type="radio"
+                                           value="true"
+                                           checked={this.props.filter.wifi}
+                                           onChange={this.onWifiChanged.bind(this)}/>
+                                </label>
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <ul className="list-unstyled text-center">
                             <li><strong>Кондиционер</strong></li>
                             <li>
@@ -148,7 +148,7 @@ class SearchComponent extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <ul className="list-unstyled text-center">
                             <li><strong>Питания</strong></li>
                             <li>
@@ -161,7 +161,7 @@ class SearchComponent extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-6">
                         <ul className="list-unstyled text-center">
                             <li><strong>Детские пл.</strong></li>
                             <li>
@@ -174,7 +174,7 @@ class SearchComponent extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-6">
                         <ul className="list-unstyled text-center">
                             <li><strong>Бассейн</strong></li>
                             <li>

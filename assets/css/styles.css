@@ -347,6 +347,7 @@ a.list-group-item span.createdAt {
     width: 150px;
     height: 150px;
     position: relative;
+    margin-top: 120px;
 }
 .profile-block-img{
     border: 9px solid white;

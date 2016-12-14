@@ -75,6 +75,8 @@ class Place extends Component {
     }
     render() {
         var place = this.props.place;
+        console.log('====place===')
+        console.log(place)
         return (
             <div>
                 <div className="col-md-12 place-title">
@@ -85,8 +87,8 @@ class Place extends Component {
                             </Link>
                         </li>
                         <li>
-                            <Link to={'/place/'+place.place.id}>
-                               {place.place.title}
+                            <Link to={'/place/'+place.id}>
+                               {place.title}
                              </Link>
                         </li>
                     </ul>
@@ -121,7 +123,7 @@ function mapStateToProps (state) {
     return {
         store: store,
         user: user,
-        place: place
+        place: place.place
     }
 }
 
