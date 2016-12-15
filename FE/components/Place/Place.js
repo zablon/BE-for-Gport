@@ -3,38 +3,24 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-var MainTable = require('./../main/mainTable');
 var helper = require('./../helper');
 var config = require('./../config');
 var Link = require('react-router').Link;
-var FotoFolder = require('./FotoFolder');
+import FotoFolder from ".//FotoFolder"
+import MainTable from "./../main/mainTable"
 import Comments from "../comments/Comments"
 import store from "../../store"
 import SmallInformationBoard from "./SmallInformationBoard"
 import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
 import { setUserParams } from "../../actions/userActions"
+
 class Place extends Component {
     constructor(props) {
         super(props);
         this.props.store.dispatch(setUserParams(window.userSettings))
-        this.state= {
-            images: ''
-        }
-    }
-    checkImg(){
-        var profileImg = new Image(),
-            self = this;
-            profileImg.onload = function(){
-                self.props.store.dispatch(setPlaceProfileUrl(config.domain + 'images/zport/'+ self.props.params.placeId + '/ico.jpg'))
-            }
-            profileImg.onerror = function(){
-                self.props.store.dispatch(setPlaceProfileUrl(config.domain + 'site-images/default.ico'))
-            }
-            profileImg.src = config.domain + 'images/zport/'+ this.props.params.placeId + '/ico.jpg';
     }
     getDataFromJSON(){
         var url =  config.domain + 'place/get/'+this.props.params.placeId,
-            num=1,
             self=this;
         $.ajax({
             type: "POST",
@@ -43,19 +29,10 @@ class Place extends Component {
             success: function (obj) {
                 if(obj.status == 'success'){
                     var dataHouse = obj.place;
-                    dataHouse.typeHouse = 'zport';
                     var placeParams = {
                         place:dataHouse,
                         description:dataHouse.description,
-                        images: dataHouse.Images,
-                        mainTable : dataHouse.Rooms
-                            .map(function(data, index){
-                                num++;
-                                return <MainTable key={index} fullData={dataHouse} data={data} count={dataHouse.Rooms.length} num={num}></MainTable>;
-                            })
                     }
-                    self.setDataImages(dataHouse);
-                    self.setState({images: dataHouse});
                     self.props.store.dispatch(setPlaceParams(placeParams));
                 }else{
                     console.log(obj.errors)
@@ -63,20 +40,13 @@ class Place extends Component {
             }
         })
     }
-    setDataImages(data){
-        this.setState({images: data}, function () {
-
-        });
-    }
     componentDidMount() {
         this.props.store.dispatch(setPlaceId(this.props.params.placeId));
         this.getDataFromJSON();
-        this.checkImg(this);
     }
     render() {
         var place = this.props.place;
-        console.log('====place===')
-        console.log(place)
+
         return (
             <div>
                 <div className="col-md-12 place-title">
@@ -95,8 +65,8 @@ class Place extends Component {
                 </div>
                 <div className="location-block col-md-12">
                     <div className="col-md-4">
-                            <a className="fancyimage" data-fancybox-group="group" href={place.profileUrl}>
-                                <img classNameName='img-responsive' src={place.profileUrl}/>
+                            <a className="fancyimage" data-fancybox-group="group" href={config.domain + 'images/zport/'+ place.id + '/ico.jpg'}>
+                                <img classNameName='img-responsive' src={config.domain + 'images/zport/'+ place.id + '/ico.jpg'}/>
                             </a>
                     </div>
                     <div className="col-md-8">
@@ -110,9 +80,14 @@ class Place extends Component {
                      {place.description}
                 </div>
                 <div className="col-md-12 location-block-description">
-                    <FotoFolder data={this.state.images}></FotoFolder>
+                    {
+                        !place.Images ?
+                            <span>Загрузки...</span>
+                            :
+                            <FotoFolder data={place} type="zport" id={place.id}></FotoFolder>
+                    }
                 </div>
-                {place.mainTable}
+                <MainTable place={place}></MainTable>
             </div>
         );
     }
@@ -129,21 +104,3 @@ function mapStateToProps (state) {
 
 module.exports = connect(mapStateToProps)(Place);
 
-
-/*
- var EditPlace = require('./../editPlace');
-
-
- var Breadcrumbs = require('react-breadcrumbs');
-
-<Breadcrumbs
-excludes={['Place']}
-routes={this.props.routes}
-params={this.props.params}
-/>
-*/
-
-/*
-<div className="col-md-12 location-block-edit">
-    <EditPlace  data={this.state.place}></EditPlace>
-</div>*/
