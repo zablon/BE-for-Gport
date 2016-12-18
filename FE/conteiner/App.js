@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-var Search = require('./../search/Search');
-var Map = require('./Map');
-var CurrentLocation = require('./CurrentLocation');
-var helper = require('./../helper');
-var Adsense = require('./../Adsense/Adsense');
+var Search = require('./../components/search/Search');
+var Map = require('./../components/main/Map');
+var CurrentLocation = require('./../components/main/CurrentLocation');
+var helper = require('./../components/helper');
+var Adsense = require('./../components/Adsense/Adsense');
 
 
-import Social from "./../social/social"
-import Auth from "./../auth/auth"
-import LocationList from "./LocationList"
-import SearchComponent from "./../search/SearchComponent"
-import SearchField from "./../search/SearchField"
-import MainNav from "./MainNav"
-import ProfileBlock from "../Profile/ProfileBlock"
-import { setUserParams } from "../../actions/userActions"
-import { fetchPlace } from "../../actions/placeActions"
-import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../../actions/filterActions"
-import store from "../../store"
-import config from "../config"
+import Social from "../components/social/social"
+import Auth from "../components/auth/auth"
+import LocationList from "../components/main/LocationList"
+import SearchComponent from "../components/search/SearchComponent"
+import SearchField from "../components/search/SearchField"
+import MainNav from "../components/main/MainNav"
+import ProfileBlock from "../components/Profile/ProfileBlock"
+import { setUserParams } from "../actions/userActions"
+import { fetchPlace } from "../actions/placeActions"
+import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../actions/filterActions"
+import store from "../store"
+import config from "../components/config"
 import io from 'socket.io-client'
 import Notifier from "react-desktop-notification"
 

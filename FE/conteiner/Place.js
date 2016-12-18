@@ -3,16 +3,16 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-var helper = require('./../helper');
-var config = require('./../config');
+var helper = require('./../components/helper');
+var config = require('./../components/config');
 var Link = require('react-router').Link;
-import FotoFolder from ".//FotoFolder"
-import MainTable from "./../main/mainTable"
-import Comments from "../comments/Comments"
-import store from "../../store"
-import SmallInformationBoard from "./SmallInformationBoard"
-import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
-import { setUserParams } from "../../actions/userActions"
+import FotoFolder from "../components/place/FotoFolder"
+import MainTable from "../components/main/mainTable"
+import Comments from "../components/comments/Comments"
+import store from "../store"
+import SmallInformationBoard from "../components/Place/smallInformationBoard"
+import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../actions/placeActions"
+import { setUserParams } from "../actions/userActions"
 
 class Place extends Component {
     constructor(props) {

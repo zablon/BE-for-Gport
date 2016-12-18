@@ -4,9 +4,9 @@
 import { Router, Route, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-var App = require('../main/App');
-var Place = require('../Place/Place');
-var Guides = require('../guides/guides');
+var App = require('../../conteiner/App');
+var Place = require('../../conteiner/Place');
+var Guides = require('../../conteiner/Guides');
 var Contacts = require('../contacts/Contacts');
 var Statistics = require('../statistics/Statistics');
 var Infrastructure = require('../Infrastructure/Infrastructure');

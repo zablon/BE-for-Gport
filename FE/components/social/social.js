@@ -23,4 +23,3 @@ export default class social extends Component {
     }
 }
 
-module.exports = social;

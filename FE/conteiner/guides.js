@@ -2,20 +2,20 @@
  * Created by semianchuk on 23.04.16.
  */
 
-var config = require('./../config');
+var config = require('./../components/config');
 var directionsService = new google.maps.DirectionsService;
 var directionsDisplay = new google.maps.DirectionsRenderer;
-var Steps = require('./steps');
-var MainNav = require('../main/MainNav');
+var Steps = require('./../components/guides/steps');
 var Link = require('react-router').Link;
-var helper = require('../helper');
+var helper = require('../components/helper');
 var endPoint = helper.endPoint
 
+import MainNav from "../components/main/MainNav"
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import store from "../../store"
-import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../../actions/placeActions"
-import { setUserParams } from "../../actions/userActions"
+import store from "../store"
+import { setPlaceId, setPlaceParams } from "../actions/placeActions"
+import { setUserParams } from "../actions/userActions"
 
 class Guides extends Component {
     constructor(props) {
