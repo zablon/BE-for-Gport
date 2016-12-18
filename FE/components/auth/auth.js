@@ -1,55 +1,43 @@
 /**
  * Created by semianchuk on 01.06.16.
  */
-var React = require('react');
+import React, { Component } from 'react'
 var Config = require('../config')
 var url ='login';
 
-var Auth = React.createClass({
+export default class Auth extends Component {
     login(){
         url = 'auth/login'
         this.sendAuth();
-    },
+    }
     signup(){
         url = 'auth/signup'
         this.sendAuth();
-    },
+    }
     FB(){
         url = 'auth/facebook'
         this.sendAuth();
-    },
+    }
     twitter(){
         url = 'auth/twitter'
         this.sendAuth();
-    },
+    }
     google(){
         url = 'auth/google'
         this.sendAuth();
-    },
+    }
     vk(){
         url = 'auth/vk'
         this.sendAuth();
-    },
+    }
     odnoklassniki(){
         url = 'auth/odnoklassniki'
         this.sendAuth();
-    },
+    }
     sendAuth(){
         console.log('send request', url)
         window.location.href = Config.domain + url
-/*        $.ajax({
-            type: "GET",
-            url: Config.domain + url,
-            dataType: "json",
-            data: {},
-            success: function (obj) {
-                console.log('success request', url)
-                if(obj.status == 'success'){
-
-                }
-            }
-        })*/
-    },
+    }
     render() {
         var commentsObj;
         return (
@@ -60,9 +48,7 @@ var Auth = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = Auth;
+}
 
 /*
  <div onClick={this.twitter} className="btn btn-info"><span className="fa fa-twitter"></span> </div>

@@ -83,7 +83,7 @@ var Map = React.createClass({
                 return (props.filter.filterSearch==true) ? props.filter.conditioner ? (data.conditioner==props.filter.conditioner) : true : true
             })
             .filter(function(data){
-                return (props.filter.filterSearch==true) ? props.filter.wifi ? (console.log(data.wifi==props.filter.wifi)) : true : true
+                return (props.filter.filterSearch==true) ? props.filter.wifi ? (data.wifi==props.filter.wifi) : true : true
             })
             .filter(function(data){
                 return (props.filter.filterSearch==true) ? props.filter.eat ? (data.eat==props.filter.eat) : true : true

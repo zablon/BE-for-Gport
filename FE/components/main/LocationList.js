@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import LocationItem from './locationItem/LocationItem'
-import helper from '../helper'
-import { setFilterType } from "../../actions/filterActions"
-import { connect } from 'react-redux'
-import store from "../../store"
 
-class LocationList extends Component {
 
+export default class LocationList extends Component {
+    
     clearFilter(){
         this.props.clearFilter();
     }
@@ -14,7 +11,8 @@ class LocationList extends Component {
 		var self = this;
         var props = this.props;
         var num=0;
-		var locations = this.props.place
+        if(!props.locations){ return (<div></div>)}
+		var locations = props.locations
             .filter(function(data){
                     return (props.filter.textSearch==true) ? data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1 : true;
             })
@@ -37,7 +35,7 @@ class LocationList extends Component {
                     return (props.filter.filterSearch==true) ? props.filter.conditioner ? (data.conditioner==props.filter.conditioner) : true : true
             })
             .filter(function(data){
-                    return (props.filter.filterSearch==true) ? props.filter.wifi ? (console.log(data.wifi==props.filter.wifi)) : true : true
+                    return (props.filter.filterSearch==true) ? props.filter.wifi ? (data.wifi==props.filter.wifi) : true : true
             })
             .filter(function(data){
                     return (props.filter.filterSearch==true) ? props.filter.eat ? (data.eat==props.filter.eat) : true : true
@@ -71,14 +69,3 @@ class LocationList extends Component {
 	}
 
 };
-
-function mapStateToProps (state) {
-    const { place, filter } = state.reducer;
-    return {
-        store: store,
-        place: place.places,
-        filter: filter
-    }
-}
-
-module.exports = connect(mapStateToProps)(LocationList);

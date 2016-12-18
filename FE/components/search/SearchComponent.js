@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import helper from '../helper'
 import { setFilterType, setFilterDistance, setFilterToiler, setFilterTv, setFilterRefrigeter ,setFilterConditioner, setFilterWifi, setFilterEat, setFilterChildren, setFilterSwiming } from "../../actions/filterActions"
-import { connect } from 'react-redux'
-import store from "../../store"
 
-class SearchComponent extends Component {
+
+export default class SearchComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -192,15 +191,3 @@ class SearchComponent extends Component {
 		);
 	}
 };
-
-function mapStateToProps (state) {
-    const { user, tweets, filter } = state.reducer;
-    return {
-        store: store,
-        user: user,
-        tweets: tweets,
-        filter: filter
-    }
-}
-
-module.exports = connect(mapStateToProps)(SearchComponent);

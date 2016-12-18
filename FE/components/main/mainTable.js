@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 import FotoFolder from './../Place/FotoFolder'
 
-export default class PriceTable extends Component {
+export default class MainTable extends Component {
 
     constructor(props) {
         super(props);
@@ -87,7 +87,7 @@ export default class PriceTable extends Component {
                                 </div>
                                 <div className="col-md-2"></div>
                                 <div className="col-md-12">
-                                    <FotoFolder data={data} type="room" id={data.id}></FotoFolder>
+                                    <FotoFolder key={data.id} data={data} type="room" id={data.id}></FotoFolder>
                                 </div>
                             </div>
                         </div>

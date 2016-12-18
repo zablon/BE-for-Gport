@@ -4,24 +4,19 @@ import { connect } from 'react-redux'
 var Search = require('./../search/Search');
 var Map = require('./Map');
 var CurrentLocation = require('./CurrentLocation');
-var LocationList = require('./LocationList');
-var SearchField = require('./../search/SearchField');
-var SearchComponent = require('./../search/SearchComponent');
-//import restauran from "../../restaurants"
-
-window.restaurants = [];
-
 var helper = require('./../helper');
-
-var MainNav = require('./MainNav');
-var Auth = require('./../auth/auth');
-var Social = require('./../social/social');
 var Adsense = require('./../Adsense/Adsense');
 
+
+import Social from "./../social/social"
+import Auth from "./../auth/auth"
+import LocationList from "./LocationList"
+import SearchComponent from "./../search/SearchComponent"
+import SearchField from "./../search/SearchField"
+import MainNav from "./MainNav"
 import ProfileBlock from "../Profile/ProfileBlock"
-import { addTweet } from "../../actions/tweetsActions"
 import { setUserParams } from "../../actions/userActions"
-import { setPlaceParams, fetchPlace } from "../../actions/placeActions"
+import { fetchPlace } from "../../actions/placeActions"
 import { setFilterType, fetchFilter, setFilterText, clearFilter } from "../../actions/filterActions"
 import store from "../../store"
 import config from "../config"
@@ -99,25 +94,24 @@ class App extends Component {
                     <ProfileBlock ></ProfileBlock>
                 </div>
                 <div className="col-md-12">
-                    <div className="col-md-7">
+                    <div className="col-md-5">
                         <Auth></Auth>
                         <div className="main-map-block">
                             <div className="col-md-12">
                                 <h2>Поиск жилья</h2>
-                                <SearchField onSearch={this.searchForAddress.bind(this)} onFilterInput={this.handleFilterText.bind(this)} filterText={this.state.filterText}/>
+                                <SearchField locations={this.props.place} onSearch={this.searchForAddress.bind(this)} onFilterInput={this.handleFilterText.bind(this)} filterText={this.state.filterText}/>
                             </div>
-                            <SearchComponent key="SearchComponent" type={routeType}/>
+                            <SearchComponent key="SearchComponent" filter={this.props.filter} store={this.props.store} type={routeType}/>
                         </div>
                     </div>
-                    <div className="mark-map-block col-md-5">
-                        <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.props.place} activeLocationAddress={this.state.currentAddress}
+                    <div className="mark-map-block col-md-7">
+                        <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.props.place.places} activeLocationAddress={this.state.currentAddress}
                         onClick={this.searchForAddress.bind(this)} />
                     </div>
                     <div className="map-block col-md-5 hidden">
                         <Map filter= {filter} filterText={this.state.filterText} locations={this.props.place.places} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
                     </div>
                 </div>
-
 			</div>
 		);
 	}

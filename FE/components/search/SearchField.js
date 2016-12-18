@@ -1,13 +1,9 @@
-var React = require('react');
 var delay = 3000;
 var isLoading = false;
 var isDirty = false;
+import React, { Component } from 'react'
 
-var SearchField = React.createClass({
-
-	getInitialState() {
-		return { value: '' };
-	},
+export default class SearchField extends Component {
 
 	handleChange(event) {
 		var self = this;
@@ -32,21 +28,17 @@ var SearchField = React.createClass({
 				}
 			}
 		};
-	},
+	}
 
 	handleSubmit(event){
 		event.preventDefault();
 		this.props.onChooseType(this.state.value);
 		this.getDOMNode().querySelector('input').blur();
-	},
-    componentDidMount(){
+	}
 
-    },
 	render() {
-        var searchList = restaurants
-            .map(function(data){
-               return  <option>{data.title}</option>
-            })
+        var searchList = this.props.location;
+
 		return (
 			<form id="geocoding_form" className="form-horizontal" onSubmit={this.handleSubmit}>
 				<div className="form-group">
@@ -55,7 +47,15 @@ var SearchField = React.createClass({
 							<input type="text" className="form-control" id="address" placeholder="Find a location..." 
 							value={this.props.filterText} onChange={this.handleChange} list="search_list" />
                             <datalist id="search_list">
-                                {searchList}
+                                {
+									!searchList ?
+										'Загрузка...'
+										:
+									searchList
+										.map(function(data){
+											return  <option>{data.title}</option>
+										})
+								}
                             </datalist>
 							<span className="input-group-btn">
 								<span className="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -67,6 +67,4 @@ var SearchField = React.createClass({
 		);
 
 	}
-});
-
-module.exports = SearchField;
+}

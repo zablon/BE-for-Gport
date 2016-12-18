@@ -84,10 +84,10 @@ class Place extends Component {
                         !place.Images ?
                             <span>Загрузки...</span>
                             :
-                            <FotoFolder data={place} type="zport" id={place.id}></FotoFolder>
+                            <FotoFolder key={place.id} data={place} type="zport" id={place.id}></FotoFolder>
                     }
                 </div>
-                <MainTable place={place}></MainTable>
+                <MainTable key={'mainTable-'+place.id} place={place}></MainTable>
             </div>
         );
     }
