@@ -3,10 +3,10 @@
  */
 
 
-var config = require('./../config');
-var helper = require('../helper');
+var config = require('./../components/config');
+var helper = require('../components/helper');
 import React, { Component } from 'react'
-import MainNav from "../main/MainNav"
+import MainNav from "../components/main/MainNav"
 
 
 class Contacts extends Component {

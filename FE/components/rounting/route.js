@@ -7,7 +7,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 var App = require('../../conteiner/App');
 var Place = require('../../conteiner/Place');
 var Guides = require('../../conteiner/Guides');
-var Contacts = require('../contacts/Contacts');
+var Contacts = require('../../conteiner/Contacts');
 var Statistics = require('../statistics/Statistics');
 var Infrastructure = require('../Infrastructure/Infrastructure');
 
