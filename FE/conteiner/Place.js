@@ -50,18 +50,18 @@ class Place extends Component {
         return (
             <div>
                 <div className="col-md-12 place-title">
-                    <ul className="nav nav-pills"  onClick={this.handleSubmit}>
-                        <li className='active'>
+                    <ol className="breadcrumb text-left" onClick={this.handleSubmit}>
+                        <li className="active">
                             <Link to={'/'}>
-                            Главная
+                                Главная
                             </Link>
                         </li>
                         <li>
                             <Link to={'/place/'+place.id}>
-                               {place.title}
-                             </Link>
+                                {place.title}
+                            </Link>
                         </li>
-                    </ul>
+                    </ol>
                 </div>
                 <div className="location-block col-md-12">
                     <div className="col-md-4">

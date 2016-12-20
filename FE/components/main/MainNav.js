@@ -20,7 +20,7 @@ export default class MainNav extends Component {
             .map(function(data,index){
                 let active = '';
                 if(data==routeType){ active = "active"}
-                if(index<5){
+                if(index<4){
                     return <li className={active}>
                                 <Link to={'/'+ data}>
                                    {helper.type(data)}
@@ -35,6 +35,11 @@ export default class MainNav extends Component {
                             <li>
                                 <Link to={'/infrastructure/gport'}>
                                     Инфраструктура
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={'/map/list'}>
+                                    Карта
                                 </Link>
                             </li>
                             <li>

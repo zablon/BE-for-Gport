@@ -40,12 +40,12 @@ export default class SearchField extends Component {
         var searchList = this.props.location;
 
 		return (
-			<form id="geocoding_form" className="form-horizontal" onSubmit={this.handleSubmit}>
+			<form id="geocoding_form" className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
 				<div className="form-group">
 					<div className="col-xs-12">
 						<div className="input-group">
 							<input type="text" className="form-control" id="address" placeholder="Find a location..." 
-							value={this.props.filterText} onChange={this.handleChange} list="search_list" />
+							value={this.props.filterText} onChange={this.handleChange.bind(this)} list="search_list" />
                             <datalist id="search_list">
                                 {
 									!searchList ?

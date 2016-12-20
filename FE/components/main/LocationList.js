@@ -53,6 +53,9 @@ export default class LocationList extends Component {
 			return <LocationItem data={l} timestamp={l.timestamp}
 					active={active} onClick={self.props.onClick} />
 		});
+        var placeParams = {
+            place:locations
+        }
 
 		if(!locations.length){
 			return null;

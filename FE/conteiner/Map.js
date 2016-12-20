@@ -25,7 +25,7 @@ import Notifier from "react-desktop-notification"
 
 window.gmarkers = [];
 
-class App extends Component {
+class MapPage extends Component {
     constructor(props) {
         super(props);
 
@@ -33,14 +33,14 @@ class App extends Component {
 
         this.props.store.dispatch(setUserParams(window.userSettings))
         this.state = {
-			currentAddress: 'Zport',
-			mapCoordinates: {
+            currentAddress: 'Zport',
+            mapCoordinates: {
                 lat: 46.12363029999999,
                 lng: 32.29127140000003
             },
             filter: this.props.filter,
             listNav:true,
-            mapNav:false
+            mapNav:true
         };
     }
     componentDidMount () {
@@ -49,11 +49,11 @@ class App extends Component {
             Notifier.start(data.title, data.text, config.domain, config.domain+"images/icon/logo.jpeg");
         })
     }
-	filterFunc(data){
+    filterFunc(data){
         this.props.store.dispatch(fetchFilter());
         this.state.filter = this.props.filter
-	}
-	searchForAddress(data){
+    }
+    searchForAddress(data){
         this.props.store.dispatch(setFilterText(data.title));
         this.state.filter = this.props.filter
         this.state.removeMarkers= true
@@ -61,7 +61,7 @@ class App extends Component {
             lat: data.lat,
             lng: data.lng
         }
-	}
+    }
     handleFilterText(filterText){
         this.props.store.dispatch(setFilterText(filterText));
         this.state.filter = this.props.filter
@@ -79,29 +79,15 @@ class App extends Component {
         }
 
     }
-    changeAction(list){
-        if(list=='list'){
-            this.setState({
-                listNav:true,
-                mapNav:false
-            })
-        }else{
-            this.setState({
-                listNav:false,
-                mapNav:true
-            })
-        }
-
-    }
-	render(){
-    var routeType = (this.props.params.type ? this.props.params.type : '');
+    render(){
+        var routeType = (this.props.params.type ? this.props.params.type : '');
         let filter = this.props.filter;
 
         return (
-			<div className="main-page">
+            <div className="main-page">
                 <div className="col-md-12 header-img">
                     <Social></Social>
-                    <img className="main-img" src="site-images/header-img.jpg"/>
+                    <img className="main-img" src={config.domain + 'site-images/header-img.jpg'}/>
                 </div>
                 <div className="col-md-12">
                     <MainNav type={routeType} typeFilter={this.typeFilter.bind(this)}></MainNav>
@@ -120,28 +106,15 @@ class App extends Component {
                             <SearchComponent key="SearchComponent" filter={this.props.filter} store={this.props.store} type={routeType}/>
                         </div>
                     </div>
-                    <div className="col-md-7 tabbable">
-                        <ul className="nav nav-tabs">
-                            <li className={this.state.listNav ? 'active' : ''} onClick={this.changeAction.bind(this, 'list')}><a data-toggle="tab" href="#list">Список {this.state.listNav}</a></li>
-                            <li className={this.state.mapNav ? 'active' : ''} onClick={this.changeAction.bind(this, 'maps')}><a data-toggle="tab" href="#maps">Карта</a></li>
-                        </ul>
-                        <div className="tab-content">
-                            <div id="list" className={this.state.listNav ? 'tab-pane active' : 'tab-pane'}>
-                                <div className="mark-map-block">
-                                    <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.props.place.places} activeLocationAddress={this.state.currentAddress}
-                                                  onClick={this.searchForAddress.bind(this)} />
-                                </div>                            </div>
-                            <div id="maps" className={this.state.mapNav ? 'tab-pane active' : 'tab-pane'}>
-                                <div className="map-block">
-                                    <Map filter= {filter} clearFilter={this.clearFilter.bind(this)} action={this.state.mapNav} filterText={this.state.filterText} locations={this.props.place.places} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
-                                </div>
-                            </div>
-                        </div>
+                    <div className="col-md-7">
+                        <div className="map-block">
+                        <Map filter= {filter} clearFilter={this.clearFilter.bind(this)} action={this.state.mapNav} filterText={this.state.filterText} locations={this.props.place.places} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
+                    </div>
                     </div>
                 </div>
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 
 };
 
@@ -157,13 +130,4 @@ function mapStateToProps (state) {
     }
 }
 
-module.exports = connect(mapStateToProps)(App);
-
-/*
- <div className="col-md-12">
- <div className="main-map-block">
- <SearchComponent key="SearchComponent" type={routeType}/>
- </div>
- </div>
- <Adsense></Adsense>
- */
+module.exports = connect(mapStateToProps)(MapPage);

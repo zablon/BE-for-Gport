@@ -1,10 +1,11 @@
 var React = require('react');
 var helper = require('./../helper');
+import config from "../config"
 
 var Map = React.createClass({
-	componentDidMount(){
-		this.componentDidUpdate();
-	},
+    getInitialState() {
+        return { num: 0 };
+    },
     infoWindow(data){
         return '<div class="col-md-12 map-list-preview" style="text-align: left">'+
             '<h4><a href="#/place/'+data.id+'">'+data.title+'</a></h4>'+
@@ -40,6 +41,7 @@ var Map = React.createClass({
         '</div>'
     },
 	componentDidUpdate(){
+        if(!this.props.action) return ;
 		if(this.lastLat == this.props.lat && this.lastLng == this.props.lng){
 			return;
 		}
@@ -59,7 +61,8 @@ var Map = React.createClass({
         this.addMarkers(map, this.props)
 	},
     addMarkers(map, props){
-        var self = this;
+        var self = this,
+            num=0;
         var locations = this.props.locations
             .filter(function(data){
                 return (props.filter.textSearch==true) ? data.title.toLowerCase().indexOf(props.filter.filterText.toLowerCase()) > -1 : true;
@@ -95,31 +98,32 @@ var Map = React.createClass({
                 return (props.filter.filterSearch==true) ? props.filter.swiming ? props.filter.swiming : true : true
             })
             .map(function(data){
-                var icon = 'images/icon/green-icon.png'
+                num++;
+                var icon = config.domain + 'images/icon/green-icon.png'
                 switch(data.type){
                     case 'chast':
-                        icon = 'images/icon/chast.png'
+                        icon = config.domain + 'images/icon/chast.png'
                         break;
                     case 'pansionat':
-                        icon = 'images/icon/pansionat.png'
+                        icon = config.domain + 'images/icon/pansionat.png'
                         break;
                     case 'hotel':
-                        icon = 'images/icon/hotel.png'
+                        icon = config.domain + 'images/icon/hotel.png'
                         break;
                     case 'sanatoriy':
-                        icon = 'images/icon/sanatoriy.png'
+                        icon = config.domain + 'images/icon/sanatoriy.png'
                         break;
                     case 'otel':
-                        icon = 'images/icon/otel.png'
+                        icon = config.domain + 'images/icon/otel.png'
                         break;
                     case 'children':
-                        icon = 'images/icon/children.png'
+                        icon = config.domain + 'images/icon/children.png'
                         break;
                     case 'basi':
-                        icon = 'images/icon/basi.png'
+                        icon = config.domain + 'images/icon/basi.png'
                         break;
                     case 'room':
-                        icon = 'images/icon/room.png'
+                        icon = config.domain + 'images/icon/room.png'
                         break;
                     default:
 
@@ -136,11 +140,18 @@ var Map = React.createClass({
                 }).setIcon(icon);
                 gmarkers.push(marker);
         })
-    new MarkerClusterer(map, gmarkers);
+
+        new MarkerClusterer(map, gmarkers);
+    },
+    clearFilter(){
+        this.props.clearFilter();
     },
 	render(){
-		return (
+        console.log(this.props)
+        return (
 			<div className="map-holder">
+                <span className="list-group-item list-group-item-first active">Результаты: {this.state.num}</span>
+                <span className="caption-of-result glyphicon glyphicon-remove" onClick={this.clearFilter.bind(this)}></span>
 				<p>Loading...</p>
 				<div id="map"></div>
 			</div>

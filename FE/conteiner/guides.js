@@ -116,7 +116,18 @@ class Guides extends Component {
         return (
             <div className="guide">
                 <div className="col-md-12">
-                    <MainNav type="" typeFilter=""></MainNav>
+                    <ol className="breadcrumb text-left" onClick={this.handleSubmit}>
+                        <li className="active">
+                            <Link to={'/'}>
+                                Главная
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/place/'+this.state.fulldata.id}>
+                                {this.state.fulldata.title}
+                            </Link>
+                        </li>
+                    </ol>
                 </div>
                 <div className="col-md-12">
                     <h3>Путеводитель для  -  <Link to={'/place/'+this.state.fulldata.id} className="location-title"> {this.state.fulldata.title}</Link> </h3>
