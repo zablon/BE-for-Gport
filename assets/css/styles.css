@@ -178,7 +178,6 @@ a.list-group-item span.createdAt {
     text-align: left;
 }
 .location-block-description, .main-block{
-    border-bottom: 1px solid #AAB1B9;
     padding: 10px 0;
 }
 .main-map-block .btn{
@@ -407,4 +406,17 @@ a.list-group-item span.createdAt {
     right: 34px;
     top: 16px;
     cursor: pointer;
+}
+#comments .form-horizontal{
+    padding-top: 10px;
+}
+.p-10{
+    padding: 10px;
+}
+.p-0{
+    padding: 0px;
+}
+.border-item{
+    border: 1px solid #ecf0f1;
+    border-bottom: 0px solid #ecf0f1;
 }

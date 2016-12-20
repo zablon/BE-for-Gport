@@ -2,11 +2,12 @@ var React = require('react');
 var moment = require('moment');
 var Link = require('react-router').Link;
 var helper = require('./../../helper');
+var config = require('./../../config');
 
 var LocationItem = React.createClass({
 
     getInitialState: function () {
-        return {hover: false};
+        return {hover: true};
     },
 
     mouseOver: function () {
@@ -34,48 +35,44 @@ var LocationItem = React.createClass({
             this.state.toogle = 'location-block-close'
         }
 		return (
-            <div>
+            <div className="col-md-12 border-item">
                 <Link to={'/place/'+this.props.data.id} className="location-title">
                     <h4 className="location-title">{this.props.data.title}</h4>
+                            <div className="col-md-6 p-0">
+                                <a className="fancyimage" data-fancybox-group="group" href={config.domain + 'images/zport/'+ this.props.data.id + '/ico.jpg'}>
+                                    <img className='img-responsive' src={config.domain + 'images/zport/'+ this.props.data.id + '/ico.jpg'}/>
+                                </a>
+                            </div>
+                            <div className="col-md-6 location-block-open" >
+                                <ul className="list-group p-0">
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-home"></i> {this.props.data.title}
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-star"></i> Тип: {helper.type(this.props.data.type)}
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-send"></i> Дистанция: {this.props.data.distance} м.
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-shopping-cart"></i> Удобства: <i className={this.props.data.toilet==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-equalizer"></i> Душ:  <i className={this.props.data.dush==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-expand"></i> TV:  <i className={this.props.data.tv==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-folder-close"></i> Холодильник: <i className={this.props.data.refrigeter==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+                                    </li>
+                                    <li className="list-group-item">
+                                        <i className="glyphicon glyphicon-globe"></i> Кондиционер: <i className={this.props.data.conditioner==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+                                    </li>
+                                </ul>
+                                <span className="glyphicon glyphicon-zoom-in"></span>
+                            </div>
                 </Link>
-                <a className={cn} onClick={this.handleClick} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
-                    <div class="raw" className="location-block">
-                        <div className={this.state.toogle} >
-                            <ul class="list-group">
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-home"></i> {this.props.data.title}
-                                </li><li className="list-group-item">
-                                <i className="glyphicon glyphicon-star"></i> Тип: {helper.type(this.props.data.type)}
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-send"></i> Дистанция: {this.props.data.distance} м.
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-shopping-cart"></i> Удобства: <i className={this.props.data.toilet==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-equalizer"></i> Душ:  <i className={this.props.data.dush==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-expand"></i> TV:  <i className={this.props.data.tv==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-folder-close"></i> Холодильник: <i className={this.props.data.refrigeter==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-globe"></i> Кондиционер: <i className={this.props.data.conditioner==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-cd"></i> Wifi:  <i className={this.props.data.wifi==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                                <li className="list-group-item">
-                                    <i className="glyphicon glyphicon-apple"></i> Питания:   <i className={this.props.data.eat==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
-                                </li>
-                            </ul>
-                            <span className="glyphicon glyphicon-zoom-in"></span>
-                        </div>
-                    </div>
-                </a>
             </div>
 
 		)
@@ -86,6 +83,19 @@ var LocationItem = React.createClass({
 module.exports = LocationItem;
 
 /*
+
+ <li className="list-group-item">
+ <i className="glyphicon glyphicon-cd"></i> Wifi:  <i className={this.props.data.wifi==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+ </li>
+ <li className="list-group-item">
+ <i className="glyphicon glyphicon-apple"></i> Питания:   <i className={this.props.data.eat==true ? "glyphicon glyphicon-ok" : " glyphicon glyphicon-remove"}></i>
+ </li>
+
+
+
+
+
+
 
 <a className={cn} onClick={this.handleClick} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
     <div class="raw" className="location-block">

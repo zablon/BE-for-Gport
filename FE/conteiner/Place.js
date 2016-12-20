@@ -13,11 +13,28 @@ import store from "../store"
 import SmallInformationBoard from "../components/Place/smallInformationBoard"
 import { setPlaceProfileUrl, setPlaceId, setPlaceParams } from "../actions/placeActions"
 import { setUserParams } from "../actions/userActions"
+var directionsService = new google.maps.DirectionsService;
+var directionsDisplay = new google.maps.DirectionsRenderer;
+var Steps = require('./../components/guides/steps');
+
+var endPoint = helper.endPoint
 
 class Place extends Component {
     constructor(props) {
         super(props);
-        this.props.store.dispatch(setUserParams(window.userSettings))
+        this.props.store.dispatch(setUserParams(window.userSettings));
+        this.state={
+            main:true,
+            comments:false,
+            foto:false,
+            maps:false,
+            fulldata: {},
+            legs: {},
+            url: '',
+            description: '',
+            destination: '',
+            endPoint:endPoint
+        }
     }
     getDataFromJSON(){
         var url =  config.domain + 'place/get/'+this.props.params.placeId,
@@ -33,6 +50,13 @@ class Place extends Component {
                         place:dataHouse,
                         description:dataHouse.description,
                     }
+                    self.setState({
+                        fulldata:dataHouse,
+
+                    })
+                    setTimeout(function(){
+                        self.calcRoute({target: {value: 'bazarNew'}})
+                    },200)
                     self.props.store.dispatch(setPlaceParams(placeParams));
                 }else{
                     console.log(obj.errors)
@@ -44,9 +68,89 @@ class Place extends Component {
         this.props.store.dispatch(setPlaceId(this.props.params.placeId));
         this.getDataFromJSON();
     }
+    changeAction(list){
+        if(list=='main'){
+            this.setState({
+                main:true,
+                comments:false,
+                foto:false,
+                maps:false
+            })
+        }else if(list=='comments'){
+            this.setState({
+                main:false,
+                comments:true,
+                foto:false,
+                maps:false
+            })
+        }else if(list=='foto'){
+            this.setState({
+                main:false,
+                comments:false,
+                foto:true,
+                maps:false
+            })
+        }else{
+            this.setState({
+                main:false,
+                comments:false,
+                foto:false,
+                maps:true
+            })
+        }
+
+    }
+    initMap() {
+        var self = this;
+        setTimeout(function(){
+            var map = new google.maps.Map(document.getElementById('map'),{
+                zoom: 14,
+                center: {
+                    lat: Number(self.state.fulldata.lat),
+                    lng: Number(self.state.fulldata.lng)
+                }
+            });
+            directionsDisplay.setMap(map);
+        },100)
+    }
+    calculateAndDisplayRoute(end) {
+        var lat = Number(this.state.fulldata.lat),
+            lng = Number(this.state.fulldata.lng),
+            self=this;
+        directionsService.route({
+            origin: {lat: lat, lng: lng},  // Haight.
+            destination: end,
+            travelMode: google.maps.TravelMode.WALKING
+        }, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                self.setState({
+                    legs : response.routes[0].legs[0],
+                    url : end.url,
+                    description :  end.description,
+                    destination : end
+                })
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+    calcRoute(event){
+        var end = this.state.endPoint;
+        for(var i=0; i<end.length; i++){
+            if(end[i].name == event.target.value){
+                this.calculateAndDisplayRoute(end[i]);
+            }
+        }
+    }
     render() {
         var place = this.props.place;
-
+        var end = this.state.endPoint
+            .map(function(data){
+                return   <option value={data.name}>{data.label}</option>
+            })
+        var distance = this.state.legs.distance ? this.state.legs.distance.value : '';
+        var put =  <h4>Дорога до - {distance}</h4>
         return (
             <div>
                 <div className="col-md-12 place-title">
@@ -66,28 +170,74 @@ class Place extends Component {
                 <div className="location-block col-md-12">
                     <div className="col-md-4">
                             <a className="fancyimage" data-fancybox-group="group" href={config.domain + 'images/zport/'+ place.id + '/ico.jpg'}>
-                                <img classNameName='img-responsive' src={config.domain + 'images/zport/'+ place.id + '/ico.jpg'}/>
+                                <img className='img-responsive' src={config.domain + 'images/zport/'+ place.id + '/ico.jpg'}/>
                             </a>
                     </div>
                     <div className="col-md-8">
                         <SmallInformationBoard data={place}></SmallInformationBoard>
                     </div>
                 </div>
-                <div className="col-md-12">
-                    <Comments placeId={place.placeId}></Comments>
+                <div className="col-md-12 text-left">
+                    {place.description}
+
                 </div>
-                <div className="col-md-12 location-block-description text-left">
-                     {place.description}
+                <div className="col-md-12 tabbable">
+                    <ul className="nav nav-tabs">
+                        <li className={this.state.main ? 'active' : ''} onClick={this.changeAction.bind(this, 'main')}><a data-toggle="tab" href="#main">Главная {this.state.listNav}</a></li>
+                        <li className={this.state.comments ? 'active' : ''} onClick={this.changeAction.bind(this, 'comments')}><a data-toggle="tab" href="#comments">Коментарии</a></li>
+                        <li className={this.state.foto ? 'active' : ''} onClick={this.changeAction.bind(this, 'foto')}><a data-toggle="tab" href="#foto">Фотоальбом</a></li>
+                        <li className={this.state.maps ? 'active' : ''} onClick={this.changeAction.bind(this, 'maps')}><a data-toggle="tab" href="#maps">Путеводитель</a></li>
+                    </ul>
+                    <div className="tab-content">
+                        <div id="main" className={this.state.main ? 'tab-pane active' : 'tab-pane'}>
+                            <MainTable key={'mainTable-'+place.id} place={place}></MainTable>
+                        </div>
+                        <div id="comments" className={this.state.comments ? 'tab-pane active' : 'tab-pane'}>
+                            <Comments placeId={place.placeId}></Comments>
+                        </div>
+                        <div id="foto" className={this.state.foto ? 'tab-pane active location-block-description' : 'tab-pane location-block-description'}>
+                            {
+                                !place.Images ?
+                                    <span>Загрузки...</span>
+                                    :
+                                    <FotoFolder key={place.id} data={place} type="zport" id={place.id}></FotoFolder>
+                            }
+                        </div>
+                        <div id="maps" className={this.state.maps ? 'tab-pane active' : 'tab-pane'}>
+                            {
+                                this.initMap()
+                            }
+                            <div id="floating-panel">
+                                <div className="col-md-6 p-10">
+                                    <b>Начало: </b>
+                                    <select id="start" onChange={this.calcRoute.bind(this)}>
+                                        <option value="chicago, il">{place.title}</option>
+                                    </select>
+                                </div>
+                                <div className="col-md-6 p-10">
+                                    <b>Конечная точка: </b>
+                                    <select id="end" onChange={this.calcRoute.bind(this)}>
+                                        {end}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-md-12">
+                                <div className="col-md-6">
+                                    <h4>{ this.state.destination ? this.state.destination.label : ''} находится на расстоянии -{ this.state.legs.distance ? this.state.legs.distance.value : ''} м от {this.state.fulldata.title}</h4>
+                                    <Steps key={place + '_step'} step={this.state.legs}></Steps>
+                                </div>
+                                <div className="col-md-6" id="map"></div>
+                            </div>
+                            <div className="col-md-12">
+                                <hr/>
+                            </div>
+                            <div className="col-md-12">
+                                <div className="col-md-6"><img src={config.domain + 'site-images/'+ this.state.url}/></div>
+                                <div className="col-md-6">{place.description}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-md-12 location-block-description">
-                    {
-                        !place.Images ?
-                            <span>Загрузки...</span>
-                            :
-                            <FotoFolder key={place.id} data={place} type="zport" id={place.id}></FotoFolder>
-                    }
-                </div>
-                <MainTable key={'mainTable-'+place.id} place={place}></MainTable>
             </div>
         );
     }
