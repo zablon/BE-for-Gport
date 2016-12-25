@@ -73,12 +73,12 @@ class Place extends Component {
         if(hashParts) this.changeAction(hashParts[1]);
     }
     changeAction(list){
-        if(list=='main'){
+        if(list=='maps'){
             this.setState({
-                main:true,
+                main:false,
                 comments:false,
                 foto:false,
-                maps:false
+                maps:true
             })
         }else if(list=='comments'){
             this.setState({
@@ -96,10 +96,10 @@ class Place extends Component {
             })
         }else{
             this.setState({
-                main:false,
+                main:true,
                 comments:false,
                 foto:false,
-                maps:true
+                maps:false
             })
         }
 

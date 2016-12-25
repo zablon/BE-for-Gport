@@ -48,6 +48,8 @@ class App extends Component {
         this.socket.on('user', data => {
             Notifier.start(data.title, data.text, config.domain, config.domain+"images/icon/logo.jpeg");
         })
+        const hashParts = window.location.hash.split('#');
+        if(hashParts) this.changeAction(hashParts[1]);
     }
 	filterFunc(data){
         this.props.store.dispatch(fetchFilter());
@@ -80,15 +82,15 @@ class App extends Component {
 
     }
     changeAction(list){
-        if(list=='list'){
-            this.setState({
-                listNav:true,
-                mapNav:false
-            })
-        }else{
+        if(list=='maps'){
             this.setState({
                 listNav:false,
                 mapNav:true
+            })
+        }else{
+            this.setState({
+                listNav:true,
+                mapNav:false
             })
         }
 
