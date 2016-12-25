@@ -193,7 +193,7 @@ class Place extends Component {
                             <MainTable key={'mainTable-'+place.id} place={place}></MainTable>
                         </div>
                         <div id="comments" className={this.state.comments ? 'tab-pane active' : 'tab-pane'}>
-                            <Comments placeId={place.placeId}></Comments>
+                            <Comments user={this.props.user} placeId={place.id}></Comments>
                         </div>
                         <div id="foto" className={this.state.foto ? 'tab-pane active location-block-description' : 'tab-pane location-block-description'}>
                             {
@@ -204,37 +204,7 @@ class Place extends Component {
                             }
                         </div>
                         <div id="maps" className={this.state.maps ? 'tab-pane active' : 'tab-pane'}>
-                            {
-                                this.initMap()
-                            }
-                            <div id="floating-panel">
-                                <div className="col-md-6 p-10">
-                                    <b>Начало: </b>
-                                    <select id="start" onChange={this.calcRoute.bind(this)}>
-                                        <option value="chicago, il">{place.title}</option>
-                                    </select>
-                                </div>
-                                <div className="col-md-6 p-10">
-                                    <b>Конечная точка: </b>
-                                    <select id="end" onChange={this.calcRoute.bind(this)}>
-                                        {end}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="col-md-6">
-                                    <h4>{ this.state.destination ? this.state.destination.label : ''} находится на расстоянии -{ this.state.legs.distance ? this.state.legs.distance.value : ''} м от {this.state.fulldata.title}</h4>
-                                    <Steps key={place + '_step'} step={this.state.legs}></Steps>
-                                </div>
-                                <div className="col-md-6" id="map"></div>
-                            </div>
-                            <div className="col-md-12">
-                                <hr/>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="col-md-6"><img src={config.domain + 'site-images/'+ this.state.url}/></div>
-                                <div className="col-md-6">{place.description}</div>
-                            </div>
+                            <Guidelist fulldata={place}></Guidelist>
                         </div>
                     </div>
                 </div>

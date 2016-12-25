@@ -11,7 +11,7 @@ import ReactDOM from "react-dom"
 import io from 'socket.io-client'
 import Notifier from "react-desktop-notification"
 
-class Comments extends Component {
+export default class Comments extends Component {
 
     constructor(props) {
         super(props);
@@ -148,7 +148,7 @@ class Comments extends Component {
         return (
             <div>
                 <div className="form-horizontal" role="form">
-                    <div className={this.state.userData ? 'show-block' : 'hide-block'}>
+                    <div className={this.state.userData ? 'show-block' : 'show-block'}>
                         <div className="form-group ">
                             <label for="email" className="col-sm-2 control-label">ФИО</label>
                             <div className="col-sm-10">
@@ -175,17 +175,15 @@ class Comments extends Component {
                     </div>
                 </div>
                 <div className="comment-block" onClick={this.showComments.bind(this)}>
-                    <div className={this.state.toogle}>
+                    <div>
                         {this.state.commentsObj}
-                    </div>
-                    <div className={this.state.commentsObj.length>0 ? "comment-block-show-full" : "hide-block comment-block-show-full" }   >
-                        <span >Показать полностью ...</span>
                     </div>
                 </div>
             </div>
         );
     }
 };
+/*
 
 function mapStateToProps (state) {
     const { user } = state.reducer;
@@ -197,3 +195,9 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps)(Comments);
+*/
+
+/*
+<div className={this.state.commentsObj.length>0 ? "comment-block-show-full" : "hide-block comment-block-show-full" }   >
+    <span >Показать полностью ...</span>
+</div>*/

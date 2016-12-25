@@ -23,7 +23,6 @@ var LocationItem = React.createClass({
 	},
 
 	render(){
-
 		var cn = "list-group-item";
 
 		if(this.props.active){

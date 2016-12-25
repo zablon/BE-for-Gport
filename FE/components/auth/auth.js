@@ -6,6 +6,9 @@ var Config = require('../config')
 var url ='login';
 
 export default class Auth extends Component {
+    constructor(props) {
+        super(props);
+    }
     login(){
         url = 'auth/login'
         this.sendAuth();
@@ -42,9 +45,9 @@ export default class Auth extends Component {
         var commentsObj;
         return (
             <div className="auth-block">
-                <div onClick={this.vk} className="btn btn-primary btn-vk"><span className="fa fa-vk"></span> </div>
-                <div onClick={this.FB} className="btn btn-primary"><span className="fa fa-facebook"></span> </div>
-                <div onClick={this.google} className="btn btn-danger"><span className="fa fa-google-plus"></span> </div>
+                <div onClick={this.vk.bind(this)} className="btn btn-primary btn-vk"><span className="fa fa-vk"></span> </div>
+                <div onClick={this.FB.bind(this)} className="btn btn-primary"><span className="fa fa-facebook"></span> </div>
+                <div onClick={this.google.bind(this)} className="btn btn-danger"><span className="fa fa-google-plus"></span> </div>
             </div>
         );
     }

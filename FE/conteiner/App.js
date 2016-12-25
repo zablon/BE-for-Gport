@@ -40,7 +40,7 @@ class App extends Component {
             },
             filter: this.props.filter,
             listNav:true,
-            mapNav:false
+            mapNav:false,
         };
     }
     componentDidMount () {
@@ -52,7 +52,7 @@ class App extends Component {
 	filterFunc(data){
         this.props.store.dispatch(fetchFilter());
         this.state.filter = this.props.filter
-	}
+    }
 	searchForAddress(data){
         this.props.store.dispatch(setFilterText(data.title));
         this.state.filter = this.props.filter
@@ -94,8 +94,42 @@ class App extends Component {
 
     }
 	render(){
-    var routeType = (this.props.params.type ? this.props.params.type : '');
+        let routeType = (this.props.params.type ? this.props.params.type : '');
         let filter = this.props.filter;
+        let locations = this.props.place.places
+            .filter(function(data){
+                return (filter.textSearch==true) ? data.title.toLowerCase().indexOf(filter.filterText.toLowerCase()) > -1 : true;
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.type ? data.type.toLowerCase().indexOf(filter.type.toLowerCase()) > -1 : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ?  filter.toilet ? (data.toilet==filter.toilet)  : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.distance ? data.distance.toLowerCase().indexOf(filter.distance.toLowerCase()) > -1 : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.tv ? (data.tv==filter.tv) : true  : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.refrigeter ? (data.refrigeter==filter.refrigeter) : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.conditioner ? (data.conditioner==filter.conditioner) : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.wifi ? (data.wifi==filter.wifi) : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.eat ? (data.eat==filter.eat) : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.children ? filter.children : true : true
+            })
+            .filter(function(data){
+                return (filter.filterSearch==true) ? filter.swiming ? filter.swiming : true : true
+            })
 
         return (
 			<div className="main-page">
@@ -128,12 +162,12 @@ class App extends Component {
                         <div className="tab-content">
                             <div id="list" className={this.state.listNav ? 'tab-pane active' : 'tab-pane'}>
                                 <div className="mark-map-block">
-                                    <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={this.props.place.places} activeLocationAddress={this.state.currentAddress}
+                                    <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={locations} activeLocationAddress={this.state.currentAddress}
                                                   onClick={this.searchForAddress.bind(this)} />
                                 </div>                            </div>
                             <div id="maps" className={this.state.mapNav ? 'tab-pane active' : 'tab-pane'}>
                                 <div className="map-block">
-                                    <Map filter= {filter} clearFilter={this.clearFilter.bind(this)} action={this.state.mapNav} filterText={this.state.filterText} locations={this.props.place.places} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
+                                    <Map filter= {filter} key="Map" clearFilter={this.clearFilter.bind(this)} action={this.state.mapNav} filterText={this.state.filterText} locations={locations} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
                                 </div>
                             </div>
                         </div>
