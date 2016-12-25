@@ -16,12 +16,14 @@ import { setUserParams } from "../actions/userActions"
 var directionsService = new google.maps.DirectionsService;
 var directionsDisplay = new google.maps.DirectionsRenderer;
 var Steps = require('./../components/guides/steps');
+import  Guidelist  from './../components/guides/guide'
 
 var endPoint = helper.endPoint
 
 class Place extends Component {
     constructor(props) {
         super(props);
+
         this.props.store.dispatch(setUserParams(window.userSettings));
         this.state={
             main:true,
@@ -67,6 +69,8 @@ class Place extends Component {
     componentDidMount() {
         this.props.store.dispatch(setPlaceId(this.props.params.placeId));
         this.getDataFromJSON();
+        const hashParts = window.location.hash.split('#');
+        if(hashParts) this.changeAction(hashParts[1]);
     }
     changeAction(list){
         if(list=='main'){
