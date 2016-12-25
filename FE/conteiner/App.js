@@ -161,11 +161,19 @@ class App extends Component {
                         </ul>
                         <div className="tab-content">
                             <div id="list" className={this.state.listNav ? 'tab-pane active' : 'tab-pane'}>
+                                <div>
+                                    <span className="list-group-item list-group-item-first active">Результаты: {locations.length}</span>
+                                    <span className="caption-of-result glyphicon glyphicon-remove" onClick={this.clearFilter.bind(this)}></span>
+                                </div>
                                 <div className="mark-map-block">
                                     <LocationList key="LocationList" filter= {filter} filterText={this.state.filterText} clearFilter={this.clearFilter.bind(this)} locations={locations} activeLocationAddress={this.state.currentAddress}
                                                   onClick={this.searchForAddress.bind(this)} />
                                 </div>                            </div>
                             <div id="maps" className={this.state.mapNav ? 'tab-pane active' : 'tab-pane'}>
+                                <div>
+                                    <span className="list-group-item list-group-item-first active">Результаты: {locations.length}</span>
+                                    <span className="caption-of-result glyphicon glyphicon-remove" onClick={this.clearFilter.bind(this)}></span>
+                                </div>
                                 <div className="map-block">
                                     <Map filter= {filter} key="Map" clearFilter={this.clearFilter.bind(this)} action={this.state.mapNav} filterText={this.state.filterText} locations={locations} removeMarkers={this.state.removeMarkers} lat={this.state.mapCoordinates.lat} lng={this.state.mapCoordinates.lng} />
                                 </div>

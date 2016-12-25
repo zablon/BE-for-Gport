@@ -29,7 +29,7 @@ export default class MainNav extends Component {
                 };
             })
             return (<div>
-                        <ul className="nav nav-pills"  onClick={this.handleSubmit}>
+                        <ul className="nav nav-pills"  onClick={this.handleSubmit.bind(this)}>
                             <li className='active'><a href="/">Главная</a></li>
                                 {NavBar}
                             <li>

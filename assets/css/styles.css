@@ -420,3 +420,6 @@ a.list-group-item span.createdAt {
     border: 1px solid #ecf0f1;
     border-bottom: 0px solid #ecf0f1;
 }
+.mark-map-block .list-group{
+    padding-right: 0;
+}

@@ -14,8 +14,6 @@ export default class LocationList extends Component {
 
 		return (
 			<div className="list-group col-xs-12">
-				<span className="list-group-item list-group-item-first active">Результаты: {props.locations.length}</span>
-                <span className="caption-of-result glyphicon glyphicon-remove" onClick={this.clearFilter.bind(this)}></span>
 				{
                     props.locations
                         .map(function(l){

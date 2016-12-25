@@ -139,8 +139,6 @@ var Map = React.createClass({
 	render(){
         return (
 			<div className="map-holder">
-                <span className="list-group-item list-group-item-first active">Результаты: {this.props.locations.length}</span>
-                <span className="caption-of-result glyphicon glyphicon-remove" onClick={this.clearFilter.bind(this)}></span>
 				<p>Loading...</p>
 				<div id="map"></div>
 			</div>

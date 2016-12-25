@@ -32,8 +32,10 @@ export default class SearchField extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
-		this.props.onChooseType(this.state.value);
-		this.getDOMNode().querySelector('input').blur();
+		var q = $('#address').val();
+		this.props.onFilterInput(
+			q
+		)
 	}
 
 	render() {
