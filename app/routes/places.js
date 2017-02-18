@@ -2,105 +2,7 @@ var models  = require('../models');
 var express = require('express');
 
 module.exports = function(app) {
-    /**
-     * @api {get} /place/country/:id Country list
-     * @apiName getCountry
-     * @apiGroup Place
-     *
-     * @apiParam {Number} id Users unique ID.
-     *
-     * @apiSuccess {JSON} field title,place,status
-     * @apiError {JSON} field title,messages,errors,status
-     */
-    app.get('/place/country/:id', function(req, res) {
-        var id = req.params.id;
-        req.assert('id', 'id is required').isInt();
-        var errors = req.validationErrors();
-        
-        if( !errors){
-            models.Country.find(
-                {where: {
-                    id: id
-                }},{
-                    include: [
-                        {model: models.Place,
-                            include: [
-                                {model: models.Room},
-                                {model: models.Image},
-                                {model: models.Image},
-                            ]
-                        },
-                        {model: models.Comment},
-                        {model: models.Image}
-                    ]
-                })
-                .then(function (place) {
-                    res.statusCode = 200;
-                    res.json({
-                        title: 'Get data by id' + id,
-                        place: place,
-                        status: 'success'
-                    });
-                });
-        }else {
-            res.statusCode = 400;
-            res.json({
-                title: 'cant get place from this id',
-                message: 'cant get place from this id',
-                errors: errors,
-                status: 'error'
-            });
-        }
-    });
-    /**
-     * @api {get} /place/country/city/:id City list
-     * @apiName getCity
-     * @apiGroup Place
-     *
-     * @apiParam {Number} id Users unique ID.
-     *
-     * @apiSuccess {JSON} field title,place,status
-     * @apiError {JSON} field title,messages,errors,status
-     */
-    app.get('/place/country/city/:id', function(req, res) {
-        var id = req.params.id;
-        req.assert('id', 'id is required').isInt();
-        var errors = req.validationErrors();
-        if( !errors){
-            models.City.find(
-                {where: {
-                    id: id
-                }},{
-                    include: [
-                        {model: models.Place,
-                            include: [
-                                {model: models.Room},
-                                {model: models.Image},
-                                {model: models.Image},
-                            ]
-                        },
-                        {model: models.Comment},
-                        {model: models.Image}
-                    ]
-                })
-                .then(function (place) {
-                    res.statusCode = 200;
-                    res.json({
-                        title: 'Get data by id' + id,
-                        place: place,
-                        status: 'success'
-                    });
-                });
-        }else {
-            res.statusCode = 400;
-            res.json({
-                title: 'cant get place from this id',
-                message: 'cant get place from this id',
-                errors: errors,
-                status: 'error'
-            });
-        }
-    });
+   
     /**
      * @api {get} /place Place list
      * @apiName getPlace
@@ -167,48 +69,49 @@ module.exports = function(app) {
      * @apiSuccess {JSON} field title,messages,errors,status
      */
     app.post('/place', function(req, res) {
-        models.Place.create({
-            title: req.params.title ? req.params.title : place.title,
-            rating: req.params.rating ? req.params.rating : place.rating,
-            type: req.params.type ? req.params.type : place.type,
-            folder: req.params.folder ? req.params.folder : place.folder,
-            distance: req.params.distance ? req.params.distance : place.distance,
-            phone: req.params.phone ? req.params.phone : place.phone,
-            address: req.params.address ? req.params.address : place.address,
-            description: req.params.description ? req.params.description : place.description,
-            children: req.params.children ? req.params.children : place.children,
-            conditioner: req.params.conditioner ? req.params.conditioner : place.conditioner,
-            dush: req.params.dush ? req.params.dush : place.dush,
-            eat: req.params.eat ? req.params.eat : place.eat,
-            kitchen: req.params.kitchen ? req.params.kitchen : place.kitchen,
-            toilet: req.params.toilet ? req.params.toilet : place.toilet,
-            tv: req.params.tv ? req.params.tv : place.tv,
-            wifi: req.params.wifi ? req.params.wifi : place.wifi,
-            refrigeter: req.params.refrigeter ? req.params.refrigeter : place.refrigeter,
-            parking: req.params.parking ? req.params.parking : place.parking,
-            swiming: req.params.swiming ? req.params.swiming : place.swiming,
-            smoke: req.params.smoke ? req.params.smoke : place.smoke,
-            animal: req.params.animal ? req.params.animal : place.animal,
-            transfer: req.params.transfer ? req.params.transfer : place.transfer,
-            spa: req.params.spa ? req.params.spa : place.spa,
-            fitness: req.params.fitness ? req.params.fitness : place.fitness,
-            garden: req.params.garden ? req.params.garden : place.garden,
-            beach: req.params.beach ? req.params.beach : place.beach,
-            sauna: req.params.sauna ? req.params.sauna : place.sauna,
-            soundproofing: req.params.soundproofing ? req.params.soundproofing : place.soundproofing,
-            massage: req.params.massage ? req.params.massage : place.massage,
-            limited_opportunities: req.params.limited_opportunities ? req.params.limited_opportunities : place.limited_opportunities,
-            free_cancel_booking: req.params.free_cancel_booking ? req.params.free_cancel_booking : place.free_cancel_booking,
-            stock: req.params.stock ? req.params.stock : place.stock,
-            double_bed: req.params.double_bed ? req.params.double_bed : place.double_bed,
-            single_bed: req.params.single_bed ? req.params.single_bed : place.single_bed,
-            lat: req.params.lat ? req.params.lat : place.lat,
-            lng: req.params.lng ? req.params.lng : place.lng
-        }).then(function () {
+        var place = {
+            title: req.query.title ? req.query.title : '',
+            rating: req.query.rating ? req.query.rating : '',
+            type: req.query.type ? req.query.type : '',
+            folder: req.query.folder ? req.query.folder : '',
+            distance: req.query.distance ? req.query.distance : '',
+            phone: req.query.phone ? req.query.phone : '',
+            address: req.query.address ? req.query.address : '',
+            description: req.query.description ? req.query.description : '',
+            children: req.query.children ? req.query.children : '',
+            conditioner: req.query.conditioner ? req.query.conditioner : '',
+            dush: req.query.dush ? req.query.dush : '',
+            eat: req.query.eat ? req.query.eat : '',
+            kitchen: req.query.kitchen ? req.query.kitchen : '',
+            toilet: req.query.toilet ? req.query.toilet : '',
+            tv: req.query.tv ? req.query.tv : '',
+            wifi: req.query.wifi ? req.query.wifi : '',
+            refrigeter: req.query.refrigeter ? req.query.refrigeter : '',
+            parking: req.query.parking ? req.query.parking : '',
+            swiming: req.query.swiming ? req.query.swiming : '',
+            smoke: req.query.smoke ? req.query.smoke : '',
+            animal: req.query.animal ? req.query.animal : '',
+            transfer: req.query.transfer ? req.query.transfer : '',
+            spa: req.query.spa ? req.query.spa : '',
+            fitness: req.query.fitness ? req.query.fitness : '',
+            garden: req.query.garden ? req.query.garden : '',
+            beach: req.query.beach ? req.query.beach : '',
+            sauna: req.query.sauna ? req.query.sauna : '',
+            soundproofing: req.query.soundproofing ? req.query.soundproofing : '',
+            massage: req.query.massage ? req.query.massage : '',
+            limited_opportunities: req.query.limited_opportunities ? req.query.limited_opportunities : '',
+            free_cancel_booking: req.query.free_cancel_booking ? req.query.free_cancel_booking : '',
+            stock: req.query.stock ? req.query.stock : '',
+            double_bed: req.query.double_bed ? req.query.double_bed : '',
+            single_bed: req.query.single_bed ? req.query.single_bed : '',
+            lat: req.query.lat ? req.query.lat : '',
+            lng: req.query.lng ? req.query.lng : ''
+        }
+        models.Place.create(place).then(function () {
             res.statusCode = 200;
             res.json({
                 title: 'Get data success',
-                places: places,
+                places: place,
                 status: 'success'
             });
         });
@@ -314,71 +217,32 @@ module.exports = function(app) {
             models.Place.find(
                 {where: {
                     id: id
-                }},{
-                    include: [
-                        {model: models.Room,
-                            include: [
-                                {model: models.Price},
-                                {model: models.Image},
-                            ]
-                        },
-                        {model: models.Comment},
-                        {model: models.Image}
-                    ]
-                })
+                }})
                 .then(function (place) {
-                    place.update({
-                        title: req.params.title ? req.params.title : place.title,
-                        rating: req.params.rating ? req.params.rating : place.rating,
-                        type: req.params.type ? req.params.type : place.type,
-                        folder: req.params.folder ? req.params.folder : place.folder,
-                        distance: req.params.distance ? req.params.distance : place.distance,
-                        phone: req.params.phone ? req.params.phone : place.phone,
-                        address: req.params.address ? req.params.address : place.address,
-                        description: req.params.description ? req.params.description : place.description,
-                        children: req.params.children ? req.params.children : place.children,
-                        conditioner: req.params.conditioner ? req.params.conditioner : place.conditioner,
-                        dush: req.params.dush ? req.params.dush : place.dush,
-                        eat: req.params.eat ? req.params.eat : place.eat,
-                        kitchen: req.params.kitchen ? req.params.kitchen : place.kitchen,
-                        toilet: req.params.toilet ? req.params.toilet : place.toilet,
-                        tv: req.params.tv ? req.params.tv : place.tv,
-                        wifi: req.params.wifi ? req.params.wifi : place.wifi,
-                        refrigeter: req.params.refrigeter ? req.params.refrigeter : place.refrigeter,
-                        parking: req.params.parking ? req.params.parking : place.parking,
-                        swiming: req.params.swiming ? req.params.swiming : place.swiming,
-                        smoke: req.params.smoke ? req.params.smoke : place.smoke,
-                        animal: req.params.animal ? req.params.animal : place.animal,
-                        transfer: req.params.transfer ? req.params.transfer : place.transfer,
-                        spa: req.params.spa ? req.params.spa : place.spa,
-                        fitness: req.params.fitness ? req.params.fitness : place.fitness,
-                        garden: req.params.garden ? req.params.garden : place.garden,
-                        beach: req.params.beach ? req.params.beach : place.beach,
-                        sauna: req.params.sauna ? req.params.sauna : place.sauna,
-                        soundproofing: req.params.soundproofing ? req.params.soundproofing : place.soundproofing,
-                        massage: req.params.massage ? req.params.massage : place.massage,
-                        limited_opportunities: req.params.limited_opportunities ? req.params.limited_opportunities : place.limited_opportunities,
-                        free_cancel_booking: req.params.free_cancel_booking ? req.params.free_cancel_booking : place.free_cancel_booking,
-                        stock: req.params.stock ? req.params.stock : place.stock,
-                        double_bed: req.params.double_bed ? req.params.double_bed : place.double_bed,
-                        single_bed: req.params.single_bed ? req.params.single_bed : place.single_bed,
-                        lat: req.params.lat ? req.params.lat : place.lat,
-                        lng: req.params.lng ? req.params.lng : place.lng
-                    }).then(function () {
+                    place.updateAttributes(req.query)
+                    .then(function (update_place) {
                         res.statusCode = 200;
                         res.json({
-                            title: 'place id -' + req.params.place_id + ' update',
-                            place: place,
+                            title: 'place id -' + id + ' update',
+                            place: update_place,
                             status: 'success'
                         });
+                    }).catch(function (error) {
+                        res.statusCode = 404;
+                        res.json({
+                            title: error,
+                            place: '',
+                            status: 'error'
+                        });
                     })
+
 
                 });
         }else {
             res.statusCode = 400;
             res.json({
-                title: 'cant get place from this id',
-                message: 'cant get place from this id',
+                title: 'cant update place from this id',
+                message: 'cant update place from this id',
                 errors: errors,
                 status: 'error'
             });
@@ -400,18 +264,35 @@ module.exports = function(app) {
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.Room.destroy({
-                where: {
-                    id: req.params.task_id
-                }
-            }).then(function () {
-                res.statusCode = 200;
-                res.json({
-                    title: 'place id -' + req.params.place_id + ' deleted',
-                    place: place,
-                    status: 'success'
+            models.Place.destroy({id: id})
+                .then(function (deletedRecord) {
+                    if(deletedRecord === 1){
+                        res.statusCode = 200;
+                        res.json({
+                            title: 'place id -' + id + ' deleted',
+                            place: '',
+                            status: 'success'
+                        });
+                    }
+                    else
+                    {
+                        res.statusCode = 404;
+                        res.json({
+                            title: 'record not found',
+                            place: '',
+                            status: 'error'
+                        });
+                    }
+
+                })
+                .catch(function (error) {
+                    res.statusCode = 404;
+                    res.json({
+                        title: error,
+                        place: '',
+                        status: 'error'
+                    });
                 });
-            });
         }else {
             res.statusCode = 400;
             res.json({
@@ -422,7 +303,105 @@ module.exports = function(app) {
             });
         }
     });
-    
+    /**
+     * @api {get} /place/country/:id Country list
+     * @apiName getCountry
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
+    app.get('/place/country/:id', function(req, res) {
+        var id = req.params.id;
+        req.assert('id', 'id is required').isInt();
+        var errors = req.validationErrors();
+
+        if( !errors){
+            models.Country.find(
+                {where: {
+                    id: id
+                }},{
+                    include: [
+                        {model: models.Place,
+                            include: [
+                                {model: models.Room},
+                                {model: models.Image},
+                                {model: models.Image},
+                            ]
+                        },
+                        {model: models.Comment},
+                        {model: models.Image}
+                    ]
+                })
+                .then(function (place) {
+                    res.statusCode = 200;
+                    res.json({
+                        title: 'Get data by id' + id,
+                        place: place,
+                        status: 'success'
+                    });
+                });
+        }else {
+            res.statusCode = 400;
+            res.json({
+                title: 'cant get place from this id',
+                message: 'cant get place from this id',
+                errors: errors,
+                status: 'error'
+            });
+        }
+    });
+    /**
+     * @api {get} /place/country/city/:id City list
+     * @apiName getCity
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
+    app.get('/place/country/city/:id', function(req, res) {
+        var id = req.params.id;
+        req.assert('id', 'id is required').isInt();
+        var errors = req.validationErrors();
+        if( !errors){
+            models.City.find(
+                {where: {
+                    id: id
+                }},{
+                    include: [
+                        {model: models.Place,
+                            include: [
+                                {model: models.Room},
+                                {model: models.Image},
+                                {model: models.Image},
+                            ]
+                        },
+                        {model: models.Comment},
+                        {model: models.Image}
+                    ]
+                })
+                .then(function (place) {
+                    res.statusCode = 200;
+                    res.json({
+                        title: 'Get data by id' + id,
+                        place: place,
+                        status: 'success'
+                    });
+                });
+        }else {
+            res.statusCode = 400;
+            res.json({
+                title: 'cant get place from this id',
+                message: 'cant get place from this id',
+                errors: errors,
+                status: 'error'
+            });
+        }
+    });
     /*
     app.post('/place/get', function (req, res) {
         models.Place.findAll().then(function (places) {
