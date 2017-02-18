@@ -8,11 +8,11 @@ module.exports = function(app, passport) {
 
     // show the home page (will also have our login links)
     // show the home page (will also have our login links)
-    app.get('/place/:id', function(req, res) {
+/*    app.get('/place/:id', function(req, res) {
         req.user ? res.locals.userSettings = req.user : res.locals.userSettings = { type: 'guest', name:'guest', email:'guest', id:'guest'};
         res.statusCode = 200;
         res.render('index.ejs');
-    });
+    });*/
     app.get('/map/list', function(req, res) {
         req.user ? res.locals.userSettings = req.user : res.locals.userSettings = { type: 'guest', name:'guest', email:'guest', id:'guest'};
         res.statusCode = 200;
