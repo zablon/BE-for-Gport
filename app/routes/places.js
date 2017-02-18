@@ -2,11 +2,21 @@ var models  = require('../models');
 var express = require('express');
 
 module.exports = function(app) {
-
+    /**
+     * @api {get} /place/country/:id Country list
+     * @apiName getCountry
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
     app.get('/place/country/:id', function(req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
+        
         if( !errors){
             models.Country.find(
                 {where: {
@@ -42,7 +52,16 @@ module.exports = function(app) {
             });
         }
     });
-
+    /**
+     * @api {get} /place/country/city/:id City list
+     * @apiName getCity
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
     app.get('/place/country/city/:id', function(req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
@@ -82,7 +101,16 @@ module.exports = function(app) {
             });
         }
     });
-
+    /**
+     * @api {get} /place Place list
+     * @apiName getPlace
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
     app.get('/place', function(req, res) {
         models.Place.findAll().then(function (places) {
             res.statusCode = 200;
@@ -93,7 +121,51 @@ module.exports = function(app) {
             });
         });
     });
-
+    /**
+     * @api {post} /place Create new place
+     * @apiName createPlace
+     * @apiGroup Place
+     *
+     * @apiParam {String} title
+     * @apiParam {Float} rating
+     * @apiParam {Integer} type
+     * @apiParam {String} folder
+     * @apiParam {String} distance
+     * @apiParam {String} phone
+     * @apiParam {String} address
+     * @apiParam {String} description
+     * @apiParam {Boolean} children
+     * @apiParam {Boolean} conditioner
+     * @apiParam {Boolean} dush
+     * @apiParam {Boolean} eat
+     * @apiParam {Boolean} kitchen
+     * @apiParam {Boolean} toilet
+     * @apiParam {Boolean} tv
+     * @apiParam {Boolean} wifi
+     * @apiParam {Boolean} refrigeter
+     * @apiParam {Boolean} parking
+     * @apiParam {Boolean} swiming
+     * @apiParam {Boolean} smoke
+     * @apiParam {Boolean} animal
+     * @apiParam {Boolean} transfer
+     * @apiParam {Boolean} spa
+     * @apiParam {Boolean} fitness
+     * @apiParam {Boolean} garden
+     * @apiParam {Boolean} beach
+     * @apiParam {Boolean} sauna
+     * @apiParam {Boolean} soundproofing
+     * @apiParam {Boolean} massage
+     * @apiParam {Boolean} limited_opportunities
+     * @apiParam {Boolean} free_cancel_booking
+     * @apiParam {Boolean} stock
+     * @apiParam {Boolean} double_bed
+     * @apiParam {Boolean} single_bed
+     * @apiParam {Float} lat
+     * @apiParam {Float} lng
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiSuccess {JSON} field title,messages,errors,status
+     */
     app.post('/place', function(req, res) {
         models.Place.create({
             title: req.params.title ? req.params.title : place.title,
@@ -141,7 +213,16 @@ module.exports = function(app) {
             });
         });
     });
-
+    /**
+     * @api {get} /place/:id Place information
+     * @apiName getPlaceById
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiSuccess {JSON} field title,messages,errors,status
+     */
     app.get('/place/:id', function(req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
@@ -180,7 +261,51 @@ module.exports = function(app) {
             });
         }
     });
-
+    /**
+     * @api {put} /place/:id Update place
+     * @apiName putPlace
+     * @apiGroup Place
+     *
+     * @apiParam {String} title
+     * @apiParam {Float} rating
+     * @apiParam {Integer} type
+     * @apiParam {String} folder
+     * @apiParam {String} distance
+     * @apiParam {String} phone
+     * @apiParam {String} address
+     * @apiParam {String} description
+     * @apiParam {Boolean} children
+     * @apiParam {Boolean} conditioner
+     * @apiParam {Boolean} dush
+     * @apiParam {Boolean} eat
+     * @apiParam {Boolean} kitchen
+     * @apiParam {Boolean} toilet
+     * @apiParam {Boolean} tv
+     * @apiParam {Boolean} wifi
+     * @apiParam {Boolean} refrigeter
+     * @apiParam {Boolean} parking
+     * @apiParam {Boolean} swiming
+     * @apiParam {Boolean} smoke
+     * @apiParam {Boolean} animal
+     * @apiParam {Boolean} transfer
+     * @apiParam {Boolean} spa
+     * @apiParam {Boolean} fitness
+     * @apiParam {Boolean} garden
+     * @apiParam {Boolean} beach
+     * @apiParam {Boolean} sauna
+     * @apiParam {Boolean} soundproofing
+     * @apiParam {Boolean} massage
+     * @apiParam {Boolean} limited_opportunities
+     * @apiParam {Boolean} free_cancel_booking
+     * @apiParam {Boolean} stock
+     * @apiParam {Boolean} double_bed
+     * @apiParam {Boolean} single_bed
+     * @apiParam {Float} lat
+     * @apiParam {Float} lng
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiSuccess {JSON} field title,messages,errors,status
+     */
     app.put('/place/:id', function (req, res){
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
@@ -260,7 +385,16 @@ module.exports = function(app) {
         }
 
     });
-
+    /**
+     * @api {delete} /place/country/:id Delete place
+     * @apiName deletePlace
+     * @apiGroup Place
+     *
+     * @apiParam {Number} id Users unique ID.
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
     app.delete('/place/:id', function (req, res){
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
