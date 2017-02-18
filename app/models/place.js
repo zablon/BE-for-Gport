@@ -3,6 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
     var Place = sequelize.define("Place", {
         title: DataTypes.STRING,
+        rating: DataTypes.INTEGER,
         type: DataTypes.STRING,
         folder: DataTypes.STRING,
         distance: DataTypes.STRING,
@@ -25,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        kitchen: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         toilet: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
@@ -41,21 +46,91 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        parking: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         swiming: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        lat: {
+        smoke: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        lng: {
+        animal: {
             type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        transfer: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        spa: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        fitness: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        garden: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        beach: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        sauna: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        soundproofing: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        massage: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        limited_opportunities: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        free_cancel_booking: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        stock: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        double_bed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        single_bed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        lat: {
+            type: DataTypes.FLOAT,
+            defaultValue: false
+        },
+        lng: {
+            type: DataTypes.FLOAT,
             defaultValue: false
         },
     }, {
         classMethods: {
             associate: function(models) {
+                Place.belongsTo(models.City, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                }),
                 Place.hasMany(models.Room);
                 Place.hasMany(models.Image);
                 Place.hasMany(models.Comment);
