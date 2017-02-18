@@ -43,7 +43,7 @@ module.exports = function(app) {
                     });
                 });
         }else {
-            res.statusCode = 200;
+            res.statusCode = 400;
             res.json({
                 title: 'cant get place from this id',
                 message: 'cant get place from this id',
@@ -92,7 +92,7 @@ module.exports = function(app) {
                     });
                 });
         }else {
-            res.statusCode = 200;
+            res.statusCode = 400;
             res.json({
                 title: 'cant get place from this id',
                 message: 'cant get place from this id',
@@ -252,7 +252,7 @@ module.exports = function(app) {
                     });
                 });
         }else {
-            res.statusCode = 200;
+            res.statusCode = 400;
             res.json({
                 title: 'cant get place from this id',
                 message: 'cant get place from this id',
@@ -375,7 +375,7 @@ module.exports = function(app) {
 
                 });
         }else {
-            res.statusCode = 200;
+            res.statusCode = 400;
             res.json({
                 title: 'cant get place from this id',
                 message: 'cant get place from this id',
@@ -413,7 +413,7 @@ module.exports = function(app) {
                 });
             });
         }else {
-            res.statusCode = 200;
+            res.statusCode = 400;
             res.json({
                 title: 'cant delete place from this id',
                 message: 'cant delete place from this id',
