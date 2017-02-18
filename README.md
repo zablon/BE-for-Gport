@@ -57,4 +57,4 @@ apidoc/
 server.js
 ```
 ## Contact
-Copyright (C) 2016 Semianchuk Vitalii<br>
+Copyright (C) 2017 FE GUYS<br>
