@@ -16,7 +16,6 @@ var session      = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var debug = require('debug')('express-sequelize');
-var restful   = require('sequelize-restful');
 
 var models  = require('./app/models');
 
@@ -63,14 +62,8 @@ var comment = require('./app/controller/comment.js');
 // routes ======================================================================
 require('./app/routes/auth')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./app/routes/comment')(app, comment); // load our routes for comment
-//require('./app/routes/places')(app);
+require('./app/routes/places')(app);
 require('./app/routes/rooms')(app);
-
-
-app.use(restful(models.sequelize, {
-    endpoint: '/place',
-    allowed: new Array()
-}))
 
 // launch ======================================================================
 var server = app.listen(port);
