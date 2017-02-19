@@ -8,8 +8,6 @@ module.exports = function(app) {
      * @apiName getPlace
      * @apiGroup Place
      *
-     * @apiParam {Number} id Users unique ID.
-     *
      * @apiSuccess {JSON} field title,place,status
      * @apiError {JSON} field title,messages,errors,status
      */
@@ -29,6 +27,7 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
+     * @apiParam {String} CityId
      * @apiParam {Float} rating
      * @apiParam {Integer} type
      * @apiParam {String} folder
@@ -70,6 +69,7 @@ module.exports = function(app) {
      */
     app.post('/place', function(req, res) {
         var place = {
+            CityId: req.query.CityId ? req.query.CityId : '',
             title: req.query.title ? req.query.title : '',
             rating: req.query.rating ? req.query.rating : '',
             type: req.query.type ? req.query.type : '',
@@ -121,7 +121,7 @@ module.exports = function(app) {
      * @apiName getPlaceById
      * @apiGroup Place
      *
-     * @apiParam {Number} id Users unique ID.
+     * @apiParam {Number} id Place unique ID.
      *
      * @apiSuccess {JSON} field title,place,status
      * @apiSuccess {JSON} field title,messages,errors,status
@@ -170,6 +170,7 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
+     * @apiParam {String} CityId
      * @apiParam {Float} rating
      * @apiParam {Integer} type
      * @apiParam {String} folder
@@ -250,11 +251,11 @@ module.exports = function(app) {
 
     });
     /**
-     * @api {delete} /place/country/:id Delete place
+     * @api {delete} /place/:id Delete place
      * @apiName deletePlace
      * @apiGroup Place
      *
-     * @apiParam {Number} id Users unique ID.
+     * @apiParam {Number} id Place unique ID.
      *
      * @apiSuccess {JSON} field title,place,status
      * @apiError {JSON} field title,messages,errors,status
@@ -308,7 +309,7 @@ module.exports = function(app) {
      * @apiName getCountry
      * @apiGroup Place
      *
-     * @apiParam {Number} id Users unique ID.
+     * @apiParam {Number} id Place unique ID.
      *
      * @apiSuccess {JSON} field title,place,status
      * @apiError {JSON} field title,messages,errors,status
@@ -358,7 +359,7 @@ module.exports = function(app) {
      * @apiName getCity
      * @apiGroup Place
      *
-     * @apiParam {Number} id Users unique ID.
+     * @apiParam {Number} id Place unique ID.
      *
      * @apiSuccess {JSON} field title,place,status
      * @apiError {JSON} field title,messages,errors,status
