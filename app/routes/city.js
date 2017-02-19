@@ -41,6 +41,7 @@ module.exports = function(app) {
      * @apiGroup City
      *
      * @apiParam {String} name
+     * @apiParam {Integer} CountryId
      *
      * @apiSuccess {JSON} field title,city,status
      * @apiSuccess {JSON} field title,messages,errors,status

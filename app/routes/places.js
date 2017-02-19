@@ -170,7 +170,7 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
-     * @apiParam {String} CityId
+     * @apiParam {Integer} CityId
      * @apiParam {Float} rating
      * @apiParam {Integer} type
      * @apiParam {String} folder
