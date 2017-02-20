@@ -15,9 +15,13 @@ module.exports = function(app) {
     app.get('/country', function (req, res) {
         models.Country.findAll({
                 include: [
-                    {model: models.City,
+                    {model: models.Region,
                         include: [
-                            {model: models.Place},
+                            {model: models.City,
+                                include: [
+                                    {model: models.Area},
+                                ]
+                            },
                         ]
                     },
                 ]
@@ -89,7 +93,15 @@ module.exports = function(app) {
             models.Country.find(
                 {
                     include: [
-                        {model: models.City}
+                        {model: models.Region,
+                            include: [
+                                {model: models.City,
+                                    include: [
+                                        {model: models.Area},
+                                    ]
+                                },
+                            ]
+                        },
                     ],
                     where: {
                         id: id

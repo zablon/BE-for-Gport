@@ -4,102 +4,100 @@ var express = require('express');
 module.exports = function(app) {
 
     /**
-     * @api {get} /city City list
-     * @apiName getCity
-     * @apiGroup City
+     * @api {get} /community Community list
+     * @apiName getCommunity
+     * @apiGroup Community
      *
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,community,status
      * @apiError {JSON} field title,messages,errors,status
      */
-    app.get('/city', function (req, res) {
-        models.City.findAll({
+    app.get('/community', function (req, res) {
+        models.Community.findAll({
                 include: [
-                    {model: models.Area},
                     {model: models.Place}
                 ]
             })
-            .then(function (city) {
+            .then(function (community) {
                 res.statusCode = 200;
                 res.json({
-                    title: 'Get list of city',
-                    city: city,
+                    title: 'Get list of community',
+                    community: community,
                     status: 'success'
                 });
             })
             .catch(function (error) {
                 res.statusCode = 400;
                 res.json({
-                    title: 'Cant get list of city',
+                    title: 'Cant get list of community',
                     citys: error,
                     status: 'error'
                 });
             })
     });
     /**
-     * @api {post} /city Create new city
-     * @apiName createCity
-     * @apiGroup City
+     * @api {post} /community Create new community
+     * @apiName createCommunity
+     * @apiGroup Community
      *
      * @apiParam {String} name
-     * @apiParam {Integer} RegionId - parent
+     * @apiParam {Integer} RegionId
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,community,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.post('/city', function(req, res) {
-        var city = {
+    app.post('/community', function(req, res) {
+        var community = {
             name: req.query.name ? req.query.name : '',
             RegionId: req.query.RegionId ? req.query.RegionId : '',
         }
-        models.City.create(city)
+        models.Community.create(community)
             .then(function (data) {
                 res.statusCode = 200;
                 res.json({
-                    title: 'Create city success',
-                    city: data,
+                    title: 'Create community success',
+                    community: data,
                     status: 'success'
                 })
             })
             .catch(function (error) {
                 res.statusCode = 400;
                 res.json({
-                    title: 'Cant create city success',
-                    city: error,
+                    title: 'Cant create community success',
+                    community: error,
                     status: 'error'
                 })
             });
     });
     /**
-     * @api {get} /city/:id City name
-     * @apiName getCityById
-     * @apiGroup City
+     * @api {get} /community/:id Community name
+     * @apiName getCommunityById
+     * @apiGroup Community
      *
-     * @apiParam {Number} id City unique ID.
+     * @apiParam {Number} id Community unique ID.
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,community,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.get('/city/:id', function(req, res) {
+    app.get('/community/:id', function(req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.City.find(
+            models.Community.find(
                 {
                     include: [
-                        {model: models.Area},
                         {model: models.Place}
                     ],
                     where: {
                         id: id
                     }
                 })
-                .then(function (city) {
+                .then(function (community) {
                     res.statusCode = 200;
                     res.json({
                         title: 'Get data by id ' + id,
-                        city: city,
+                        community: community,
                         status: 'success'
                     });
                 });
@@ -114,39 +112,39 @@ module.exports = function(app) {
         }
     });
     /**
-     * @api {put} /city/:id Update city
-     * @apiName putCity
-     * @apiGroup City
+     * @api {put} /community/:id Update community
+     * @apiName putCommunity
+     * @apiGroup Community
      *
      * @apiParam {Integer} id
-     * @apiParam {Integer} RegionId - parent
+     * @apiParam {Integer} RegionId
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,community,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.put('/city/:id', function (req, res){
+    app.put('/community/:id', function (req, res){
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.City.find(
+            models.Community.find(
                 {where: {
                     id: id
                 }})
-                .then(function (city) {
-                    city.updateAttributes(req.query)
+                .then(function (community) {
+                    community.updateAttributes(req.query)
                         .then(function (update_city) {
                             res.statusCode = 200;
                             res.json({
-                                title: 'city id -' + id + ' update',
-                                city: update_city,
+                                title: 'community id -' + id + ' update',
+                                community: update_city,
                                 status: 'success'
                             });
                         }).catch(function (error) {
                         res.statusCode = 404;
                         res.json({
                             title: error,
-                            city: '',
+                            community: '',
                             status: 'error'
                         });
                     })
@@ -155,35 +153,35 @@ module.exports = function(app) {
         }else {
             res.statusCode = 400;
             res.json({
-                title: 'cant update city from this id',
-                message: 'cant update city from this id',
+                title: 'cant update community from this id',
+                message: 'cant update community from this id',
                 errors: errors,
                 status: 'error'
             });
         }
     });
     /**
-     * @api {delete} /city/:id Delete city
-     * @apiName deleteCity
-     * @apiGroup City
+     * @api {delete} /community/:id Delete community
+     * @apiName deleteCommunity
+     * @apiGroup Community
      *
-     * @apiParam {Number} id City unique ID.
+     * @apiParam {Number} id Community unique ID.
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,community,status
      * @apiError {JSON} field title,messages,errors,status
      */
-    app.delete('/city/:id', function (req, res){
+    app.delete('/community/:id', function (req, res){
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.City.destroy({id: id})
+            models.Community.destroy({id: id})
                 .then(function (deletedRecord) {
                     if(deletedRecord === 1){
                         res.statusCode = 200;
                         res.json({
-                            title: 'city id -' + id + ' deleted',
-                            city: '',
+                            title: 'community id -' + id + ' deleted',
+                            community: '',
                             status: 'success'
                         });
                     }
@@ -192,7 +190,7 @@ module.exports = function(app) {
                         res.statusCode = 404;
                         res.json({
                             title: 'record not found',
-                            city: '',
+                            community: '',
                             status: 'error'
                         });
                     }
@@ -202,15 +200,15 @@ module.exports = function(app) {
                     res.statusCode = 404;
                     res.json({
                         title: error,
-                        city: '',
+                        community: '',
                         status: 'error'
                     });
                 });
         }else {
             res.statusCode = 400;
             res.json({
-                title: 'cant delete city from this id',
-                message: 'cant delete city from this id',
+                title: 'cant delete community from this id',
+                message: 'cant delete community from this id',
                 errors: errors,
                 status: 'error'
             });

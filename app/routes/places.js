@@ -27,7 +27,8 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
-     * @apiParam {String} CityId
+     * @apiParam {String} CityId - parent
+     * @apiParam {String} AreaId - parent
      * @apiParam {Float} rating
      * @apiParam {Integer} type
      * @apiParam {String} folder
@@ -70,6 +71,7 @@ module.exports = function(app) {
     app.post('/place', function(req, res) {
         var place = {
             CityId: req.query.CityId ? req.query.CityId : '',
+            AreaId: req.query.AreaId ? req.query.AreaId : '',
             title: req.query.title ? req.query.title : '',
             rating: req.query.rating ? req.query.rating : '',
             type: req.query.type ? req.query.type : '',
@@ -170,7 +172,8 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
-     * @apiParam {Integer} CityId
+     * @apiParam {Integer} AreaId - parent
+     * @apiParam {Integer} CityId -parent
      * @apiParam {Float} rating
      * @apiParam {Integer} type
      * @apiParam {String} folder

@@ -4,102 +4,108 @@ var express = require('express');
 module.exports = function(app) {
 
     /**
-     * @api {get} /city City list
-     * @apiName getCity
-     * @apiGroup City
+     * @api {get} /region Region list
+     * @apiName getRegion
+     * @apiGroup Region
      *
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,region,status
      * @apiError {JSON} field title,messages,errors,status
      */
-    app.get('/city', function (req, res) {
-        models.City.findAll({
+    app.get('/region', function (req, res) {
+        models.Region.findAll({
                 include: [
-                    {model: models.Area},
-                    {model: models.Place}
+                    {model: models.City,
+                        include: [
+                            {model: models.Area},
+                        ]
+                    },
                 ]
             })
-            .then(function (city) {
+            .then(function (region) {
                 res.statusCode = 200;
                 res.json({
-                    title: 'Get list of city',
-                    city: city,
+                    title: 'Get list of region',
+                    region: region,
                     status: 'success'
                 });
             })
             .catch(function (error) {
                 res.statusCode = 400;
                 res.json({
-                    title: 'Cant get list of city',
+                    title: 'Cant get list of region',
                     citys: error,
                     status: 'error'
                 });
             })
     });
     /**
-     * @api {post} /city Create new city
-     * @apiName createCity
-     * @apiGroup City
+     * @api {post} /region Create new region
+     * @apiName createRegion
+     * @apiGroup Region
      *
      * @apiParam {String} name
-     * @apiParam {Integer} RegionId - parent
+     * @apiParam {Integer} CountryId - parent
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,region,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.post('/city', function(req, res) {
-        var city = {
+    app.post('/region', function(req, res) {
+        var region = {
             name: req.query.name ? req.query.name : '',
-            RegionId: req.query.RegionId ? req.query.RegionId : '',
+            CountryId: req.query.CountryId ? req.query.CountryId : '',
         }
-        models.City.create(city)
+        models.Region.create(region)
             .then(function (data) {
                 res.statusCode = 200;
                 res.json({
-                    title: 'Create city success',
-                    city: data,
+                    title: 'Create region success',
+                    region: data,
                     status: 'success'
                 })
             })
             .catch(function (error) {
                 res.statusCode = 400;
                 res.json({
-                    title: 'Cant create city success',
-                    city: error,
+                    title: 'Cant create region success',
+                    region: error,
                     status: 'error'
                 })
             });
     });
     /**
-     * @api {get} /city/:id City name
-     * @apiName getCityById
-     * @apiGroup City
+     * @api {get} /region/:id Region name
+     * @apiName getRegionById
+     * @apiGroup Region
      *
-     * @apiParam {Number} id City unique ID.
+     * @apiParam {Number} id Region unique ID.
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,region,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.get('/city/:id', function(req, res) {
+    app.get('/region/:id', function(req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.City.find(
+            models.Region.find(
                 {
                     include: [
-                        {model: models.Area},
-                        {model: models.Place}
+                        {model: models.City,
+                            include: [
+                                {model: models.Area},
+                            ]
+                        },
                     ],
                     where: {
                         id: id
                     }
                 })
-                .then(function (city) {
+                .then(function (region) {
                     res.statusCode = 200;
                     res.json({
                         title: 'Get data by id ' + id,
-                        city: city,
+                        region: region,
                         status: 'success'
                     });
                 });
@@ -114,39 +120,39 @@ module.exports = function(app) {
         }
     });
     /**
-     * @api {put} /city/:id Update city
-     * @apiName putCity
-     * @apiGroup City
+     * @api {put} /region/:id Update region
+     * @apiName putRegion
+     * @apiGroup Region
      *
      * @apiParam {Integer} id
-     * @apiParam {Integer} RegionId - parent
+     * @apiParam {Integer} CountryId - parent
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,region,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.put('/city/:id', function (req, res){
+    app.put('/region/:id', function (req, res){
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.City.find(
+            models.Region.find(
                 {where: {
                     id: id
                 }})
-                .then(function (city) {
-                    city.updateAttributes(req.query)
+                .then(function (region) {
+                    region.updateAttributes(req.query)
                         .then(function (update_city) {
                             res.statusCode = 200;
                             res.json({
-                                title: 'city id -' + id + ' update',
-                                city: update_city,
+                                title: 'region id -' + id + ' update',
+                                region: update_city,
                                 status: 'success'
                             });
                         }).catch(function (error) {
                         res.statusCode = 404;
                         res.json({
                             title: error,
-                            city: '',
+                            region: '',
                             status: 'error'
                         });
                     })
@@ -155,35 +161,35 @@ module.exports = function(app) {
         }else {
             res.statusCode = 400;
             res.json({
-                title: 'cant update city from this id',
-                message: 'cant update city from this id',
+                title: 'cant update region from this id',
+                message: 'cant update region from this id',
                 errors: errors,
                 status: 'error'
             });
         }
     });
     /**
-     * @api {delete} /city/:id Delete city
-     * @apiName deleteCity
-     * @apiGroup City
+     * @api {delete} /region/:id Delete region
+     * @apiName deleteRegion
+     * @apiGroup Region
      *
-     * @apiParam {Number} id City unique ID.
+     * @apiParam {Number} id Region unique ID.
      *
-     * @apiSuccess {JSON} field title,city,status
+     * @apiSuccess {JSON} field title,region,status
      * @apiError {JSON} field title,messages,errors,status
      */
-    app.delete('/city/:id', function (req, res){
+    app.delete('/region/:id', function (req, res){
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if( !errors){
-            models.City.destroy({id: id})
+            models.Region.destroy({id: id})
                 .then(function (deletedRecord) {
                     if(deletedRecord === 1){
                         res.statusCode = 200;
                         res.json({
-                            title: 'city id -' + id + ' deleted',
-                            city: '',
+                            title: 'region id -' + id + ' deleted',
+                            region: '',
                             status: 'success'
                         });
                     }
@@ -192,7 +198,7 @@ module.exports = function(app) {
                         res.statusCode = 404;
                         res.json({
                             title: 'record not found',
-                            city: '',
+                            region: '',
                             status: 'error'
                         });
                     }
@@ -202,15 +208,15 @@ module.exports = function(app) {
                     res.statusCode = 404;
                     res.json({
                         title: error,
-                        city: '',
+                        region: '',
                         status: 'error'
                     });
                 });
         }else {
             res.statusCode = 400;
             res.json({
-                title: 'cant delete city from this id',
-                message: 'cant delete city from this id',
+                title: 'cant delete region from this id',
+                message: 'cant delete region from this id',
                 errors: errors,
                 status: 'error'
             });

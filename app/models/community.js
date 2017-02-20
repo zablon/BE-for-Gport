@@ -1,22 +1,26 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-    var City = sequelize.define("City", {
+    var Community = sequelize.define("Community", {
         name: DataTypes.STRING,
+        title: DataTypes.STRING,
+        description: DataTypes.STRING,
+        suscribers: DataTypes.INTEGER,
+        wall: DataTypes.STRING,
+        msg: DataTypes.STRING,
     }, {
         classMethods: {
             associate: function(models) {
-                City.belongsTo(models.Region, {
+                Community.belongsTo(models.City, {
                     onDelete: "CASCADE",
                     foreignKey: {
                         allowNull: false
                     }
                 }),
-                City.hasMany(models.Area);
-                City.hasMany(models.Place);
+                    Community.hasMany(models.Place);
             }
         }
     });
 
-    return City;
+    return Community;
 };

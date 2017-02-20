@@ -1,22 +1,21 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-    var City = sequelize.define("City", {
+    var Area = sequelize.define("Area", {
         name: DataTypes.STRING,
     }, {
         classMethods: {
             associate: function(models) {
-                City.belongsTo(models.Region, {
+                Area.belongsTo(models.City, {
                     onDelete: "CASCADE",
                     foreignKey: {
                         allowNull: false
                     }
                 }),
-                City.hasMany(models.Area);
-                City.hasMany(models.Place);
+                    Area.hasMany(models.Place);
             }
         }
     });
 
-    return City;
+    return Area;
 };

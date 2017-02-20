@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                Country.hasMany(models.City);
+                Country.hasMany(models.Region);
             }
         }
     });
