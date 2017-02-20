@@ -9,18 +9,17 @@ import { MaterialModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent
-
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule
+    MaterialModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
