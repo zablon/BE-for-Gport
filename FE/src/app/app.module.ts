@@ -7,9 +7,9 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateServic
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
-import {FooterComponent} from './footer/footer.component';
-import {ContentComponent} from './content/content.component';
-import { MainFilterComponent } from './main-filter/main-filter.component';
+import { FooterComponent } from './footer/footer.component';
+import { ContentComponent } from './content/content.component';
+import { HeaderSearchComponent } from './header-search/header-search.component';
 
 @NgModule({
   declarations: [
