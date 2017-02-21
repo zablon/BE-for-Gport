@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Search } from '../app.models';
 
 @Component({
   selector: 'app-content',
@@ -10,6 +11,10 @@ export class ContentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSearch(searchData: Search) {
+    console.log(searchData);
   }
 
 }
