@@ -68,6 +68,7 @@ require('./app/routes/region')(app);
 require('./app/routes/area')(app);
 require('./app/routes/city')(app);
 require('./app/routes/rooms')(app);
+require('./app/routes/price')(app);
 
 // launch ======================================================================
 var server = app.listen(port);

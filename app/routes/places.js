@@ -173,7 +173,7 @@ module.exports = function(app) {
      *
      * @apiParam {String} title
      * @apiParam {Integer} AreaId - parent
-     * @apiParam {Integer} CityId -parent
+     * @apiParam {Integer} CityId - parent
      * @apiParam {Float} rating
      * @apiParam {Integer} type
      * @apiParam {String} folder
