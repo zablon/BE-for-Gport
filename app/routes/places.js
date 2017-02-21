@@ -4,6 +4,99 @@ var express = require('express');
 module.exports = function(app) {
    
     /**
+     * @api {get} /place/search Search place list
+     * @apiName getPlaceSearch
+     * @apiGroup Place
+     *
+     * @apiParam {String} title
+     * @apiParam {Float} rating
+     * @apiParam {Integer} type
+     * @apiParam {String} folder
+     * @apiParam {String} distance
+     * @apiParam {String} phone
+     * @apiParam {String} address
+     * @apiParam {String} description
+     * @apiParam {Boolean} children
+     * @apiParam {Boolean} conditioner
+     * @apiParam {Boolean} dush
+     * @apiParam {Boolean} eat
+     * @apiParam {Boolean} kitchen
+     * @apiParam {Boolean} toilet
+     * @apiParam {Boolean} tv
+     * @apiParam {Boolean} wifi
+     * @apiParam {Boolean} refrigeter
+     * @apiParam {Boolean} parking
+     * @apiParam {Boolean} swiming
+     * @apiParam {Boolean} smoke
+     * @apiParam {Boolean} animal
+     * @apiParam {Boolean} transfer
+     * @apiParam {Boolean} spa
+     * @apiParam {Boolean} fitness
+     * @apiParam {Boolean} garden
+     * @apiParam {Boolean} beach
+     * @apiParam {Boolean} sauna
+     * @apiParam {Boolean} soundproofing
+     * @apiParam {Boolean} massage
+     * @apiParam {Boolean} limited_opportunities
+     * @apiParam {Boolean} free_cancel_booking
+     * @apiParam {Boolean} stock
+     * @apiParam {Boolean} double_bed
+     * @apiParam {Boolean} single_bed
+     *
+     * @apiSuccess {JSON} field title,place,status
+     * @apiError {JSON} field title,messages,errors,status
+     */
+    app.get('/place/search', function(req, res) {
+        var obj = {
+                title: req.query.title ? {$like: `%${req.query.title.toLowerCase()}%`} : '',
+                rating: req.query.rating ? req.query.rating : '',
+                type: req.query.type ? req.query.type : '',
+                folder: req.query.folder ? req.query.folder : '',
+                distance: req.query.distance ? req.query.distance : '',
+                phone: req.query.phone ? {$like: `%${req.query.phone.toLowerCase()}%`}: '',
+                address: req.query.address ? {$like: `%${req.query.address.toLowerCase()}%`} : '',
+                description: req.query.description ? {$like: `%${req.query.description.toLowerCase()}%`} : '',
+                children: req.query.children ? req.query.children : '',
+                conditioner: req.query.conditioner ? req.query.conditioner : '',
+                dush: req.query.dush ? req.query.dush : '',
+                eat: req.query.eat ? req.query.eat : '',
+                kitchen: req.query.kitchen ? req.query.kitchen : '',
+                toilet: req.query.toilet ? req.query.toilet : '',
+                tv: req.query.tv ? req.query.tv : '',
+                wifi: req.query.wifi ? req.query.wifi : '',
+                refrigeter: req.query.refrigeter ? req.query.refrigeter : '',
+                parking: req.query.parking ? req.query.parking : '',
+                swiming: req.query.swiming ? req.query.swiming : '',
+                smoke: req.query.smoke ? req.query.smoke : '',
+                animal: req.query.animal ? req.query.animal : '',
+                transfer: req.query.transfer ? req.query.transfer : '',
+                spa: req.query.spa ? req.query.spa : '',
+                fitness: req.query.fitness ? req.query.fitness : '',
+                garden: req.query.garden ? req.query.garden : '',
+                beach: req.query.beach ? req.query.beach : '',
+                sauna: req.query.sauna ? req.query.sauna : '',
+                soundproofing: req.query.soundproofing ? req.query.soundproofing : '',
+                massage: req.query.massage ? req.query.massage : '',
+                limited_opportunities: req.query.limited_opportunities ? req.query.limited_opportunities : '',
+                free_cancel_booking: req.query.free_cancel_booking ? req.query.free_cancel_booking : '',
+                stock: req.query.stock ? req.query.stock : '',
+                double_bed: req.query.double_bed ? req.query.double_bed : '',
+                single_bed: req.query.single_bed ? req.query.single_bed : '',
+        }
+        var query = {};
+        for(var prop in obj){
+            if(obj[prop]) query[prop] = obj[prop] == 'true' ? true : obj[prop] == 'false' ? false : obj[prop]
+        }
+        models.Place.findAll({ where: query}).then(function (places) {
+            res.statusCode = 200;
+            res.json({
+                title: 'Get data success',
+                places: places,
+                status: 'success'
+            });
+        });
+    });
+    /**
      * @api {get} /place Place list
      * @apiName getPlace
      * @apiGroup Place

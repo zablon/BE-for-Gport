@@ -127,13 +127,15 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 Place.belongsTo(models.Area, {
                     onDelete: "CASCADE",
-                    as: 'areaPlace',
-                    foreignKey: 'areaPlace'
+                    foreignKey: {
+                        allowNull: false
+                    }
                 }),
                 Place.belongsTo(models.City, {
                     onDelete: "CASCADE",
-                    as: 'cityPlace',
-                    foreignKey: 'cityPlace'
+                    foreignKey: {
+                        allowNull: false
+                    }
                 }),
                 Place.hasMany(models.Room);
                 Place.hasMany(models.Image);
