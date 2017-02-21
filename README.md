@@ -32,14 +32,17 @@
 ```
 ## 7. Visit in your browser at: `http://localhost:8080`
 
+## 8. DocApi (for update apidoc)
+```
+sudo apidoc -i app/ -o apidoc/
+```
+
 ## Structure of App
 ```
 FE/
-    action/
-    components/
-    reducer/
-    client.js
-    store.js
+    e2e/
+    src/
+    node_modules/
 assets/
     css/
     images/
@@ -50,8 +53,8 @@ app/
     models/
     routes/
     socket/
-main.js
+apidoc/
 server.js
 ```
 ## Contact
-Copyright (C) 2016 Semianchuk Vitalii<br>
+Copyright (C) 2017 FE GUYS<br>

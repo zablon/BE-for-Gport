@@ -6,7 +6,6 @@ module.exports = function(app) {
     app.post('/:room_id/price/create', function (req, res) {
         models.Price.create({
             price: req.body.price,
-            price: req.body.price,
             RoomId: req.params.room_id
         }).then(function () {
             res.redirect('/');

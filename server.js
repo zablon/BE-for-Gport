@@ -48,7 +48,7 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 
-app.set('view engine', 'ejs'); // set up ejs for templating
+//app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
@@ -63,7 +63,12 @@ var comment = require('./app/controller/comment.js');
 require('./app/routes/auth')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./app/routes/comment')(app, comment); // load our routes for comment
 require('./app/routes/places')(app);
+require('./app/routes/country')(app);
+require('./app/routes/region')(app);
+require('./app/routes/area')(app);
+require('./app/routes/city')(app);
 require('./app/routes/rooms')(app);
+
 // launch ======================================================================
 var server = app.listen(port);
 notification = socketIo(server);
