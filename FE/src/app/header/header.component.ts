@@ -6,14 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private isIn = false;// store state
-  toggleMobileMenu() { // click handler
-    this.isIn = !this.isIn;
-  }
+  private isIn = false;
 
   constructor() {
 
   }
+
+  toggleMobileMenu() {
+    this.isIn = !this.isIn;
+  }
+
 
   ngOnInit() {
 

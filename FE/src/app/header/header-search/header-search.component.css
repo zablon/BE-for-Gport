@@ -1,0 +1,9 @@
+.my-form {
+  line-height: 50px;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .header-input {
+    width: 100%;
+  }
+}
