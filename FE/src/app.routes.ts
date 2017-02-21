@@ -1,15 +1,35 @@
-// Import our dependencies
-//import { Routes } from '@angular/router';
-//import { Home } from './home';
-//import { Login } from './login';
-//import { Signup } from './signup';
-//import { AuthGuard } from './common/auth.guard';
+//import { ModuleWithProviders } from "@angular/core";
+//import { Routes, RouterModule } from "@angular/router";
+//import { IndexComponent } from "./index/index.component";
+//import { RootComponent } from "./root/root.component";
+//import { SigninComponent } from "./signin/signin.component";
+//import { SignupComponent } from "./signup/signup.component";
 //
-//// Define which component should be loaded based on the current URL
-//export const routes: Routes = [
-//  { path: '',       component: Login },
-//  { path: 'login',  component: Login },
-//  { path: 'signup', component: Signup },
-//  { path: 'home',   component: Home, canActivate: [AuthGuard] },
-//  { path: '**',     component: Login },
+//const routes: Routes = [
+//  {
+//    path: "",
+//    component: RootComponent,
+//    children: [
+//      {
+//        path: "signin",
+//        component: SigninComponent,
+//        data: {
+//          breadcrumb: "Sign In"
+//        }
+//      },
+//      {
+//        path: "signup",
+//        component: SignupComponent,
+//        data: {
+//          breadcrumb: "Sign Up"
+//        }
+//      },
+//      {
+//        path: "",
+//        component: IndexComponent
+//      }
+//    ]
+//  },
 //];
+//
+//export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
