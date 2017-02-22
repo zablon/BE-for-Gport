@@ -1,5 +1,5 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import { Search } from '../../app.models';
+import { Search } from '../../../app.models';
 
 @Component({
   selector: 'app-content',
