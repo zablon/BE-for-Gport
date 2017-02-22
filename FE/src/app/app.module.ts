@@ -16,12 +16,20 @@ import {MainFilterComponent} from './components/main-filter/main-filter.componen
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
 import { SearchPageComponent } from './components/pages/search-page/search-page.component';
+import { PlacesComponent } from './components/pages/places/places.component';
+import { PlaceImageComponent } from './components/pages/places/place-image/place-image.component';
+import { PlaceShortInfoComponent } from './components/pages/places/place-short-info/place-short-info.component';
+import { PlaceRoomComponent } from './components/pages/places/place-room/place-room.component';
+import { PlaceGuideComponent } from './components/pages/places/place-guide/place-guide.component';
+import { PlaceCommentsComponent } from './components/pages/places/place-comments/place-comments.component';
 
 const appRoutes: Routes = [
   {
     path: 'search',
     component: SearchPageComponent
   },
+  { path: 'place', component: PlacesComponent },
+
   { path: '',
     pathMatch: 'full',
     component: ContentComponent
@@ -40,6 +48,12 @@ const appRoutes: Routes = [
     MainFilterComponent,
     PageNotFoundComponent,
     SearchPageComponent,
+    PlacesComponent,
+    PlaceImageComponent,
+    PlaceShortInfoComponent,
+    PlaceRoomComponent,
+    PlaceGuideComponent,
+    PlaceCommentsComponent
   ],
   imports: [
     BrowserModule,
