@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
-import { HeaderSearchComponent } from './header-search/header-search.component';
+import { HeaderSearchComponent } from './header/header-search/header-search.component';
 import { MainFilterComponent } from './main-filter/main-filter.component';
 
 @NgModule({
@@ -18,7 +18,8 @@ import { MainFilterComponent } from './main-filter/main-filter.component';
     HeaderComponent,
     FooterComponent,
     ContentComponent,
-    MainFilterComponent
+    MainFilterComponent,
+    HeaderSearchComponent
   ],
   imports: [
     BrowserModule,
