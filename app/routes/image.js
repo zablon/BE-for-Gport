@@ -2,40 +2,24 @@ var models  = require('../models');
 var express = require('express');
 var fs = require('fs');
 var multer  = require('multer');
+var cors  = require('cors');
 
 module.exports = function(app) {
+    app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
 
-    var storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            console.log(req.user)
-            var newDestination = 'uploads/' + req.user._username;
-            var stat = null;
-            try {
-                stat = fs.statSync(newDestination);
-            } catch (err) {
-                fs.mkdirSync(newDestination);
-            }
-            if (stat && !stat.isDirectory()) {
-                throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
-            }
-            cb(null, newDestination);
-        }
-    });
-    var upload = multer(
-        {
-            dest: 'uploads/',
-            limits: {
-                fieldNameSize: 100,
-                fileSize: 60000000
-            },
-            storage: storage
-        }
-    );
+    app.options('/api'); // enable pre-flight request for DELETE request
+    var upload = multer({ dest: 'uploads/' })
 
-    app.use("/upload", upload.single("obj"));
-    app.post('/upload', function (req, res) {
-        console.log(res);
+    app.post('/upload', upload.any(), function(req, res)  {
+       console.log(req.files)
+        res.statusCode = 200;
+        res.json({
+            title: 'Get data success',
+            images: req.files.originalname,
+            status: 'success'
+        });
     });
+
 
     /**
      * @api {get} /image Image list
