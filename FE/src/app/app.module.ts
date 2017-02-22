@@ -8,9 +8,26 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateServic
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
-import {ContentComponent} from './components/content/content.component';
+import {ContentComponent} from './components/pages/content/content.component';
 import {HeaderSearchComponent} from './components/header/header-search/header-search.component';
 import {MainFilterComponent} from './components/main-filter/main-filter.component';
+
+import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
+import { SearchPageComponent } from './components/pages/search-page/search-page.component';
+
+const appRoutes: Routes = [
+  {
+    path: 'search',
+    component: SearchPageComponent
+  },
+  { path: '',
+    pathMatch: 'full',
+    component: ContentComponent
+  },
+  { path: '**', component: PageNotFoundComponent }
+];
+
 
 @NgModule({
   declarations: [
@@ -19,7 +36,9 @@ import {MainFilterComponent} from './components/main-filter/main-filter.componen
     HeaderSearchComponent,
     FooterComponent,
     ContentComponent,
-    MainFilterComponent
+    MainFilterComponent,
+    PageNotFoundComponent,
+    SearchPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +46,7 @@ import {MainFilterComponent} from './components/main-filter/main-filter.componen
     ReactiveFormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    // TranslateModule.forRoot()
+    RouterModule.forRoot(appRoutes),
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: translateFactory,
