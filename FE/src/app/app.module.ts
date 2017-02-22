@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService} from 'ng2-translate';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    FileUploadModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     TranslateModule.forRoot({
