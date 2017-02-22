@@ -1,4 +1,4 @@
-<app-header></app-header>
-<app-content></app-content>
+<app-header [showFilters]="showFiltersInHeader"></app-header>
+<app-content (onShowFiltersInHeader)="onShowFiltersInHeader($event)"></app-content>
 <app-footer></app-footer>
 

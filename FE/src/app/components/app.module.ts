@@ -6,11 +6,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService} from 'ng2-translate';
 
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ContentComponent } from './components/content/content.component';
-import { HeaderSearchComponent } from './components/header/header-search/header-search.component';
-import { MainFilterComponent } from './components/main-filter/main-filter.component';
+import {HeaderComponent} from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { ContentComponent } from './content/content.component';
+import { HeaderSearchComponent } from './header/header-search/header-search.component';
+import { MainFilterComponent } from './main-filter/main-filter.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +34,7 @@ import { MainFilterComponent } from './components/main-filter/main-filter.compon
       deps: [Http]
     })
   ],
-  providers: [
-    { provide: 'Window',  useValue: window }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
