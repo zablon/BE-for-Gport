@@ -1,7 +1,41 @@
 var models  = require('../models');
 var express = require('express');
+var fs = require('fs');
+var multer  = require('multer');
 
 module.exports = function(app) {
+
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            console.log(req.user)
+            var newDestination = 'uploads/' + req.user._username;
+            var stat = null;
+            try {
+                stat = fs.statSync(newDestination);
+            } catch (err) {
+                fs.mkdirSync(newDestination);
+            }
+            if (stat && !stat.isDirectory()) {
+                throw new Error('Directory cannot be created because an inode of a different type exists at "' + dest + '"');
+            }
+            cb(null, newDestination);
+        }
+    });
+    var upload = multer(
+        {
+            dest: 'uploads/',
+            limits: {
+                fieldNameSize: 100,
+                fileSize: 60000000
+            },
+            storage: storage
+        }
+    );
+
+    app.use("/upload", upload.single("obj"));
+    app.post('/upload', function (req, res) {
+        console.log(res);
+    });
 
     /**
      * @api {get} /image Image list
