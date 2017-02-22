@@ -7,10 +7,10 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateServic
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ContentComponent } from './components/content/content.component';
-import { HeaderSearchComponent } from './components/header/header-search/header-search.component';
-import { MainFilterComponent } from './components/main-filter/main-filter.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {ContentComponent} from './components/content/content.component';
+import {HeaderSearchComponent} from './components/header/header-search/header-search.component';
+import {MainFilterComponent} from './components/main-filter/main-filter.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +30,12 @@ import { MainFilterComponent } from './components/main-filter/main-filter.compon
     // TranslateModule.forRoot()
     TranslateModule.forRoot({
       provide: TranslateLoader,
-      useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+      useFactory: translateFactory,
       deps: [Http]
     })
   ],
   providers: [
-    { provide: 'Window',  useValue: window }
+    {provide: 'Window', useValue: window}
   ],
   bootstrap: [AppComponent]
 })
@@ -44,4 +44,8 @@ export class AppModule {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
   }
+}
+
+function translateFactory(http: Http) {
+  return new TranslateStaticLoader(http, '/assets/i18n', '.json');
 }
