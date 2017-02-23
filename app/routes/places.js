@@ -42,11 +42,15 @@ module.exports = function(app) {
      * @apiParam {Boolean} stock
      * @apiParam {Boolean} double_bed
      * @apiParam {Boolean} single_bed
+     * @apiParam {Integer} offset = 0
+     * @apiParam {Integer} limit = 20
      *
      * @apiSuccess {JSON} field title,place,status
      * @apiError {JSON} field title,messages,errors,status
      */
     app.get('/place/search', function(req, res) {
+        var offset = req.query.offset || 0,
+            limit = req.query.limit || 20;
         var obj = {
                 title: req.query.title ? {$like: `%${req.query.title.toLowerCase()}%`} : '',
                 rating: req.query.rating ? req.query.rating : '',
@@ -87,7 +91,11 @@ module.exports = function(app) {
         for(var prop in obj){
             if(obj[prop]) query[prop] = obj[prop] == 'true' ? true : obj[prop] == 'false' ? false : obj[prop]
         }
-        models.Place.findAll({ where: query}).then(function (places) {
+        models.Place.findAll({
+                where: query,
+                offset: offset,
+                limit: limit
+            }).then(function (places) {
             res.statusCode = 200;
             res.json({
                 title: 'Get data success',
@@ -101,11 +109,20 @@ module.exports = function(app) {
      * @apiName getPlace
      * @apiGroup Place
      *
+     * @apiParam {Integer} offset = 0
+     * @apiParam {Integer} limit = 20
+     *
      * @apiSuccess {JSON} field title,place,status
      * @apiError {JSON} field title,messages,errors,status
      */
     app.get('/place', function(req, res) {
-        models.Place.findAll().then(function (places) {
+        var offset = req.query.offset || 0,
+            limit = req.query.limit || 20;
+
+        models.Place.findAll({
+            offset: offset,
+            limit: limit
+        }).then(function (places) {
             res.statusCode = 200;
             res.json({
                 title: 'Get data success',
@@ -216,6 +233,7 @@ module.exports = function(app) {
      * @apiName getPlaceById
      * @apiGroup Place
      *
+     *
      * @apiParam {Number} id Place unique ID.
      *
      * @apiSuccess {JSON} field title,place,status
@@ -304,6 +322,7 @@ module.exports = function(app) {
      * @apiParam {Float} lat
      * @apiParam {Float} lng
      *
+     *
      * @apiSuccess {JSON} field title,place,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
@@ -313,9 +332,11 @@ module.exports = function(app) {
         var errors = req.validationErrors();
         if( !errors){
             models.Place.find(
-                {where: {
-                    id: id
-                }})
+                {
+                    where: {
+                        id: id
+                    }
+                })
                 .then(function (place) {
                     place.updateAttributes(req.query)
                     .then(function (update_place) {
@@ -430,9 +451,10 @@ module.exports = function(app) {
                         {model: models.Comment},
                         {model: models.Image}
                     ],
-                where: {
-                    id: id
-                }})
+                    where: {
+                        id: id
+                    }
+                })
                 .then(function (place) {
                     res.statusCode = 200;
                     res.json({

@@ -86,11 +86,17 @@ module.exports = function(app) {
      * @apiName getImage
      * @apiGroup Image
      *
+     * @apiParam {Integer} offset = 0
+     * @apiParam {Integer} limit = 20
+     *
      * @apiSuccess {JSON} field title,image,status
      * @apiError {JSON} field title,messages,errors,status
      */
     app.get('/image', function (req, res) {
-        models.Image.findAll().then(function (images) {
+        var offset = req.params.offset || 0,
+            limit = req.params.limit || 20;
+
+        models.Image.findAll({ offset: offset, limit: limit }).then(function (images) {
             res.statusCode = 200;
             res.json({
                 title: 'Get data success',
