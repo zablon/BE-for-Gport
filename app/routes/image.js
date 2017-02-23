@@ -1,7 +1,85 @@
 var models  = require('../models');
 var express = require('express');
+var multer  = require('multer');
+var shell = require('shelljs');
 
 module.exports = function(app) {
+    app.options('/api'); // enable pre-flight request for DELETE request
+    var upload = multer({
+        storage: multer.diskStorage({
+            destination: function(req, file, callback) {
+            var type = req.body.folder || '';
+            var path = './uploads/'+type;
+                shell.mkdir('-p', path);
+                callback(null, path);
+        },
+        filename: function(req, file, callback){
+            callback(null, file.originalname);
+        }
+        }),
+        limits: { fileSize: 2000000 },
+        maxCount: 8,
+    });
+    /**
+     * @api {post} /upload Upload Image
+     * @apiName Upload
+     * @apiGroup Image
+     *
+     * @apiParam {String} RoomId - parent (option)
+     * @apiParam {String} CountryId - parent (option)
+     * @apiParam {String} RegionId - parent (option)
+     * @apiParam {String} CityId - parent (option)
+     * @apiParam {String} AreaId - parent (option)
+     * @apiParam {String} PlaceId - parent (option)
+     * @apiParam {String} CommunityId - parent (option)
+     * @apiParam {String} url - format 'ukraine/kherson/gport/'
+     *
+     * @apiSuccess {JSON} field title,image,status (limit: 20MB, maxfiles: 8, must be at least one parent)
+     * @apiError {JSON} field title,messages,errors,status
+     */
+    app.post('/upload', upload.any(), function(req, res)  {
+        if(!req.files){
+            res.statusCode = 200;
+            res.json({
+                title: 'cant get image from this id',
+                message: 'cant get image from this id',
+                errors: 'files is empty',
+                status: 'error'
+            });
+        }else{
+            for(var i = 0; i < req.files.length; i++){
+                var image = {
+                    RoomId: req.body.RoomId ? req.body.RoomId : '',
+                    CountryId: req.body.CountryId ? req.body.CountryId : '',
+                    RegionId: req.body.RegionId ? req.body.RegionId : '',
+                    CityId: req.body.CityId ? req.body.CityId : '',
+                    AreaId: req.body.AreaId ? req.body.AreaId : '',
+                    PlaceId: req.body.PlaceId ? req.body.PlaceId : '',
+                    CommunityId: req.body.CommunityId ? req.body.CommunityId : '',
+                    url: req.files[i].path
+                }
+                if (image.url.length>0) {
+                    models.Image.create(image).then(function (result) {
+                        res.statusCode = 200;
+                        res.json({
+                            title: 'Get data success',
+                            image: result,
+                            status: 'success'
+                        });
+                    });
+                } else {
+                    res.statusCode = 400;
+                    res.json({
+                        title: 'cant upload image',
+                        message: 'cant upload image',
+                        errors: 'data is wrong',
+                        status: 'error'
+                    });
+                }
+            }
+        }
+    });
+
 
     /**
      * @api {get} /image Image list
@@ -26,7 +104,6 @@ module.exports = function(app) {
      * @apiName createImage
      * @apiGroup Image
      *
-     * @apiParam {String} mounth
      * @apiParam {String} RoomId - parent
      * @apiParam {String} CountryId - parent
      * @apiParam {String} RegionId - parent
@@ -34,8 +111,7 @@ module.exports = function(app) {
      * @apiParam {String} AreaId - parent
      * @apiParam {String} PlaceId - parent
      * @apiParam {String} CommunityId - parent
-     * @apiParam {Float} image
-     * @apiParam {Integer} stock
+     * @apiParam {String} url
      *
      * @apiSuccess {JSON} field title,image,status
      * @apiSuccess {JSON} field title,messages,errors,status
@@ -49,9 +125,7 @@ module.exports = function(app) {
             AreaId: req.query.AreaId ? req.query.AreaId : '',
             PlaceId: req.query.PlaceId ? req.query.PlaceId : '',
             CommunityId: req.query.CommunityId ? req.query.CommunityId : '',
-            mounth: req.query.mounth ? req.query.mounth : '',
-            image: req.query.image ? req.query.image : '',
-            stock: req.query.stock ? req.query.stock : '',
+            url: req.query.url ? req.query.url : '',
         }
         models.Image.create(image).then(function () {
             res.statusCode = 200;
@@ -106,7 +180,6 @@ module.exports = function(app) {
      * @apiName putImage
      * @apiGroup Image
      *
-     * @apiParam {String} mounth
      * @apiParam {String} RoomId - parent
      * @apiParam {String} CountryId - parent
      * @apiParam {String} RegionId - parent
@@ -114,8 +187,7 @@ module.exports = function(app) {
      * @apiParam {String} AreaId - parent
      * @apiParam {String} PlaceId - parent
      * @apiParam {String} CommunityId - parent
-     * @apiParam {Float} image
-     * @apiParam {Integer} stock
+     * @apiParam {String} url
      *
      * @apiSuccess {JSON} field title,image,status
      * @apiSuccess {JSON} field title,messages,errors,status

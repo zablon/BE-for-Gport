@@ -16,6 +16,7 @@ var session      = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var debug = require('debug')('express-sequelize');
+var cors  = require('cors');
 
 var models  = require('./app/models');
 
@@ -55,6 +56,7 @@ app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secre
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
 
 // conntroller ======================================================================
 var comment = require('./app/controller/comment.js');
@@ -69,6 +71,7 @@ require('./app/routes/area')(app);
 require('./app/routes/city')(app);
 require('./app/routes/rooms')(app);
 require('./app/routes/price')(app);
+require('./app/routes/image')(app);
 
 // launch ======================================================================
 var server = app.listen(port);

@@ -1,6 +1,7 @@
 var models  = require('../models'),
     express = require('express'),
-    helper = require('../../config/helper.js');
+    helper = require('../../config/helper.js'),
+    url = 'http://localhost:4200'
 
 module.exports = function(app, passport) {
 
@@ -13,26 +14,7 @@ module.exports = function(app, passport) {
         res.statusCode = 200;
         res.render('index.ejs');
     });*/
-    app.get('/map/list', function(req, res) {
-        req.user ? res.locals.userSettings = req.user : res.locals.userSettings = { type: 'guest', name:'guest', email:'guest', id:'guest'};
-        res.statusCode = 200;
-        res.render('index.ejs');
-    });
-    app.get('/guides/:id', function(req, res) {
-        req.user ? res.locals.userSettings = req.user : res.locals.userSettings = { type: 'guest', name:'guest', email:'guest', id:'guest'};
-        res.statusCode = 200;
-        res.render('index.ejs');
-    });
-    app.get('/contact/us', function(req, res) {
-        req.user ? res.locals.userSettings = req.user : res.locals.userSettings = { type: 'guest', name:'guest', email:'guest', id:'guest'};
-        res.statusCode = 200;
-        res.render('index.ejs');
-    });
-    app.get('/', function(req, res) {
-        req.user ? res.locals.userSettings = req.user : res.locals.userSettings = { type: 'guest', name:'guest', email:'guest', id:'guest'};
-        res.statusCode = 200;
-        res.render('index.ejs');
-    });
+
 
     // PROFILE SECTION =========================
     app.get('/success', isLoggedIn, function(req, res) {
@@ -90,21 +72,53 @@ module.exports = function(app, passport) {
                 failureRedirect : '/'
             }));
     // vk -------------------------------
-
+        /**
+         * @api {get} /auth/vk VK registration and login
+         * @apiName vkRegistration
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // send to vk to do the authentication
         app.get('/auth/vk', passport.authenticate('vkontakte', { scope : 'email' }));
-
+        /**
+         * @api {get} /auth/vkontakte/callback Vkontakte callback
+         * @apiName vkontakteCallback
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // handle the callback after facebook has authenticated the user
         app.get('/auth/vkontakte/callback',
             passport.authenticate('vkontakte', {
-                successRedirect : '/',
-                failureRedirect : '/'
+                successRedirect : url,
+                failureRedirect : url + '/error'
             }));
     // facebook -------------------------------
-
+        /**
+         * @api {get} /auth/facebook Facebook registration and login
+         * @apiName facebookRegistration
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // send to facebook to do the authentication
         app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
+        /**
+         * @api {get} /auth/facebook/callback Facebook callback
+         * @apiName facebookCallback
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
@@ -113,10 +127,26 @@ module.exports = function(app, passport) {
             }));
 
     // twitter --------------------------------
-
+        /**
+         * @api {get} /auth/twitter Twitter registration and login
+         * @apiName twitterRegistration
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // send to twitter to do the authentication
         app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-
+        /**
+         * @api {get} /auth/twitter/callback Twitter callback
+         * @apiName twitterCallback
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // handle the callback after twitter has authenticated the user
         app.get('/auth/twitter/callback',
             passport.authenticate('twitter', {
@@ -126,10 +156,26 @@ module.exports = function(app, passport) {
 
 
     // google ---------------------------------
-
+        /**
+         * @api {get} /auth/google Google registration and login
+         * @apiName googleRegistration
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // send to google to do the authentication
         app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-
+        /**
+         * @api {get} /auth/google/callback Google callback
+         * @apiName googleCallback
+         * @apiGroup Auth
+         *
+         *
+         * @apiSuccess nothing '/'
+         * @apiError nothing '/error'
+         */
         // the callback after google has authenticated the user
         app.get('/auth/google/callback',
             passport.authenticate('google', {

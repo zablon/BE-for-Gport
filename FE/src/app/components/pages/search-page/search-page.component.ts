@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = 'http://localhost:8080/upload/';
 
 @Component({
   selector: 'search-page',
@@ -14,6 +14,10 @@ export class SearchPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // Add in the other upload form parameters.
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('folder', 'ukraine/kherson/gport');
+      form.append('PlaceId', '1');
+    };
   }
-
 }

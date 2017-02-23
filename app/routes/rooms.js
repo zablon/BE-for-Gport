@@ -97,14 +97,15 @@ module.exports = function(app) {
         var errors = req.validationErrors();
         if( !errors){
             models.Room.find(
-                {where: {
-                    id: id
-                }},{
+                {
                     include: [
                         {model: models.Price},
                         {model: models.Image},
                         {model: models.Comment},
-                    ]
+                    ],
+                    where: {
+                        id: id
+                    }
                 })
                 .then(function (room) {
                     res.statusCode = 200;
