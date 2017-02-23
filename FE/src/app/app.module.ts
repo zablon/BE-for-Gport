@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +22,8 @@ import { PlaceShortInfoComponent } from './components/pages/places/place-short-i
 import { PlaceRoomComponent } from './components/pages/places/place-room/place-room.component';
 import { PlaceGuideComponent } from './components/pages/places/place-guide/place-guide.component';
 import { PlaceCommentsComponent } from './components/pages/places/place-comments/place-comments.component';
+
+import {GlobalStoreService} from './shared/global-store.service';
 
 const appRoutes: Routes = [
   {
@@ -70,8 +72,10 @@ const appRoutes: Routes = [
     })
   ],
   providers: [
-    {provide: 'Window', useValue: window}
+    {provide: 'Window', useValue: window},
+    GlobalStoreService
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {

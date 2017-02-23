@@ -2,6 +2,7 @@ import {Component, Output, EventEmitter, OnInit, ElementRef, Inject} from '@angu
 import {FormGroup, FormControl} from '@angular/forms';
 import {Search} from '../../app.models';
 import OnScrolledDown from '../../shared/on-scolled-down';
+import {GlobalStoreService} from '../../shared/global-store.service';
 
 @Component({
   selector: 'app-main-filter',
@@ -11,10 +12,9 @@ import OnScrolledDown from '../../shared/on-scolled-down';
 export class MainFilterComponent extends OnScrolledDown implements OnInit {
 
   private searchForm: FormGroup;
-  private scrolledUnderForm: boolean;
 
-  constructor(elRef: ElementRef, @Inject('Window') window: Window) {
-    super(elRef, window);
+  constructor(elRef: ElementRef, @Inject('Window') window: Window, globalStoreService: GlobalStoreService) {
+    super(elRef, window, globalStoreService, 'displayHeaderFilters');
   }
 
   // @HostListener('window:scroll', ['$event'])
