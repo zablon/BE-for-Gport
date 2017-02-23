@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./place-guide.component.css']
 })
 export class PlaceGuideComponent implements OnInit {
-
+  lat: number = 50.4501;
+  lng: number = 30.5234;
   constructor() { }
 
   ngOnInit() {
