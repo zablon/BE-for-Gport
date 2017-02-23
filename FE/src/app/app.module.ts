@@ -5,6 +5,7 @@ import {HttpModule, Http} from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService} from 'ng2-translate';
 import { FileUploadModule } from 'ng2-file-upload';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -69,6 +70,9 @@ const appRoutes: Routes = [
       provide: TranslateLoader,
       useFactory: translateFactory,
       deps: [Http]
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDOWayS2FYoTDhVInRQrXlSjDfwYUvbqfc'
     })
   ],
   providers: [
