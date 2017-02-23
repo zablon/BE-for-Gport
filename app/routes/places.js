@@ -227,19 +227,20 @@ module.exports = function(app) {
         var errors = req.validationErrors();
         if( !errors){
             models.Place.find(
-                {where: {
-                    id: id
-                }},{
+                {
                     include: [
+                        {model: models.Comment},
+                        {model: models.Image},
                         {model: models.Room,
                             include: [
                                 {model: models.Price},
                                 {model: models.Image},
                             ]
-                        },
-                        {model: models.Comment},
-                        {model: models.Image}
-                    ]
+                        }
+                    ],
+                    where: {
+                        id: id
+                    }
                 })
                 .then(function (place) {
                     res.statusCode = 200;
@@ -417,9 +418,7 @@ module.exports = function(app) {
 
         if( !errors){
             models.Country.find(
-                {where: {
-                    id: id
-                }},{
+                {
                     include: [
                         {model: models.Place,
                             include: [
@@ -430,8 +429,10 @@ module.exports = function(app) {
                         },
                         {model: models.Comment},
                         {model: models.Image}
-                    ]
-                })
+                    ],
+                where: {
+                    id: id
+                }})
                 .then(function (place) {
                     res.statusCode = 200;
                     res.json({
@@ -466,9 +467,7 @@ module.exports = function(app) {
         var errors = req.validationErrors();
         if( !errors){
             models.City.find(
-                {where: {
-                    id: id
-                }},{
+                {
                     include: [
                         {model: models.Place,
                             include: [
@@ -479,7 +478,10 @@ module.exports = function(app) {
                         },
                         {model: models.Comment},
                         {model: models.Image}
-                    ]
+                    ],
+                    where: {
+                        id: id
+                    }
                 })
                 .then(function (place) {
                     res.statusCode = 200;

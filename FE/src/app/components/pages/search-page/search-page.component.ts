@@ -14,6 +14,10 @@ export class SearchPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // Add in the other upload form parameters.
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('folder', 'ukraine/kherson/gport');
+      form.append('PlaceId', '1');
+    };
   }
-
 }
