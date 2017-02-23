@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ScrolledUnderComponent } from './scrolled-under.component';
+import { PlacesComponent } from './places.component';
 
-describe('ScrolledUnderComponent', () => {
-  let component: ScrolledUnderComponent;
-  let fixture: ComponentFixture<ScrolledUnderComponent>;
+describe('PlacesComponent', () => {
+  let component: PlacesComponent;
+  let fixture: ComponentFixture<PlacesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScrolledUnderComponent ]
+      declarations: [ PlacesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScrolledUnderComponent);
+    fixture = TestBed.createComponent(PlacesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

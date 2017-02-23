@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { GlobalStoreService } from '../../shared/global-store.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   private isIn = false;
 
-  @Input() showFilters: boolean;
+  constructor(private globalStoreService: GlobalStoreService) {
 
-  constructor() {
+  }
 
+  get showFilters() {
+    return this.globalStoreService.displayHeaderFilters;
   }
 
   toggleMobileMenu() {

@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -16,12 +16,22 @@ import {MainFilterComponent} from './components/main-filter/main-filter.componen
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
 import { SearchPageComponent } from './components/pages/search-page/search-page.component';
+import { PlacesComponent } from './components/pages/places/places.component';
+import { PlaceImageComponent } from './components/pages/places/place-image/place-image.component';
+import { PlaceShortInfoComponent } from './components/pages/places/place-short-info/place-short-info.component';
+import { PlaceRoomComponent } from './components/pages/places/place-room/place-room.component';
+import { PlaceGuideComponent } from './components/pages/places/place-guide/place-guide.component';
+import { PlaceCommentsComponent } from './components/pages/places/place-comments/place-comments.component';
+
+import {GlobalStoreService} from './shared/global-store.service';
 
 const appRoutes: Routes = [
   {
     path: 'search',
     component: SearchPageComponent
   },
+  { path: 'place', component: PlacesComponent },
+
   { path: '',
     pathMatch: 'full',
     component: ContentComponent
@@ -40,6 +50,12 @@ const appRoutes: Routes = [
     MainFilterComponent,
     PageNotFoundComponent,
     SearchPageComponent,
+    PlacesComponent,
+    PlaceImageComponent,
+    PlaceShortInfoComponent,
+    PlaceRoomComponent,
+    PlaceGuideComponent,
+    PlaceCommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,8 +72,10 @@ const appRoutes: Routes = [
     })
   ],
   providers: [
-    {provide: 'Window', useValue: window}
+    {provide: 'Window', useValue: window},
+    GlobalStoreService
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {
