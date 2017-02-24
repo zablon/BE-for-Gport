@@ -1,21 +1,41 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-              (click)="toggleMobileMenu()" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">VDV</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
-      <app-header-search *ngIf="showFilters"></app-header-search>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#">Sign in</a></li>
-        <li><a href="#about">Sign up</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
+<!--<nav class="navbar navbar-default navbar-fixed-top">-->
+  <!--<div class="container">-->
+    <!--<div class="navbar-header">-->
+      <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"-->
+              <!--(click)="toggleMobileMenu()" aria-expanded="false" aria-controls="navbar">-->
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+      <!--</button>-->
+      <!--<a class="navbar-brand" href="#">VDV</a>-->
+    <!--</div>-->
+    <!--<div id="navbar" class="navbar-collapse collapse" [ngClass]="{ 'in': isIn }">-->
+      <!--<app-header-search *ngIf="showFilters"></app-header-search>-->
+      <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li class="active"><a href="#">Sign in</a></li>-->
+        <!--<li><a href="#about">Sign up</a></li>-->
+      <!--</ul>-->
+    <!--</div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+  <!--</div>-->
+<!--</nav>-->
+
+
+<nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" (click)="toggleMobileMenu()" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Navbar</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ 'in': isIn }">
+    <app-header-search *ngIf="showFilters"></app-header-search>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Sign in<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Sign up</a>
+      </li>
+    </ul>
   </div>
 </nav>
