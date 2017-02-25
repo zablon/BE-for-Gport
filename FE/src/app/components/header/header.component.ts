@@ -7,7 +7,7 @@ import { GlobalStoreService } from '../../shared/global-store.service';
   styleUrls: ['header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private isIn = false;
+  private isCollapsed:boolean = false;
 
   constructor(private globalStoreService: GlobalStoreService) {
 
@@ -16,11 +16,6 @@ export class HeaderComponent implements OnInit {
   get showFilters() {
     return this.globalStoreService.displayHeaderFilters;
   }
-
-  toggleMobileMenu() {
-    this.isIn = !this.isIn;
-  }
-
 
   ngOnInit() {
 
