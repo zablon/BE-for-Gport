@@ -1,6 +1,7 @@
-/**
+/*
+/!**
  * Created by semianchuk on 30.09.16.
- */
+ *!/
 var mongoose = require('mongoose');
 
 var commentSchema = mongoose.Schema({
@@ -17,3 +18,4 @@ var commentSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Comment', commentSchema);
+*/

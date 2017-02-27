@@ -89,7 +89,8 @@ module.exports = function(app) {
                 {
                     include: [
                         {model: models.Area},
-                        {model: models.Place}
+                        {model: models.Place},
+                        {model: models.Attraction}
                     ],
                     where: {
                         id: id
