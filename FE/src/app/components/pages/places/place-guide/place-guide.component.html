@@ -1,10 +1,24 @@
 <div class="container">
-  <div class="col-md-6">
-    <div class="map-wrapper">
-      <sebm-google-map [latitude]="lat" [longitude]="lng">
-        <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <input placeholder="Enter source location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+               class="form-control col-md-11" #pickupInput [formControl]="destinationInput">
+        <input placeholder="Enter destination" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+               class="form-control col-md-11" #pickupOutput [formControl]="destinationOutput">
+      </div>
+      <sebm-google-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [styles]="mapCustomStyles">
+        <!-- <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude" [iconUrl]="iconurl">
+            <sebm-google-map-info-window>
+                <strong>InfoWindow content</strong>
+            </sebm-google-map-info-window>
+        </sebm-google-map-marker> -->
+        <sebm-google-map-directions [origin]="origin" [destination]="destination"></sebm-google-map-directions>
       </sebm-google-map>
+      <div>
+        <p *ngIf="vc.estimatedTime">Estimated travel time: <span [innerHtml]="vc.estimatedTime"></span></p>
+        <p *ngIf="vc.estimatedDistance">Distance: <span [innerHtml]="vc.estimatedDistance"></span></p>
+      </div>
     </div>
   </div>
-  <div class="col-md-6"></div>
 </div>

@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {HttpModule, Http} from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService} from 'ng2-translate';
@@ -25,6 +25,7 @@ import { PlaceGuideComponent } from './components/pages/places/place-guide/place
 import { PlaceCommentsComponent } from './components/pages/places/place-comments/place-comments.component';
 
 import {GlobalStoreService} from './shared/global-store.service';
+import { DirectionsMapDirective } from './directives/direction-map.directive';
 
 const appRoutes: Routes = [
   {
@@ -56,7 +57,9 @@ const appRoutes: Routes = [
     PlaceShortInfoComponent,
     PlaceRoomComponent,
     PlaceGuideComponent,
-    PlaceCommentsComponent
+    PlaceCommentsComponent,
+    DirectionsMapDirective
+
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ const appRoutes: Routes = [
       deps: [Http]
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDOWayS2FYoTDhVInRQrXlSjDfwYUvbqfc'
+      apiKey: 'AIzaSyDOWayS2FYoTDhVInRQrXlSjDfwYUvbqfc',
+      libraries: ["places"]
     })
   ],
   providers: [
