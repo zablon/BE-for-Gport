@@ -1,21 +1,59 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-              (click)="toggleMobileMenu()" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
+      <button type="button" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation" data-toggle="collapse" data-target="#navbar"
+              (click)="isCollapsed = !isCollapsed" aria-expanded="false" aria-controls="navbar">
+        <span class="navbar-toggler-icon"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">VDV</a>
     </div>
-    <div id="navbar" class="navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
+    <!--<div class="collapse navbar-collapse" (collapsed)="collapsed($event)" (expanded)="expanded($event)"-->
+         <!--[collapse]="isCollapsed">-->
+    <div class="collapse navbar-collapse">
       <app-header-search *ngIf="showFilters"></app-header-search>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#">Sign in</a></li>
-        <li><a href="#about">Sign up</a></li>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a class="nav-link" href="#">Sign in</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Sign up</a></li>
       </ul>
     </div><!--/.nav-collapse -->
+    <!--<div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ 'in': isIn }">-->
+    <!--<app-header-search *ngIf="showFilters"></app-header-search>-->
+    <!--<ul class="navbar-nav ml-auto">-->
+    <!--<li class="nav-item active"><a class="nav-link" href="#">Sign in</a></li>-->
+    <!--<li class="nav-item"><a class="nav-link" href="#about">Sign up</a></li>-->
+    <!--</ul>-->
+    <!--</div>&lt;!&ndash;/-->
   </div>
 </nav>
+
+<!--<nav class="navbar navbar-toggleable-md navbar-light bg-faded">-->
+<!--<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"-->
+<!--data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
+<!--aria-label="Toggle navigation">-->
+<!--<span class="navbar-toggler-icon"></span>-->
+<!--</button>-->
+<!--<a class="navbar-brand" href="#">Navbar</a>-->
+
+<!--<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--<ul class="navbar-nav mr-auto">-->
+<!--<li class="nav-item active">-->
+<!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+<!--</li>-->
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">Link</a>-->
+<!--</li>-->
+<!--<li class="nav-item">-->
+<!--<a class="nav-link disabled" href="#">Disabled</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--<form class="form-inline my-2 my-lg-0">-->
+<!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+<!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</nav>-->
