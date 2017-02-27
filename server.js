@@ -5,7 +5,6 @@
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 8080;
-//var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var expressValidator = require('express-validator');
@@ -32,12 +31,9 @@ models.sequelize.sync().then(function() {
     server.on('listening', onListening);
 });
 
-var configDB = require('./config/database.js');
-
 var socketIo = require('./app/socket/socket.js');
 
 // configuration ===============================================================
-//mongoose.connect(configDB.url); // connect to our database
 app.use(express.static(__dirname + '/assets'));
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -76,12 +72,11 @@ require('./app/routes/price')(app);
 require('./app/routes/image')(app);
 
 // launch ======================================================================
-var server = app.listen(port);
+var server = app.listen(process.env.PORT || 3000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
+
 notification = socketIo(server);
-
-console.log('The magic happens on port ' + port);
-
-
 
 /**
  * Normalize a port into a number, string, or false.
