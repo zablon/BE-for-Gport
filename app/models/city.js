@@ -12,8 +12,10 @@ module.exports = function(sequelize, DataTypes) {
                         allowNull: false
                     }
                 }),
-                City.hasMany(models.Area);
-                City.hasMany(models.Place);
+                City.hasMany(models.Area),
+                City.hasMany(models.Place),
+                City.hasMany(models.Attraction)
+
             }
         }
     });

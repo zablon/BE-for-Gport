@@ -3,135 +3,147 @@ var express = require('express');
 
 module.exports = function(app) {
     /**
-     * @api {get} /comment Comment list
-     * @apiName getComment
-     * @apiGroup Comment
+     * @api {get} /attraction Attraction list
+     * @apiName getAttraction
+     * @apiGroup Attraction
      *
      * @apiParam {Integer} offset = 0
      * @apiParam {Integer} limit = 20
      *
-     * @apiSuccess {JSON} field title,comment,status
+     * @apiSuccess {JSON} field title,attraction,status
      * @apiError {JSON} field title,messages,errors,status
      */
-    app.get('/comment', function (req, res) {
+    app.get('/attraction', function (req, res) {
         var offset = req.params.offset || 0,
             limit = req.params.limit || 20;
 
-        models.Comment.findAll({ offset: offset, limit: limit }).then(function (comments) {
+        models.Attraction.findAll({ offset: offset, limit: limit }).then(function (attractions) {
             res.statusCode = 200;
             res.json({
                 title: 'Get data success',
-                comments: comments,
+                attractions: attractions,
                 status: 'success'
             });
         });
     });
     /**
-     * @api {post} /comment Create new comment
-     * @apiName createComment
-     * @apiGroup Comment
+     * @api {post} /attraction Create new attraction
+     * @apiName createAttraction
+     * @apiGroup Attraction
      *
-     * @apiParam {String} PlaceId - parent
-     * @apiParam {String} name
-     * @apiParam {String} email
-     * @apiParam {String} data
+     * @apiParam {String} CityId - parent
+     * @apiParam {String} AreaId - parent
+     * @apiParam {String} title
+     * @apiParam {String} rating
+     * @apiParam {String} address
+     * @apiParam {String} description
+     * @apiParam {Double} lng
+     * @apiParam {Double} lat
      *
-     * @apiSuccess {JSON} field title,comment,status
+     * @apiSuccess {JSON} field title,attraction,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.post('/comment', function (req, res) {
-        var comment = {
-            PlaceId: req.query.PlaceId ? req.query.PlaceId : '',
-            name: req.query.name ? req.query.name : '',
-            email: req.query.email ? req.query.email : '',
-            data: req.query.data ? req.query.data : ''
+    app.post('/attraction', function (req, res) {
+        var attraction = {
+            CityId: req.query.CityId ? req.query.CityId : '',
+            AreaId: req.query.AreaId ? req.query.AreaId : '',
+            title: req.query.title ? req.query.title : '',
+            rating: req.query.rating ? req.query.rating : '',
+            address: req.query.address ? req.query.address : '',
+            description: req.query.description ? req.query.description : '',
+            lng: req.query.lng ? req.query.lng : '',
+            lat: req.query.lat ? req.query.lat : '',
         }
-        models.Comment.create(comment).then(function () {
+        models.Attraction.create(attraction).then(function () {
             res.statusCode = 200;
             res.json({
                 title: 'Get data success',
-                comment: comment,
+                attraction: attraction,
                 status: 'success'
             });
         });
     });
     /**
-     * @api {get} /comment/:id Comment information
-     * @apiName getCommentById
-     * @apiGroup Comment
+     * @api {get} /attraction/:id Attraction information
+     * @apiName getAttractionById
+     * @apiGroup Attraction
      *
-     * @apiParam {Number} id Comment unique ID.
+     * @apiParam {Number} id Attraction unique ID.
      *
-     * @apiSuccess {JSON} field title,comment,status
+     * @apiSuccess {JSON} field title,attraction,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.get('/comment/:id', function (req, res) {
+    app.get('/attraction/:id', function (req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if (!errors) {
-            models.Comment.find(
+            models.Attraction.find(
                 {
                     where: {
                         id: id
                     }
                 })
-                .then(function (comment) {
+                .then(function (attraction) {
                     res.statusCode = 200;
                     res.json({
                         title: 'Get data by id' + id,
-                        comment: comment,
+                        attraction: attraction,
                         status: 'success'
                     });
                 });
         } else {
             res.statusCode = 400;
             res.json({
-                title: 'cant get comment from this id',
-                message: 'cant get comment from this id',
+                title: 'cant get attraction from this id',
+                message: 'cant get attraction from this id',
                 errors: errors,
                 status: 'error'
             });
         }
     });
     /**
-     * @api {put} /comment/:id Update comment
-     * @apiName putComment
-     * @apiGroup Comment
+     * @api {put} /attraction/:id Update attraction
+     * @apiName putAttraction
+     * @apiGroup Attraction
      *
-     * @apiParam {String} PlaceId - parent
-     * @apiParam {String} name
-     * @apiParam {String} email
-     * @apiParam {String} data
+     * @apiParam {String} CityId - parent
+     * @apiParam {String} AreaId - parent
+     * @apiParam {String} title
+     * @apiParam {String} rating
+     * @apiParam {String} address
+     * @apiParam {String} description
+     * @apiParam {Float} lng
+     * @apiParam {Float} lat
      *
-     * @apiSuccess {JSON} field title,comment,status
+     * @apiSuccess {JSON} field title,attraction,status
      * @apiSuccess {JSON} field title,messages,errors,status
      */
-    app.put('/comment/:id', function (req, res) {
+    app.put('/attraction/:id', function (req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if (!errors) {
-            models.Comment.find(
+            models.Attraction.find(
                 {
                     where: {
                         id: id
                     }
                 })
-                .then(function (comment) {
-                    comment.updateAttributes(req.query)
-                        .then(function (update_comment) {
+                .then(function (attraction) {
+                    attraction.updateAttributes(req.query)
+                        .then(function (update_attraction) {
                             res.statusCode = 200;
                             res.json({
-                                title: 'comment id -' + id + ' update',
-                                comment: update_comment,
+                                title: 'attraction id -' + id + ' update',
+                                attraction: update_attraction,
                                 status: 'success'
                             });
                         }).catch(function (error) {
                         res.statusCode = 404;
                         res.json({
                             title: error,
-                            comment: '',
+                            attraction: '',
                             status: 'error'
                         });
                     })
@@ -141,8 +153,8 @@ module.exports = function(app) {
         } else {
             res.statusCode = 400;
             res.json({
-                title: 'cant update comment from this id',
-                message: 'cant update comment from this id',
+                title: 'cant update attraction from this id',
+                message: 'cant update attraction from this id',
                 errors: errors,
                 status: 'error'
             });
@@ -150,27 +162,27 @@ module.exports = function(app) {
 
     });
     /**
-     * @api {delete} /comment/:id Delete comment
-     * @apiName deleteComment
-     * @apiGroup Comment
+     * @api {delete} /attraction/:id Delete attraction
+     * @apiName deleteAttraction
+     * @apiGroup Attraction
      *
-     * @apiParam {Number} id Comment unique ID.
+     * @apiParam {Number} id Attraction unique ID.
      *
-     * @apiSuccess {JSON} field title,comment,status
+     * @apiSuccess {JSON} field title,attraction,status
      * @apiError {JSON} field title,messages,errors,status
      */
-    app.delete('/comment/:id', function (req, res) {
+    app.delete('/attraction/:id', function (req, res) {
         var id = req.params.id;
         req.assert('id', 'id is required').isInt();
         var errors = req.validationErrors();
         if (!errors) {
-            models.Comment.destroy({id: id})
+            models.Attraction.destroy({id: id})
                 .then(function (deletedRecord) {
                     if (deletedRecord === 1) {
                         res.statusCode = 200;
                         res.json({
-                            title: 'comment id -' + id + ' deleted',
-                            comment: '',
+                            title: 'attraction id -' + id + ' deleted',
+                            attraction: '',
                             status: 'success'
                         });
                     }
@@ -178,7 +190,7 @@ module.exports = function(app) {
                         res.statusCode = 404;
                         res.json({
                             title: 'record not found',
-                            comment: '',
+                            attraction: '',
                             status: 'error'
                         });
                     }
@@ -188,15 +200,15 @@ module.exports = function(app) {
                     res.statusCode = 404;
                     res.json({
                         title: error,
-                        comment: '',
+                        attraction: '',
                         status: 'error'
                     });
                 });
         } else {
             res.statusCode = 400;
             res.json({
-                title: 'cant delete comment from this id',
-                message: 'cant delete comment from this id',
+                title: 'cant delete attraction from this id',
+                message: 'cant delete attraction from this id',
                 errors: errors,
                 status: 'error'
             });

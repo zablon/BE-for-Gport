@@ -137,7 +137,7 @@ module.exports = function(sequelize, DataTypes) {
                     }
                 }),
                 Place.belongsToMany(models.Type,
-                    { through: 'UserProjects' }
+                    { through: 'PlaceType' }
                 ),
                 Place.hasMany(models.Room),
                 Place.hasMany(models.Image),
