@@ -4,7 +4,6 @@ module.exports = function(sequelize, DataTypes) {
     var Place = sequelize.define("Place", {
         title: DataTypes.STRING,
         rating: DataTypes.INTEGER,
-        type: DataTypes.STRING,
         folder: DataTypes.STRING,
         distance: DataTypes.STRING,
         phone: DataTypes.STRING,
@@ -137,9 +136,12 @@ module.exports = function(sequelize, DataTypes) {
                         allowNull: false
                     }
                 }),
-                Place.hasMany(models.Room);
-                Place.hasMany(models.Image);
-                Place.hasMany(models.Comment);
+                Place.belongsToMany(models.Type,
+                    { through: 'UserProjects' }
+                ),
+                Place.hasMany(models.Room),
+                Place.hasMany(models.Image),
+                Place.hasMany(models.Comment)
             }
         }
     });

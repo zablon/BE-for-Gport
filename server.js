@@ -64,6 +64,7 @@ var comment = require('./app/controller/comment.js');
 // routes ======================================================================
 require('./app/routes/auth')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./app/routes/comment')(app, comment); // load our routes for comment
+require('./app/routes/type')(app);
 require('./app/routes/places')(app);
 require('./app/routes/country')(app);
 require('./app/routes/region')(app);

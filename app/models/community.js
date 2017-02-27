@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
                         allowNull: false
                     }
                 }),
-                    Community.hasMany(models.Place);
+                Community.hasMany(models.Place);
             }
         }
     });

@@ -137,6 +137,7 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
+     * @apiParam {String} TypeId - type of place
      * @apiParam {String} CityId - parent
      * @apiParam {String} AreaId - parent
      * @apiParam {Float} rating
@@ -180,11 +181,11 @@ module.exports = function(app) {
      */
     app.post('/place', function(req, res) {
         var place = {
+            TypeId: req.query.TypeId ? req.query.TypeId : '',
             CityId: req.query.CityId ? req.query.CityId : '',
             AreaId: req.query.AreaId ? req.query.AreaId : '',
             title: req.query.title ? req.query.title : '',
             rating: req.query.rating ? req.query.rating : '',
-            type: req.query.type ? req.query.type : '',
             folder: req.query.folder ? req.query.folder : '',
             distance: req.query.distance ? req.query.distance : '',
             phone: req.query.phone ? req.query.phone : '',
@@ -247,6 +248,7 @@ module.exports = function(app) {
             models.Place.find(
                 {
                     include: [
+                        {model: models.Type},
                         {model: models.Comment},
                         {model: models.Image},
                         {model: models.Room,
@@ -284,6 +286,7 @@ module.exports = function(app) {
      * @apiGroup Place
      *
      * @apiParam {String} title
+     * @apiParam {String} TypeId - type of place
      * @apiParam {Integer} AreaId - parent
      * @apiParam {Integer} CityId - parent
      * @apiParam {Float} rating
@@ -445,7 +448,7 @@ module.exports = function(app) {
                             include: [
                                 {model: models.Room},
                                 {model: models.Image},
-                                {model: models.Image},
+                                {model: models.Comment},
                             ]
                         },
                         {model: models.Comment},
@@ -495,10 +498,9 @@ module.exports = function(app) {
                             include: [
                                 {model: models.Room},
                                 {model: models.Image},
-                                {model: models.Image},
+                                {model: models.Comment},
                             ]
                         },
-                        {model: models.Comment},
                         {model: models.Image}
                     ],
                     where: {
