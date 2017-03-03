@@ -56,5 +56,35 @@ app/
 apidoc/
 server.js
 ```
+
+## GIT
+####merge commits:
+```
+git rebase -i HEAD~{{commits-count}}
+```
+will show an editor box:
+```
+pick {{commit_hash}} {{commit_comment}}
+pick {{commit_hash}} {{commit_comment}}
+pick {{commit_hash}} {{commit_comment}}
+...
+```
+you have to replace `pick` with `squash`
+for those commits that you want to merge into the upper commit like:
+```
+pick    {{commit_hash}} {{commit_comment}}
+squash  {{commit_hash}} {{commit_comment}}
+squash  {{commit_hash}} {{commit_comment}}
+```
+then close editor `:wq`
+after that a new editor window will be displayed with squashed commits and an upper one to where commits will be squashed
+
+you can edit those commit texts and close this editor `:wq`
+
+after that just make a `git push -f`
+
+And that all :)
+
+
 ## Contact
 Copyright (C) 2017 FE GUYS<br>
